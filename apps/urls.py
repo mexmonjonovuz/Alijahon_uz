@@ -1,7 +1,7 @@
 from django.urls import path
 
-from apps.views import HomeTemplateView
+from apps.views import CategoryListView
 
 urlpatterns = [
-    path('', HomeTemplateView.as_view(), name='template')
+    path('', CategoryListView.as_view(),name='main_base')
 ]

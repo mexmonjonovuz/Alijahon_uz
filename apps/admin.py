@@ -6,7 +6,7 @@ from apps.models import Category, Product, User
 
 @register(User)
 class UserModelAdmin(UserAdmin):
-    pass
+    list_display = ("username", "email", "image")
 
 
 @register(Category)

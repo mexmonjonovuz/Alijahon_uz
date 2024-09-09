@@ -1,5 +1,5 @@
 from django.contrib.auth.models import AbstractUser
-from django.db.models import CharField, Model, ForeignKey, CASCADE
+from django.db.models import CharField, Model, ForeignKey, CASCADE, ImageField
 from django_ckeditor_5.fields import CKEditor5Field
 
 
@@ -18,3 +18,4 @@ class User(AbstractUser):
     telegram_id = CharField(max_length=30, blank=True, null=True)
     bio = CKEditor5Field('Text', config_name='basic', null=True, blank=True)
     district = ForeignKey('District', CASCADE, blank=True, null=True)
+    image = ImageField(upload_to='user/%Y/%m/%d/', default='apps/assets/img/team/default.jpg',blank=True)
