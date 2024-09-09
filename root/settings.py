@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 
+from django.conf import settings
+from django.utils.translation import gettext as _
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Internal
     'apps.apps.AppsConfig',
+    'django.contrib.humanize',
     # external
     'django_ckeditor_5',
 ]
@@ -32,6 +35,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'root.urls'
@@ -83,11 +87,18 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
-
 USE_TZ = True
+USE_L10N = True
+
+LANGUAGES = [
+    ('en', 'English'),
+    ('ru', 'Russian'),
+    ('uz', 'Uzbek'),
+]
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR / 'static')
@@ -122,7 +133,6 @@ customColorPalette = [
         'label': 'Blue'
     },
 ]
-CK_EDITOR_5_UPLOAD_FILE_VIEW_NAME = "custom_upload_file"
 
 CKEDITOR_5_CONFIGS = {
     'default': {

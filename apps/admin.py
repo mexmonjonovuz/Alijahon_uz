@@ -6,8 +6,7 @@ from apps.models import Category, Product, User
 
 @register(User)
 class UserModelAdmin(UserAdmin):
-    pass
-
+    ordering = 'phone',
 
 @register(Category)
 class CategoryModelAdmin(ModelAdmin):

@@ -1,11 +1,12 @@
-from django.db.models import Model, SlugField
+from django.db.models import Model, SlugField, CharField, DateTimeField
 from django.utils.text import slugify
-from django_ckeditor_5.fields import CKEditor5Field
 
 
 class SlugBaseModel(Model):
-    name = CKEditor5Field('Text', config_name='extends')
+    name = CharField(max_length=255)
     slug = SlugField(max_length=255, unique=True, editable=False)
+    created_at = DateTimeField(auto_now=True)
+    updated_at = DateTimeField(auto_now_add=True)
 
     class Meta:
         abstract = True
