@@ -1,4 +1,3 @@
-from apps.models.user import User
-from apps.models.product import Product
-from apps.models.category import Category
-from apps.models.base import SlugBaseModel
+from apps.models.base import SlugTimeBasedModel, SlugBasedModel, TimeBasedModel
+from apps.models.shop import Stream, Product, Category
+from apps.models.user import User, District, Region

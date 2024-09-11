@@ -1,0 +1,133 @@
+{% extends 'apps/base.html' %}
+{% block title %}
+    Payment page
+{% endblock %}
+
+{% block main_content %}
+    <div class="card mb-3" bis_skin_checked="1">
+        <div class="card-body" bis_skin_checked="1">
+            <div class="container" bis_skin_checked="1">
+                <br>
+                <div class="row" bis_skin_checked="1">
+                    <div class="col-sm-6 p-4" bis_skin_checked="1">
+                        <div class="card" bis_skin_checked="1">
+                            <div class="card-header" bis_skin_checked="1">
+                                <h5>Mening hisobim</h5>
+                            </div>
+                            <div class="card-body" bis_skin_checked="1">
+                                <h5 class="card-title">Asosiy balansda: 0 so'm</h5>
+                                <h5 class="card-title">To'lab berildi: 0 so'm</h5>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-6 p-4" bis_skin_checked="1">
+                        <div class="card" bis_skin_checked="1">
+                            <div class="card-header" bis_skin_checked="1">
+                                <h5>To'lovga sorov berish formasi</h5>
+                            </div>
+                            <nav>
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist" bis_skin_checked="1">
+                                    <button id="nav-money-tab" class="nav-link active" data-bs-toggle="tab"
+                                            data-bs-target="#nav-money" type="button" role="tab"
+                                            aria-controls="nav-money" aria-selected="true">Pul
+                                    </button>
+                                    <button class="nav-link" id="nav-coin-tab" data-bs-toggle="tab"
+                                            data-bs-target="#nav-coin" type="button" role="tab" aria-controls="nav-coin"
+                                            aria-selected="false">Tanga
+                                    </button>
+                                </div>
+                            </nav>
+                            <div class="tab-content" id="nav-tabContent" bis_skin_checked="1">
+                                <div class="tab-pane fade show active" id="nav-money" role="tabpanel"
+                                     aria-labelledby="nav-money-tab" bis_skin_checked="1">
+                                    <form class="card-body" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken"
+                                               value="xUWe52ummzXrbgjvoFpBCXv1lhiygXucHGmT8neVZ9ix7sQvDxwRZl9yO6WHevhx">
+                                        <div class="form-group" bis_skin_checked="1">
+                                            Karta raqami <input type="text" name="card_number" class="form-control"
+                                                                placeholder="Karta raqamini kiriting" maxlength="16"
+                                                                required="" id="id_card_number">
+                                        </div>
+
+                                        <div class="form-group" bis_skin_checked="1">
+                                            Amount <input type="number" name="amount" class="form-control"
+                                                          placeholder="Miqdorini kiriting" required="" id="id_amount">
+                                        </div>
+
+                                        <div class="form-group" bis_skin_checked="1">
+                                            <select name="type" class="form-control class-type" style="display: none;"
+                                                    id="id_type">
+                                                <option value="money">Pul</option>
+
+                                                <option value="coin">Tanga</option>
+
+                                            </select>
+                                        </div>
+
+                                        <input type="submit" value="Tasdiqlash" class="btn btn-primary">
+                                    </form>
+                                </div>
+                                <div class="tab-pane fade" id="nav-coin" role="tabpanel" aria-labelledby="nav-coin-tab"
+                                     bis_skin_checked="1">
+                                    <form class="card-body" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken"
+                                               value="xUWe52ummzXrbgjvoFpBCXv1lhiygXucHGmT8neVZ9ix7sQvDxwRZl9yO6WHevhx">
+                                        <div class="form-group" bis_skin_checked="1">
+                                            Karta raqami <input type="text" name="card_number" class="form-control"
+                                                                placeholder="Karta raqamini kiriting" maxlength="16"
+                                                                required="" id="id_card_number">
+                                        </div>
+
+                                        <div class="form-group" bis_skin_checked="1">
+                                            Amount <input type="number" name="amount" class="form-control"
+                                                          placeholder="Miqdorini kiriting" required="" id="id_amount">
+                                        </div>
+
+                                        <div class="form-group" bis_skin_checked="1">
+                                            <select name="type" class="form-control class-type" style="display: none;"
+                                                    id="id_type">
+                                                <option value="money">Pul</option>
+
+                                                <option value="coin">Tanga</option>
+
+                                            </select>
+                                        </div>
+
+                                        <input type="submit" method="POST" value="Tasdiqlash" class="btn btn-primary">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <br>
+
+                <div class="table-responsive" bis_skin_checked="1">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Sana</th>
+                            <th scope="col">Hisob raqam</th>
+                            <th scope="col">Summa</th>
+                            <th scope="col">Holat</th>
+                            <th scope="col">Xabar</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr class="text-center">
+
+                            <th colspan="5"> Hozircha sizda pul yechish sorovlari mavjud emas</th>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

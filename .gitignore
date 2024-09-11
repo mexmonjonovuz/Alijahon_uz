@@ -16,6 +16,8 @@
 .idea/**/libraries
 cmake-build-*/
 .idea/**/mongoSettings.xml
+templates/public
+media
 *.iws
 out/
 .idea_modules/

@@ -2,11 +2,9 @@ from django.db.models import Model, SlugField, CharField, DateTimeField
 from django.utils.text import slugify
 
 
-class SlugBaseModel(Model):
+class SlugBasedModel(Model):
     name = CharField(max_length=255)
     slug = SlugField(max_length=255, unique=True, editable=False)
-    created_at = DateTimeField(auto_now=True)
-    updated_at = DateTimeField(auto_now_add=True)
 
     class Meta:
         abstract = True
@@ -20,3 +18,16 @@ class SlugBaseModel(Model):
 
     def __str__(self):
         return self.name
+
+
+class TimeBasedModel(Model):
+    created_at = DateTimeField(auto_now=True)
+    updated_at = DateTimeField(auto_now_add=True)
+
+    class Meta:
+        abstract = True
+
+class SlugTimeBasedModel(TimeBasedModel, SlugBasedModel):
+
+    class Meta:
+        abstract = True

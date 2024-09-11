@@ -1,0 +1,94 @@
+{% extends 'apps/base.html' %}
+
+{% block title %}
+	Login page
+{% endblock %}
+
+{% block main_content %}
+    <div class="content_auth_form">
+        <div class="content_auth_form_group">
+            <div class="content_auth_form_group_input">
+                <div class="card">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="card-header bg-circle-shape bg-shape text-center p-2">
+                            <a class="font-sans-serif fw-bolder fs-4 z-index-1 position-relative link-light light"
+                               href="/">
+                                Alijahon
+                            </a>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row flex-between-center">
+                                <div class="col-auto">
+                                    <h3>Kirish</h3>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <label class="form-label" for="phone-mask">
+                                        Telefon nomer
+                                    </label>
+                                </div>
+                                <input type="text" name="phone" id="phone-mask" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <label class="form-label" for="split-login-password">Parol</label>
+                                </div>
+                                <input class="form-control" name="password" id="split-login-password" type="password">
+                            </div>
+                            <div class="row flex-between-center">
+                                <div class="col-auto">
+                                    <div class="form-check mb-0">
+                                        <input class="form-check-input" autocomplete="on" type="checkbox"
+                                               id="split-checkbox">
+                                        <label class="form-check-label mb-0" for="split-checkbox">
+                                            Men qoidalar bilan tanishdim
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-auto">
+                                    <a class="fs--1" href="#">
+                                        Foydalanish shartlari
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">
+                                    Kirish
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script dependencies -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+    <script src="https://unpkg.com/imask"></script>
+
+    <script>
+        $(function () {
+            $('#phone-mask').inputmask({
+                "mask": "+\\9\\98(99) 999-99-99"
+            });
+
+            var availableTags = [
+                "Tag1",
+                "Tag2",
+                "Tag3"
+            ];
+
+            $("#search-input").autocomplete({
+                source: availableTags
+            });
+            console.log(availableTags);
+        });
+    </script>
+{% endblock %}

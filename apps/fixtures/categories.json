@@ -1,0 +1,156 @@
+[
+{
+  "model": "apps.category",
+  "pk": 1,
+  "fields": {
+    "name": "Uy-uchun",
+    "slug": "uy-uchun",
+    "created_at": "2024-09-08T12:45:59.940Z",
+    "updated_at": "2024-09-08T11:23:19.926Z",
+    "image": "categories/uy-uchun.png"
+  }
+},
+{
+  "model": "apps.category",
+  "pk": 2,
+  "fields": {
+    "name": "Bolalar-uchun",
+    "slug": "bolalar-uchun-1",
+    "created_at": "2024-09-08T12:45:29.919Z",
+    "updated_at": "2024-09-08T11:23:39.901Z",
+    "image": "categories/bolalar_uchun.png"
+  }
+},
+{
+  "model": "apps.category",
+  "pk": 3,
+  "fields": {
+    "name": "Sovg'a",
+    "slug": "sovga",
+    "created_at": "2024-09-08T12:46:45.450Z",
+    "updated_at": "2024-09-08T12:46:45.450Z",
+    "image": "categories/sovga.png"
+  }
+},
+{
+  "model": "apps.category",
+  "pk": 4,
+  "fields": {
+    "name": "Ayollar",
+    "slug": "ayollar-1",
+    "created_at": "2024-09-08T12:47:13.878Z",
+    "updated_at": "2024-09-08T12:47:12.084Z",
+    "image": "categories/ayollar.png"
+  }
+},
+{
+  "model": "apps.category",
+  "pk": 5,
+  "fields": {
+    "name": "Davolovchi Mahsulotlar",
+    "slug": "davolovchi-mahsulotlar",
+    "created_at": "2024-09-08T12:48:01.994Z",
+    "updated_at": "2024-09-08T12:48:01.994Z",
+    "image": "categories/davolovchi_mahsulot.jpeg"
+  }
+},
+{
+  "model": "apps.category",
+  "pk": 6,
+  "fields": {
+    "name": "Erkaklar Uchun",
+    "slug": "erkaklar-uchun",
+    "created_at": "2024-09-08T12:48:36.014Z",
+    "updated_at": "2024-09-08T12:48:36.014Z",
+    "image": "categories/erkaklar_uchun.jpeg"
+  }
+},
+{
+  "model": "apps.category",
+  "pk": 7,
+  "fields": {
+    "name": "Fitnes",
+    "slug": "fitnes",
+    "created_at": "2024-09-08T12:49:00.083Z",
+    "updated_at": "2024-09-08T12:49:00.083Z",
+    "image": "categories/fitnes.png"
+  }
+},
+{
+  "model": "apps.category",
+  "pk": 8,
+  "fields": {
+    "name": "Davolovchi Mazlar",
+    "slug": "davolovchi-mazlar",
+    "created_at": "2024-09-08T12:49:44.584Z",
+    "updated_at": "2024-09-08T12:49:44.584Z",
+    "image": "categories/davolovchi_mazlar.png"
+  }
+},
+{
+  "model": "apps.category",
+  "pk": 9,
+  "fields": {
+    "name": "Mashina uchun",
+    "slug": "mashina-uchun",
+    "created_at": "2024-09-08T12:50:18.476Z",
+    "updated_at": "2024-09-08T12:50:18.476Z",
+    "image": "categories/mashina_uchun.png"
+  }
+},
+{
+  "model": "apps.category",
+  "pk": 10,
+  "fields": {
+    "name": "Kitoblar",
+    "slug": "kitoblar",
+    "created_at": "2024-09-08T12:50:42.489Z",
+    "updated_at": "2024-09-08T12:50:42.489Z",
+    "image": "categories/kitoblar.png"
+  }
+},
+{
+  "model": "apps.category",
+  "pk": 11,
+  "fields": {
+    "name": "Aqilli soatlar",
+    "slug": "aqilli-soatlar",
+    "created_at": "2024-09-08T12:51:20.346Z",
+    "updated_at": "2024-09-08T12:51:20.346Z",
+    "image": "categories/aqilli_soatlar.webp"
+  }
+},
+{
+  "model": "apps.category",
+  "pk": 12,
+  "fields": {
+    "name": "Atir",
+    "slug": "atir",
+    "created_at": "2024-09-08T12:51:42.141Z",
+    "updated_at": "2024-09-08T12:51:42.141Z",
+    "image": "categories/atir.jpg"
+  }
+},
+{
+  "model": "apps.category",
+  "pk": 13,
+  "fields": {
+    "name": "Yangi yil mahsulotlari",
+    "slug": "yangi-yil-mahsulotlari",
+    "created_at": "2024-09-08T12:52:25.349Z",
+    "updated_at": "2024-09-08T12:52:25.349Z",
+    "image": "categories/yangi_yil.png"
+  }
+},
+{
+  "model": "apps.category",
+  "pk": 14,
+  "fields": {
+    "name": "Elektronika",
+    "slug": "elektronika",
+    "created_at": "2024-09-08T12:52:56.295Z",
+    "updated_at": "2024-09-08T12:52:56.295Z",
+    "image": "categories/elektronika.webp"
+  }
+}
+]

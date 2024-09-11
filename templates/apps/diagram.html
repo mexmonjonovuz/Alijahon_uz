@@ -1,0 +1,27 @@
+{% extends 'apps/base.html' %}
+{% block title %}
+    Diagrammalar
+{% endblock %}
+{% block main_content %}
+
+    <div class="card mb-3" bis_skin_checked="1">
+        <div class="card-body" bis_skin_checked="1">
+            <div class="container" bis_skin_checked="1">
+                <div class="d-flex justify-content-center" bis_skin_checked="1">
+                    <canvas class="w-50 h-50 m-0" id="order-chart" width="585" height="585"
+                            style="display: block; box-sizing: border-box; height: 585px; width: 585px;"></canvas>
+                </div>
+                <div class="d-flex justify-content-center" bis_skin_checked="1">
+                    <canvas class="w-50 h-50 m-0" id="regions-chart" width="585" height="585"
+                            style="display: block; box-sizing: border-box; height: 585px; width: 585px;"></canvas>
+                </div>
+                <div class="d-flex justify-content-center" bis_skin_checked="1">
+                    <canvas class="w-50 h-50 m-0" id="products-chart" width="585" height="585"
+                            style="display: block; box-sizing: border-box; height: 585px; width: 585px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

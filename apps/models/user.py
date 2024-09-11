@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models import CharField, Model, ForeignKey, CASCADE, ImageField, TextChoices
 from django_ckeditor_5.fields import CKEditor5Field
 
-from apps.managers import CustomUserManager
+from apps.models.managers import CustomUserManager
 
 
 class Region(Model):
