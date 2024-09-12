@@ -13,7 +13,7 @@ from apps.models import Category, Product, User
 
 class MainBaseView(ListView):
     queryset = Category.objects.all()
-    template_name = 'apps/product/product_list.html'
+    template_name = 'apps/products/product_list.html'
     context_object_name = "categories"
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -24,13 +24,13 @@ class MainBaseView(ListView):
 
 class ProductDetailView(DetailView):
     queryset = Product.objects.all()
-    template_name = 'apps/product/product_detail.html'
-    context_object_name = "product"
+    template_name = 'apps/products/product_detail.html'
+    context_object_name = "products"
 
 
 class ProductListByCategoryListView(ListView):
     queryset = Product.objects.order_by('-created_at')
-    template_name = 'apps/product/category_list.html'
+    template_name = 'apps/products/category_list.html'
     context_object_name = 'products'
 
     def get_queryset(self):
@@ -68,9 +68,8 @@ class CustomLoginView(LoginView):
                                                                               })
 
 
-class FavoriteView(ListView):
-    queryset = Product.objects.all()
-    template_name = 'apps/product/favorite.html'
+class FavoriteView(TemplateView):
+    template_name = 'apps/products/favorite.html'
 
 
 class CustomLogautView(LoginRequiredMixin, View):
@@ -83,7 +82,7 @@ class CustomLogautView(LoginRequiredMixin, View):
 
 
 class CoinsView(TemplateView):
-    template_name = 'apps/coins.html'
+    template_name = 'apps/statistics/coins.html'
 
 
 class PaymentView(TemplateView):
@@ -91,8 +90,38 @@ class PaymentView(TemplateView):
 
 
 class DiagramView(TemplateView):
-    template_name = 'apps/diagram.html'
+    template_name = 'apps/statistics/diagram.html'
 
 
 class CompetitionView(TemplateView):
-    template_name = 'apps/competition.html'
+    template_name = 'apps/statistics/competition.html'
+
+
+class StatisticView(TemplateView):
+    template_name = 'apps/statistics/statistic.html'
+
+
+class SteamView(TemplateView):
+    template_name = 'apps/orders/steam.html'
+
+
+class MarketView(TemplateView):
+    template_name = 'apps/market.html'
+
+
+class InquiriesView(TemplateView):
+    template_name = 'apps/inquiries.html'
+
+
+class OrderListView(TemplateView):
+    template_name = 'apps/orders/order.html'
+
+
+class CustomProfileView(TemplateView):
+    template_name = 'apps/auth/profile.html'
+
+
+class CustomSettingView(ListView):
+    queryset = User.objects.all()
+    template_name = 'apps/auth/settings.html'
+    context_object_name = 'user'

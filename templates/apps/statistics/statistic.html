@@ -1,0 +1,70 @@
+{% extends 'apps/base.html' %}
+{% block title %}
+    Stastika page
+{% endblock %}
+{% block main_content %}
+    <div class="card mb-3" bis_skin_checked="1">
+        <div class="card-body" bis_skin_checked="1">
+            <div class="container" bis_skin_checked="1">
+                <div class="container border-bottom-4" bis_skin_checked="1">
+                    <div class="header_tab_menu" bis_skin_checked="1">
+                        <div class="header_menu" style="overflow: auto" bis_skin_checked="1">
+                            <a href="/admin_page/stats?period=today" class="btn btn-default">Bugun</a>
+                            <a href="/admin_page/stats?period=last_day" class="btn btn-default">Kechagi</a>
+                            <a href="/admin_page/stats?period=wekly" class="btn btn-default">Haftalik</a>
+                            <a href="/admin_page/stats?period=monthly" class="btn btn-default">Oylik</a>
+                            <a href="/admin_page/stats?period=all" class="btn btn-default">Hammasi</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive" bis_skin_checked="1">
+                    <table class="table">
+                        <thead class="text-center">
+
+                        <tr>
+                            <th scope="col">Oqim</th>
+                            <th scope="col">Mahsulot</th>
+                            <th scope="col">Tashrif</th>
+                            <th scope="col">Yangi</th>
+                            <th scope="col">Dastavkaga tayyor</th>
+                            <th scope="col">Yetkazilmoqda</th>
+                            <th scope="col">Yetqazib berildi</th>
+                            <th scope="col">Telefon ko'tarmadi</th>
+                            <th scope="col">Bekor qilindi</th>
+                            <th scope="col">Arxivlandi</th>
+                        </tr>
+                        <tr class="bg-info">
+                            <td> JAMI</td>
+                            <td></td>
+                            <td> 0</td>
+                            <td> 0</td>
+                            <td> 0</td>
+                            <td> 0</td>
+                            <td> 0</td>
+                            <td> 0</td>
+                            <td> 0</td>
+                            <td> 0</td>
+                        </tr>
+                        </thead>
+
+                        <tbody class="text-center">
+
+                        <tr class="bg-info">
+                            <td> JAMI</td>
+                            <td></td>
+                            <td> 0</td>
+                            <td> 0</td>
+                            <td> 0</td>
+                            <td> 0</td>
+                            <td> 0</td>
+                            <td> 0</td>
+                            <td> 0</td>
+                            <td> 0</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

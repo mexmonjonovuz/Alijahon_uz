@@ -1,0 +1,65 @@
+{% extends 'apps/base.html' %}
+{% block title %}
+    Profile page
+{% endblock %}
+{% block main_content %}
+    <div class="card" bis_skin_checked="1">
+        <div class="row g-0 text-center fs--1" bis_skin_checked="1">
+            <div class="col-12 col-md-12" bis_skin_checked="1">
+                <div class="bg-white dark__bg-1100 p-3 h-100" bis_skin_checked="1"><img
+                        class="img-thumbnail img-fluid rounded-circle mb-3 shadow-sm" src="" alt=""
+                        width="100">
+                    <h6 class="mb-1">
+                        998901209552
+                        <br>
+                        <p>998901209552</p>
+                    </h6>
+                    <p class="fs--2 mb-1"><a class="btn btn-link text-700" href="{% url 'settings_page' %}">Sozlamalarga
+                        o'tish</a></p>
+
+                </div>
+            </div>
+        </div>
+        <div class="card-body fs--1 p-0" bis_skin_checked="1">
+
+            <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300"
+               href="{% url 'favorite_page' %}">
+                <div class="notification-avatar" bis_skin_checked="1">
+                    <div class="avatar avatar-xl me-3" bis_skin_checked="1">
+                        <div class="avatar-emoji rounded-circle " bis_skin_checked="1"><span role="img"
+                                                                                             aria-label="Emoji">📌</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="notification-body" bis_skin_checked="1">
+                    <p class="mb-1"><strong>Mening sevimlarim</strong></p>
+                </div>
+            </a>
+            <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300"
+               href="{% url 'favorite_page' %}">
+                <div class="notification-avatar" bis_skin_checked="1">
+                    <div class="avatar avatar-xl me-3" bis_skin_checked="1">
+                        <div class="avatar-emoji rounded-circle " bis_skin_checked="1"><span role="img"
+                                                                                             aria-label="Emoji">🏷️</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="notification-body" bis_skin_checked="1">
+                    <p class="mb-1"><strong>Mening buyurtmalarim</strong></p>
+                </div>
+            </a>
+            <a class="border-bottom-0 notification rounded-0 border-x-0 border border-300" href="#">
+                <div class="notification-avatar" bis_skin_checked="1">
+                    <div class="avatar avatar-xl me-3" bis_skin_checked="1">
+                        <div class="avatar-emoji rounded-circle " bis_skin_checked="1"><span role="img"
+                                                                                             aria-label="Emoji">💬</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="notification-body" bis_skin_checked="1">
+                    <p class="mb-1"><strong>Mijozlarni qo'llab-quvvatlash</strong></p>
+                </div>
+            </a>
+        </div>
+    </div>
+{% endblock %}
