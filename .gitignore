@@ -317,3 +317,9 @@ dmypy.json
 .pytype/
 cython_debug/
 .idea
+
+apps/migrations/
+apps/fixtures/*
+templates/public/
+apps/static/apps/
+

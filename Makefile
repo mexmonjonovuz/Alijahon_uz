@@ -6,7 +6,7 @@ compile:
 	django-admin compilemessages
 
 dumpdata:
-	python3 manage.py dumpdata --indent=2 apps.Category > categories.json
+	python3 manage.py dumpdata --indent=2 apps.shop.Product > product.json
 
 loaddata:
 	python3 manage.py loaddata categories

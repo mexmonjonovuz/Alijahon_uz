@@ -94,7 +94,7 @@ var rgbaColor = function rgbaColor() {
 
 var getColor = function getColor(name) {
   var dom = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document.documentElement;
-  return getComputedStyle(dom).getPropertyValue("--Alijahon-".concat(name)).trim();
+  return getComputedStyle(dom).getPropertyValue("--falcon-".concat(name)).trim();
 };
 
 var getColors = function getColors(dom) {
@@ -4858,7 +4858,7 @@ var upcomingMonthNumber = window.dayjs && window.dayjs().add(1, 'month').format(
 var upcomingMonthName = window.dayjs && window.dayjs().format('MMM');
 var thisYear = window.dayjs && window.dayjs().format('YYYY');
 var managementEvents = [{
-  title: 'Monthly team meeting for Alijahon React Project',
+  title: 'Monthly team meeting for Falcon React Project',
   start: "".concat(thisYear, "-").concat(thisMonthNumber, "-07"),
   end: "".concat(thisYear, "-").concat(thisMonthNumber, "-09"),
   startTime: "07 ".concat(thisMonthName, ", ").concat(thisYear),
@@ -4923,7 +4923,7 @@ var getStackIcon = function getStackIcon(icon, transform) {
 var getTemplate = function getTemplate(event) {
   return "\n<div class=\"modal-header bg-light ps-card pe-5 border-bottom-0\">\n  <div>\n    <h5 class=\"modal-title mb-0\">".concat(event.title, "</h5>\n    ").concat(event.extendedProps.organizer ? "<p class=\"mb-0 fs--1 mt-1\">\n        by <a href=\"#!\">".concat(event.extendedProps.organizer, "</a>\n      </p>") : '', "\n  </div>\n  <button type=\"button\" class=\"btn-close position-absolute end-0 top-0 mt-3 me-3\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>\n</div>\n<div class=\"modal-body px-card pb-card pt-1 fs--1\">\n  ").concat(event.extendedProps.description ? "\n      <div class=\"d-flex mt-3\">\n        ".concat(getStackIcon('fas fa-align-left'), "\n        <div class=\"flex-1\">\n          <h6>Description</h6>\n          <p class=\"mb-0\">\n            \n          ").concat(event.extendedProps.description.split(' ').slice(0, 30).join(' '), "\n          </p>\n        </div>\n      </div>\n    ") : '', " \n  <div class=\"d-flex mt-3\">\n    ").concat(getStackIcon('fas fa-calendar-check'), "\n    <div class=\"flex-1\">\n        <h6>Date and Time</h6>\n        <p class=\"mb-1\">\n          ").concat(window.dayjs && window.dayjs(event.start).format('dddd, MMMM D, YYYY, h:mm A'), " \n          ").concat(event.end ? "\u2013 <br/>".concat(window.dayjs && window.dayjs(event.end).subtract(1, 'day').format('dddd, MMMM D, YYYY, h:mm A')) : '', "\n        </p>\n    </div>\n  </div>\n  ").concat(event.extendedProps.location ? "\n        <div class=\"d-flex mt-3\">\n          ".concat(getStackIcon('fas fa-map-marker-alt'), "\n          <div class=\"flex-1\">\n              <h6>Location</h6>\n              <p class=\"mb-0\">").concat(event.extendedProps.location, "</p>\n          </div>\n        </div>\n      ") : '', "\n  ").concat(event.schedules ? "\n        <div class=\"d-flex mt-3\">\n        ".concat(getStackIcon('fas fa-clock'), "\n        <div class=\"flex-1\">\n            <h6>Schedule</h6>\n            \n            <ul class=\"list-unstyled timeline mb-0\">\n              ").concat(event.schedules.map(function (schedule) {
     return "<li>".concat(schedule.title, "</li>");
-  }).join(''), "\n            </ul>\n        </div>\n      ") : '', "\n  </div>\n</div>\n<div class=\"modal-footer d-flex justify-content-end bg-light px-card border-top-0\">\n  <a href=\"").concat(document.location.href.split('/').slice(0, 5).join('/'), "/app/events/create-an-event.html\" class=\"btn btn-Alijahon-default btn-sm\">\n    <span class=\"fas fa-pencil-alt fs--2 mr-2\"></span> Edit\n  </a>\n  <a href='").concat(document.location.href.split('/').slice(0, 5).join('/'), "/app/events/event-detail.html' class=\"btn btn-Alijahon-primary btn-sm\">\n    See more details\n    <span class=\"fas fa-angle-right fs--2 ml-1\"></span>\n  </a>\n</div>\n");
+  }).join(''), "\n            </ul>\n        </div>\n      ") : '', "\n  </div>\n</div>\n<div class=\"modal-footer d-flex justify-content-end bg-light px-card border-top-0\">\n  <a href=\"").concat(document.location.href.split('/').slice(0, 5).join('/'), "/app/events/create-an-event.html\" class=\"btn btn-falcon-default btn-sm\">\n    <span class=\"fas fa-pencil-alt fs--2 mr-2\"></span> Edit\n  </a>\n  <a href='").concat(document.location.href.split('/').slice(0, 5).join('/'), "/app/events/event-detail.html' class=\"btn btn-falcon-primary btn-sm\">\n    See more details\n    <span class=\"fas fa-angle-right fs--2 ml-1\"></span>\n  </a>\n</div>\n");
 };
 /* -------------------------------------------------------------------------- */
 
@@ -7987,7 +7987,7 @@ var marketShareEcommerceInit = function marketShareEcommerceInit() {
           },
           data: [{
             value: 5300000,
-            name: 'Alijahon'
+            name: 'Falcon'
           }, {
             value: 1900000,
             name: 'Sparrow'
@@ -9618,7 +9618,7 @@ var topProductsInit = function topProductsInit() {
   var $echartBarTopProducts = document.querySelector(ECHART_BAR_TOP_PRODUCTS);
 
   if ($echartBarTopProducts) {
-    var data = [['product', '2019', '2018'], ['Boots4', 43, 85], ['Reign Pro', 83, 73], ['Slick', 86, 62], ['Alijahon', 72, 53], ['Sparrow', 80, 50], ['Hideway', 50, 70], ['Freya', 80, 90]];
+    var data = [['product', '2019', '2018'], ['Boots4', 43, 85], ['Reign Pro', 83, 73], ['Slick', 86, 62], ['Falcon', 72, 53], ['Sparrow', 80, 50], ['Hideway', 50, 70], ['Freya', 80, 90]];
     var userOptions = utils.getData($echartBarTopProducts, 'options');
     var chart = window.echarts.init($echartBarTopProducts);
 
@@ -10693,3 +10693,5 @@ docReady(chartBubble);
 docReady(chartLine);
 docReady(treeviewInit);
 //# sourceMappingURL=theme.js.map
+
+

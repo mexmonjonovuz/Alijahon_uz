@@ -44,6 +44,7 @@
     <link href="{% static 'apps/assets/css/theme.min.css' %}" rel="stylesheet" id="style-default">
     <link href="{% static 'apps/assets/css/user-rtl.min.css' %}" rel="stylesheet" id="user-style-rtl">
     <link href="{% static 'apps/assets/css/user.min.css' %}" rel="stylesheet" id="user-style-default">
+
     <script>
         var isRTL = JSON.parse(localStorage.getItem('isRTL'));
         if (isRTL) {
@@ -59,6 +60,8 @@
             userLinkRTL.setAttribute('disabled', true);
         }
     </script>
+    {% block custom_css %}
+    {% endblock %}
 </head>
 <body>
 
@@ -91,20 +94,18 @@
             {% include 'apps/parts/_header.html' %}
             {% block main_content %}
             {% endblock %}
-
             {% include 'apps/parts/_footer.html' %}
-
         </div>
     </div>
 </main>
 
 <!-- ===============================================-->
-<!-- End of Main Content-->
+<!--End of Main Content-->
 <!--===============================================-->
 
 
 <!--===============================================-->
-<!--JavaScripts-->
+<!-- JavaScripts-->
 <!--===============================================-->
 <script src="{% static 'apps/vendors/popper/popper.min.js' %}"></script>
 <script src="{% static 'apps/vendors/bootstrap/bootstrap.min.js' %}"></script>
@@ -113,9 +114,10 @@
 <script src="{% static 'apps/vendors/echarts/echarts.min.js' %}"></script>
 <script src="{% static 'apps/vendors/fontawesome/all.min.js' %}"></script>
 <script src="{% static 'apps/vendors/lodash/lodash.min.js' %}"></script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
 <script src="{% static 'apps/vendors/list.js/list.min.js' %}"></script>
 <script src="{% static 'apps/assets/js/theme.js' %}"></script>
+{% block custom_js %}
+{% endblock %}
 
 </body>
 </html>

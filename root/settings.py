@@ -2,7 +2,8 @@ import os
 from pathlib import Path
 
 from django.conf import settings
-from django.utils.translation import gettext as _
+from django.contrib.messages import constants as messages
+from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     # external
     'django_ckeditor_5',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -32,14 +34,16 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'root.urls'
-print(BASE_DIR)
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -71,18 +75,18 @@ DATABASES = {
 }
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
 
 LANGUAGE_CODE = 'en-us'
@@ -94,14 +98,16 @@ USE_TZ = True
 USE_L10N = True
 
 LANGUAGES = [
-    ('en', 'English'),
-    ('ru', 'Russian'),
-    ('uz', 'Uzbek'),
+    ('en', _('English')),
+    ('ru', _('Russian')),
+    ('uz', _('Uzbek')),
 ]
+
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR / 'static')
+LOGIN_URL = '/'
 MEDIA_ROOT = os.path.join(BASE_DIR / 'media')
 MEDIA_URL = 'media/'
 
@@ -194,3 +200,36 @@ CKEDITOR_5_CONFIGS = {
         }
     }
 }
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
+
+# LOGGING = {
+#     'version': 1,
+#     'filters': {
+#         'require_debug_true': {
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         }
+#     },
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'filters': ['require_debug_true'],
+#             'class': 'logging.StreamHandler',
+#         }
+#     },
+#     'loggers': {
+#         'django.db.backends': {
+#             'level': 'DEBUG',
+#             'handlers': ['console'],
+#         }
+#     }
+# }
+
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+LOGOUT_REDIRECT_URL = '/'

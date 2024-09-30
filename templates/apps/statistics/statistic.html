@@ -9,18 +9,17 @@
                 <div class="container border-bottom-4" bis_skin_checked="1">
                     <div class="header_tab_menu" bis_skin_checked="1">
                         <div class="header_menu" style="overflow: auto" bis_skin_checked="1">
-                            <a href="/admin_page/stats?period=today" class="btn btn-default">Bugun</a>
-                            <a href="/admin_page/stats?period=last_day" class="btn btn-default">Kechagi</a>
-                            <a href="/admin_page/stats?period=wekly" class="btn btn-default">Haftalik</a>
-                            <a href="/admin_page/stats?period=monthly" class="btn btn-default">Oylik</a>
-                            <a href="/admin_page/stats?period=all" class="btn btn-default">Hammasi</a>
+                            <a href="{% url 'statistika_page' %}?period=today" class="btn btn-default">Bugun</a>
+                            <a href="{% url 'statistika_page' %}?period=yesterday" class="btn btn-default">Kechagi</a>
+                            <a href="{% url 'statistika_page' %}?period=weekly" class="btn btn-default">Haftalik</a>
+                            <a href="{% url 'statistika_page' %}?period=monthly" class="btn btn-default">Oylik</a>
+                            <a href="{% url 'statistika_page' %}?period=all" class="btn btn-default">Hammasi</a>
                         </div>
                     </div>
                 </div>
                 <div class="table-responsive" bis_skin_checked="1">
                     <table class="table">
                         <thead class="text-center">
-
                         <tr>
                             <th scope="col">Oqim</th>
                             <th scope="col">Mahsulot</th>
@@ -36,33 +35,51 @@
                         <tr class="bg-info">
                             <td> JAMI</td>
                             <td></td>
-                            <td> 0</td>
-                            <td> 0</td>
-                            <td> 0</td>
-                            <td> 0</td>
-                            <td> 0</td>
-                            <td> 0</td>
-                            <td> 0</td>
-                            <td> 0</td>
+                            <td> {{ streams.stream.total_visit_count }}</td>
+                            <td> {{ streams.stream.total_new_count }}</td>
+                            <td> {{ streams.stream.total_ready_count }}</td>
+                            <td> {{ streams.stream.total_deliver_count }}</td>
+                            <td> {{ streams.stream.total_delivered_count }}</td>
+                            <td> {{ streams.stream.total_cant_phone_count }}</td>
+                            <td> {{ streams.stream.total_canceled_count }}</td>
+                            <td> {{ streams.stream.total_archived_count }}</td>
                         </tr>
                         </thead>
 
                         <tbody class="text-center">
+                        {% for stream in streams %}
+                            <tr>
+                                <td>{{ stream.name }}</td>
+                                <td>{{ stream.product.name }}</td>
+                                <td>{{ stream.visit_count }}</td>
+                                <td>{{ stream.new }}</td>
+                                <td>{{ stream.ready }}</td>
+                                <td>{{ stream.deliver }}</td>
+                                <td>{{ stream.delivered }}</td>
+                                <td>{{ stream.cant_phone }}</td>
+                                <td>{{ stream.canceled }}</td>
+                                <td>{{ stream.archived }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
 
+                        <tbody class="text-center">
                         <tr class="bg-info">
                             <td> JAMI</td>
                             <td></td>
-                            <td> 0</td>
-                            <td> 0</td>
-                            <td> 0</td>
-                            <td> 0</td>
-                            <td> 0</td>
-                            <td> 0</td>
-                            <td> 0</td>
-                            <td> 0</td>
+                            <td> {{ streams.stream.total_visit_count }}</td>
+                            <td> {{ streams.stream.total_new_count }}</td>
+                            <td> {{ streams.stream.total_ready_count }}</td>
+                            <td> {{ streams.stream.total_deliver_count }}</td>
+                            <td> {{ streams.stream.total_delivered_count }}</td>
+                            <td> {{ streams.stream.total_cant_phone_count }}</td>
+                            <td> {{ streams.stream.total_canceled_count }}</td>
+                            <td> {{ streams.stream.total_archived_count }}</td>
                         </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="table-responsive" bis_skin_checked="1">
                 </div>
             </div>
         </div>

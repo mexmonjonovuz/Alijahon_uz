@@ -1,24 +1,25 @@
 {% extends 'apps/base.html' %}
 {% load humanize %}
-
+{% load custom_tags %}
 {% block main_content %}
     <div class="card mb-3">
         <div class="card-body">
             <div class="container border-bottom-4">
                 <div class="header_tab_menu">
                     <div class="header_menu active" style="overflow: auto">
-                        <a href="{% url 'product_lists' %}" class="btn btn-default">
-                            Barchasi
-                        </a>
+                        <a href="{% url 'category_list' %}"
+                           class="btn btn-default{% if request.path|has_active_category %}active{% endif %}">Barchasi</a>
                         {% for category in categories %}
-                            <a href="{% url 'category_list' category.slug %}"
-                               class="btn btn-default">
+                            <a href="{% url 'category_by_slug' category.slug %}"
+                               class="btn btn-default
+                                       {% if request.path|has_active_category:category.slug %}active{% endif %}">
                                 {{ category.name }}
                             </a>
                         {% endfor %}
                     </div>
                 </div>
             </div>
+        <br>
             <div class="container" id="productsList">
                 <div class="content_grid">
                     <div class="row">
@@ -39,18 +40,18 @@
                                             </h5>
                                             <p class="fs--1 mb-2">
                                                 <a class="text-500"
-                                                   href="{% url 'category_list' product.category.slug %}">
+                                                   href="{% url 'category_by_slug' product.category.slug %}">
                                                     {{ product.category.name }}
                                                 </a>
                                             </p>
                                             <h5 class="fs-md-2 text-warning mb-0 d-flex align-items-center mb-2">
-                                                {{ product.price|intcomma }} so'm
+                                                {{ product.price|intcomma }} sum
                                             </h5>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-between-center px-3">
                                         <div>
-                                            <a class="btn btn-sm btn-falcon-default" style="width: 130px;" href="#!"
+                                            <a class="btn btn-sm btn-falcon-default" style="width: 130px;" href="#"
                                                data-bs-toggle="tooltip" data-bs-placement="top" title="Add to Cart">
                                                 <svg class="svg-inline--fa fa-cart-plus fa-w-18" aria-hidden="true"
                                                      focusable="false" data-prefix="fas" data-icon="cart-plus"

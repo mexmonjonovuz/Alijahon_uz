@@ -1,4 +1,9 @@
 asgiref==3.8.1
 Django==5.1.1
+django-ckeditor-5==0.2.13
 mysqlclient==2.2.4
+pillow==10.4.0
+python-dotenv==1.0.1
 sqlparse==0.5.1
+
+

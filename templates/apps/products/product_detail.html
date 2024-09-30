@@ -1,59 +1,107 @@
 {% extends 'apps/base.html' %}
 {% load humanize %}
+{% load custom_tags %}
 {% block main_content %}
     <div class="card mb-3 mt-2">
         <div class="card-body text-center">
             <div class="col-lg-8 mx-auto swiper-container">
-                <form method="post">
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-
-                    <div class="mb-2">
-                        <label class="form-label" for="formGroupNameInput">Ism Familya:</label>
-                        <input class="form-control" name="full_name" id="formGroupNameInput" type="text" required/>
+                <form method="post" action="{% url 'success_order_page' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input class="form-control" name="stream" type="hidden" required value="{{ stream_id }}"/>
+                    <input class="form-control" name="user" type="hidden" required value="{{ user.pk }}"/>
+                    <input class="form-control" name="product" id="hidden_product" type="hidden" required
+                           value="{{ product.pk }}"/>
+                    <div class="mb-4">
+                        <label class="form-label" for="full-name">Ismingiz:</label>
+                        <input class="form-control" id="full-name" name="full_name" type="text" required/>
+                        <span id="full-name-error" style="color: red; display: none;"></span>
                     </div>
-
                     <div class="mb-4">
                         <label class="form-label" for="phone-mask">Telefon nomer:</label>
-                        <input class="form-control" id="phone-mask" name="phone" type="text" required/>
+                        <input class="form-control" id="phone-mask" name="phone_number" type="text" required/>
+                        <span id="phone-error" style="color: red; display: none;"></span>
                     </div>
-
                     <div class="d-grid gap-2 col-6 mx-auto" style="margin-top: 20px;">
-                        <button class="btn btn-primary" type="submit">Buyurtma berish</button>
+                        <button class="btn btn-primary" id="submit-btn" type="submit">Buyurtma berish</button>
                     </div>
                 </form>
             </div>
-
             <div class="row justify-content-center mt-4">
                 <div class="col-lg-8 swiper-container">
                     <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-main mb-3 img-fluid">
                     <div class="row mb-5 thumbs"></div>
                 </div>
             </div>
-
             <div class="col-lg-8 mx-auto swiper-container mt-4">
                 <h5>{{ product.name }}</h5>
                 <p class="fs--1">{{ product.description|safe }}</p>
                 <h4 class="d-flex justify-content-center align-items-center">
-                    <span class="text-warning me-2">{{ product.price|intcomma }} so'm</span>
+                    <span class="text-warning me-2">{{ product.price|intcomma }} sum</span>
                 </h4>
             </div>
         </div>
     </div>
-
+    <script src="https://unpkg.com/imask"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
     <script>
         $(function () {
             $('#phone-mask').inputmask({
-                "mask": "+\\9\\98(99) 999-99-99"
+                "mask": "+\\9\\98(99) 999-99-99",
+                "placeholder": "_",
+                showMaskOnHover: true,
+                showMaskOnFocus: true,
+                onBeforePaste: function (pastedValue, opts) {
+                    return pastedValue.replace(/\D/g, '').slice(-9);
+                }
             });
-            var availableTags = [
-                "Tag1",
-                "Tag2",
-                "Tag3"
-            ];
-            $("#search-input").autocomplete({
-                source: availableTags
-            });
-            console.log(availableTags);
         });
+        $('.btn_open_modal').on('click', function () {
+            let product_id = $(this).attr('name');
+            $('#hidden_product').val(product_id);
+        });
+
+        function toggleValidationError(elementId, errorMessage, show = true) {
+            const errorElement = document.getElementById(elementId);
+            if (show) {
+                errorElement.innerText = errorMessage;
+                errorElement.style.display = 'block';
+                setTimeout(() => errorElement.style.display = 'none', 5000);
+            } else {
+                errorElement.style.display = 'none';
+            }
+        }
+
+        function validatePhoneNumber(inputId, errorElementId) {
+            const phoneValue = document.getElementById(inputId).value.replace(/\D/g, '');
+            const isValid = phoneValue.length === 12;
+            toggleValidationError(errorElementId, 'Telefon raqam standardga javob bermaydi, iltimos tekshirib yuboring', !isValid);
+            return isValid;
+        }
+
+        function validateFullName(inputId, errorElementId) {
+            const fullNameValue = document.getElementById(inputId).value.trim();
+            if (fullNameValue.length < 3) {
+                toggleValidationError(errorElementId, 'Ism uzunligi kamida 3 ta belgidan iborat bo\'lishi kerak');
+                return false;
+            }
+            if (/\d/.test(fullNameValue)) {
+                toggleValidationError(errorElementId, 'Ismda raqam bo\'lishi mumkin emas');
+                return false;
+            }
+            toggleValidationError(errorElementId, '', false);
+            return true;
+        }
+
+        document.getElementById('submit-btn').addEventListener('click', function (event) {
+            const isPhoneValid = validatePhoneNumber('phone-mask', 'phone-error');
+            const isFullNameValid = validateFullName('full-name', 'full-name-error');
+
+            if (!isPhoneValid || !isFullNameValid) {
+                event.preventDefault();
+            }
+        });
+
     </script>
+
 {% endblock %}

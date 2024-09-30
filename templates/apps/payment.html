@@ -15,8 +15,8 @@
                                 <h5>Mening hisobim</h5>
                             </div>
                             <div class="card-body" bis_skin_checked="1">
-                                <h5 class="card-title">Asosiy balansda: 0 so'm</h5>
-                                <h5 class="card-title">To'lab berildi: 0 so'm</h5>
+                                <h5 class="card-title">Asosiy balansda: 0 sum</h5>
+                                <h5 class="card-title">To'lab berildi: 0 sum</h5>
                             </div>
                         </div>
 
@@ -47,10 +47,9 @@
                                                value="xUWe52ummzXrbgjvoFpBCXv1lhiygXucHGmT8neVZ9ix7sQvDxwRZl9yO6WHevhx">
                                         <div class="form-group" bis_skin_checked="1">
                                             Karta raqami <input type="text" name="card_number" class="form-control"
-                                                                placeholder="Karta raqamini kiriting" maxlength="16"
-                                                                required="" id="id_card_number">
+                                                                placeholder="**** **** **** ****" maxlength="19" 
+                                                                required="" id="inputNumber">
                                         </div>
-
                                         <div class="form-group" bis_skin_checked="1">
                                             Amount <input type="number" name="amount" class="form-control"
                                                           placeholder="Miqdorini kiriting" required="" id="id_amount">
@@ -117,7 +116,6 @@
                             <th scope="col">Xabar</th>
                         </tr>
                         </thead>
-
                         <tbody>
                         <tr class="text-center">
 
@@ -130,4 +128,13 @@
             </div>
         </div>
     </div>
+    <script>
+        const inputNumber = document.getElementById('inputNumber');
+
+        inputNumber.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || '';
+            e.target.value = formattedValue;
+        });
+    </script>
 {% endblock %}

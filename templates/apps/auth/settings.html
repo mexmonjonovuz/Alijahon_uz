@@ -3,23 +3,34 @@
     Settings page
 {% endblock %}
 {% block main_content %}
-    <div class="row" bis_skin_checked="1">
-        <div class="col-12" bis_skin_checked="1">
-            <div class="card mb-3 btn-reveal-trigger" bis_skin_checked="1">
-                <div class="card-header position-relative min-vh-25 mb-8" bis_skin_checked="1">
-                    <div class="cover-image" bis_skin_checked="1">
-                        <div class="bg-holder rounded-3 rounded-bottom-0"
-                             style="background-image:url('{{ user.image.url }}');"
-                             bis_skin_checked="1">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-3 btn-reveal-trigger">
+                <div class="card-header position-relative min-vh-25 mb-8">
+                    <div class="cover-image">
+                        <div class="bg-holder rounded-3 rounded-bottom-0">
                         </div>
                         <input class="d-none" id="upload-cover-image" type="file">
 
                     </div>
-                    <div class="avatar avatar-5xl avatar-profile shadow-sm img-thumbnail rounded-circle"
-                         bis_skin_checked="1">
-                        <div class="h-100 w-100 rounded-circle overflow-hidden position-relative" bis_skin_checked="1">
-                            <img src="{{ user.image.url }}" width="200" alt="" data-dz-thumbnail="data-dz-thumbnail">
-                        </div>
+                    <div class="avatar avatar-5xl avatar-profile shadow-sm img-thumbnail rounded-circle">
+                        <form action="{% url 'settings_change_image_page' %}" method="post"
+                              enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="h-100 w-100 rounded-circle overflow-hidden position-relative"><img
+                                    src="{% if user.image %}{{ user.image.url }}{% else %}https://alijahon.uz/media/img/nouser.png{% endif %}"
+                                    width="200" style="height: 162px" alt="" data-dz-thumbnail="data-dz-thumbnail">
+
+                                <input name="image" class="d-none" id="profile-image" type="file"/>
+                                <label class="mb-0 overlay-icon d-flex flex-center" for="profile-image"><span
+                                        class="bg-holder overlay overlay-0"></span><span
+                                        class="z-index-1 text-white dark__text-white text-center fs--1"><span
+                                        class="fas fa-camera"></span><span class="d-block">Update</span></span></label>
+                            </div>
+                            <div class="col-12 d-flex justify-content-end" style="margin-left: 80px">
+                                <button class="btn btn-primary" type="submit">Saqlash</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -32,91 +43,87 @@
                     <h5 class="mb-0">Sozlamalar</h5>
                 </div>
                 <div class="card-body bg-light" bis_skin_checked="1">
-
-                    <form class="row g-3" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="csrfmiddlewaretoken"
-                               value="9049AUmzXUww361u1C7tvBXRJTyNXXHTjMuODf68AuRCZiyugueJSZBocIcWVvue">
-
-                        <div class="col-lg-6" bis_skin_checked="1">
-                            Ismi
-                            <input type="text" name="first_name" class="form-control" maxlength="30" id="id_first_name">
-
+                    <form method="post" enctype="multipart/form-data" action="{% url 'settings_page' %}">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-lg-6" bis_skin_checked="1">
+                                Ismi
+                                <input type="text" name="first_name" class="form-control" maxlength="30"
+                                       id="id_first_name"
+                                       value="{{ user.first_name }}">
+                            </div>
+                            <div class="col-lg-6" bis_skin_checked="1">
+                                Familiya
+                                <input type="text" name="last_name" class="form-control" maxlength="40"
+                                       id="id_last_name"
+                                       value="{{ user.last_name }}">
+                            </div>
                         </div>
-
-                        <div class="col-lg-6" bis_skin_checked="1">
-                            Familiya
-                            <input type="text" name="last_name" class="form-control" maxlength="40" id="id_last_name">
-
+                        <div class="row">
+                            <div class="col-lg-6">
+                                Viloyat
+                                <select name="id_region" class="form-control" id="id_region" 
+                                        onchange="getDistricts(this.value)">
+                                    <option value="">Viloyat tanlang</option>
+                                    {% for region in regions %}
+                                        <option value="{{ region.id }}"
+                                                {% if user.region.id == region.id %}selected{% endif %}>
+                                            {{ region.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-lg-6">
+                                Tuman
+                                <select name="district" class="form-control" id="district_id">
+                                    <option value="" selected disabled>Tuman tanlang</option>
+                                    {% if user.district.id %}
+                                        <option value="{{ user.district.id }}"
+                                                selected>{{ user.district.name }}</option>
+                                    {% endif %}
+                                </select>
+                            </div>
                         </div>
+                        <script>
+                            function getDistricts(regionId) {
+                                const districtSelect = document.getElementById('district_id');
+                                districtSelect.innerHTML = '<option value="" selected disabled>Shahar/Tuman tanlang</option>';
 
-                        <div class="col-lg-6" bis_skin_checked="1">
-                            Viloyat
-                            <select name="region" class="form-control" id="id_region">
-                                <option value="Viloyatni tanlang">Viloyatni tanlang</option>
-
-                                <option value="tashkent">Toshkent shahar</option>
-
-                                <option value="andijon">Andijon viloyati</option>
-
-                                <option value="buxoro">Buxoro viloyati</option>
-
-                                <option value="fargona">Fargʻona viloyati</option>
-
-                                <option value="jizzax">Jizzax viloyati</option>
-
-                                <option value="namangan">Namangan viloyati</option>
-
-                                <option value="navoiy">Navoiy viloyati</option>
-
-                                <option value="qashqadaryo">Qashqadaryo viloyati</option>
-
-                                <option value="qoraqalpogiston">Qoraqalpogʻiston Respublika</option>
-
-                                <option value="samarqand">Samarqand viloyati</option>
-
-                                <option value="sirdaryo">Sirdaryo viloyati</option>
-
-                                <option value="surxondaryo">Surxondaryo viloyati</option>
-
-                                <option value="toshkent">Toshkent viloyati</option>
-
-                                <option value="xorazm">Xorazm viloyati</option>
-
-                            </select>
-
+                                if (regionId) {
+                                    fetch(`/get-districts/${regionId}`)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            data.forEach(district => {
+                                                const option = document.createElement('option');
+                                                option.value = district.id;
+                                                option.text = district.name;
+                                                districtSelect.appendChild(option);
+                                            });
+                                        })
+                                        .catch(error => console.log('Error:', error));
+                                }
+                            }
+                        </script>
+                        <div class="row">
+                            <div class="col-lg-6" bis_skin_checked="1">
+                                Manzil
+                                <input type="text" name="address" class="form-control" maxlength="100" id="id_address"
+                                       value="{{ user.address|default_if_none:'' }}">
+                            </div>
+                            <div class="col-lg-6" bis_skin_checked="1">
+                                Telegram id
+                                <input type="number" name="telegram_id" class="form-control" maxlength="10"
+                                       id="id_telegram" value="{{ user.telegram_id|default_if_none:'' }}">
+                            </div>
                         </div>
-
-                        <div class="col-lg-6" bis_skin_checked="1">
-                            Shahar/Tuman
-                            <input type="text" name="city" class="form-control" maxlength="100" id="id_city">
-
-                        </div>
-
-                        <div class="col-lg-6" bis_skin_checked="1">
-                            Manzil
-                            <input type="text" name="location" class="form-control" maxlength="200" id="id_location">
-
-                        </div>
-
-                        <div class="col-lg-6" bis_skin_checked="1">
-                            Telegram id
-                            <input type="text" name="telegram_id" class="form-control" maxlength="200"
-                                   id="id_telegram_id">
-
-                        </div>
-
                         <div class="col-lg-6" bis_skin_checked="1">
                             Siz haqingizda
-                            <textarea name="description" cols="40" rows="10" class="form-control" maxlength="399"
-                                      id="id_description"></textarea>
-
+                            <textarea name="bio" cols="40" rows="10" class="form-control" maxlength="399"
+                                      id="id_bio">{{ user.bio|default_if_none:'' }}</textarea>
                         </div>
-
-
                         <div class="col-12 d-flex justify-content-end" bis_skin_checked="1">
                             <button class="btn btn-primary" type="submit">Saqlash</button>
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -128,19 +135,20 @@
                         <h5 class="mb-0">Parolni o'zgartirish</h5>
                     </div>
                     <div class="card-body bg-light" bis_skin_checked="1">
-                        <form>
+                        <form method="post" action="{% url 'settings_change_page' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
                             <div class="mb-3" bis_skin_checked="1">
                                 <label class="form-label" for="old-password">Oldingi parol</label>
-                                <input class="form-control" id="old-password" type="password">
+                                <input class="form-control" id="old-password" type="password" name="password">
                             </div>
                             <div class="mb-3" bis_skin_checked="1">
                                 <label class="form-label" for="new-password">Yangi parol</label>
-                                <input class="form-control" id="new-password" type="password">
+                                <input class="form-control" id="new-password" type="password" name="password1">
                             </div>
                             <div class="mb-3" bis_skin_checked="1">
                                 <label class="form-label" for="confirm-password">Yangi parolni
                                     takrorlash</label>
-                                <input class="form-control" id="confirm-password" type="password">
+                                <input class="form-control" id="confirm-password" type="password" name="password2">
                             </div>
                             <button class="btn btn-primary d-block w-100" type="submit">Parolni yangilash
                             </button>

@@ -1,0 +1,37 @@
+<form method="POST" action="/operator/currier_page">
+    {% csrf_token %}
+    <input type="hidden">
+    <input class="btn btn-primary" type="submit" value="Kuryer" style="margin-top: 10px;">
+    <input type="checkbox" onclick="toggle(this)"> Toggle All<br>
+
+    <div class="form-check" bis_skin_checked="1">
+        <input class="form-check-input" type="checkbox" name="orders" value="2130470" id="order-1">
+        <div class="card border-dark mt-5" bis_skin_checked="1">
+                <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">
+                    #
+                    722 
+                </span>
+            <div class="card-body" bis_skin_checked="1">
+                <h2 class="card-title">Bolalar uchun alifbo - 129000 so'm</h2>
+                <ul class="text-muted">
+                    <li class="">Client: TESTTTTTT ZAKAZ - +998101001010</li>
+                    <li class="">Address: Viloyatni tanlang None</li>
+                    <li class="">
+                        Narxi: 516000 so'm
+                        <strong>+ 30000</strong> so'm
+                    </li>
+                    <li class="">Soni: 4ta</li>
+                    <li class="">Komment: zor joyida</li>
+                    <li class="">Yetkazilish vaqti: 12-May, 2024-yil</li>
+                    <li class="">ID: #2130470</li>
+                    <li class="">Oqim ID: #</li>
+                    <li class="">Vaqti: 12-May, 2024-yil 11:45</li>
+                    <li class="">Yangilangan vaqti: 9-Iyul, 2024-yil 20:47</li>
+                </ul>
+
+                <a href="#" class="btn btn-primary">Holatini o'zgartirish</a>
+
+            </div>
+        </div>
+    </div>
+</form>

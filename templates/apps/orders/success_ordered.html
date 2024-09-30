@@ -1,0 +1,49 @@
+{% extends 'apps/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+    Success Ordered page
+{% endblock %}
+{% block main_content %}
+    <div class="container text-center pb-5 card" style="margin-top: 80px;" bis_skin_checked="1">
+        <div class="card-body" style="margin-top: 30px" bis_skin_checked="1">
+        </div>
+        <img style="height: 100px; width:100px; margin-left:45%; margin-top: 30px"
+             src="{% static '/apps/assets/img/success_icon.png' %}"
+             alt="Green Success Image">
+        <h3 class="mt-4">Arizangiz qabul qilindi!</h3>
+        <p>Batafsil ma'lumot uchun operator yaqin vaqt ichida siz bilan aloqaga chiqadi.</p>
+        <p>Iltimos, telefoningiz yoqilgan holda bo'lsin!</p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Mahsulot</th>
+                <th scope="col">Summa</th>
+                <th scope="col">Soni</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="col">{{ product.name }}</th>
+                <th scope="col">{{ product.price|intcomma }} sum</th>
+                <th scope="col">{{ '1' }}</th>
+            </tr>
+            <tr>
+                <th scope="col">Yetkazib berish</th>
+                <td>
+                    Toshkent Shahar: {{ site_settings.delivery_price_tashkent }} sum<br>
+                    Toshkent Viloyatlari: {{ site_settings.delivery_price_tashkent_region }} sum<br>
+                    Viloyatlar: {{ site_settings.delivery_price_regions }} sum
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="row" bis_skin_checked="1">
+            <div class="col-md-6" bis_skin_checked="1">
+            </div>
+            <div class="col-md-6 mt-3" bis_skin_checked="1">
+                <a href="{% url 'main_base' %}" class="btn btn-primary w-50">Boshqa mahsulotlar</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

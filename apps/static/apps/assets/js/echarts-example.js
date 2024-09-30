@@ -68,7 +68,7 @@ var rgbaColor = function rgbaColor() {
 
 var getColor = function getColor(name) {
   var dom = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document.documentElement;
-  return getComputedStyle(dom).getPropertyValue("--Alijahon-".concat(name)).trim();
+  return getComputedStyle(dom).getPropertyValue("--falcon-".concat(name)).trim();
 };
 
 var getColors = function getColors(dom) {

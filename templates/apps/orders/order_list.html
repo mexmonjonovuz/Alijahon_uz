@@ -1,0 +1,41 @@
+{% extends 'apps/base.html' %}
+{% load humanize %}
+{% block title %}
+    Order page
+{% endblock %}
+
+
+{% block main_content %}
+    <div class="card mb-3" bis_skin_checked="1">
+        <div class="card-body" bis_skin_checked="1">
+            <div class="container" style="padding-top: 10px;" bis_skin_checked="1">
+                <div class="content_cart" bis_skin_checked="1">
+                    <div class="content_single-product-nouser" bis_skin_checked="1">
+                        <div class="row" bis_skin_checked="1">
+                            <div class="col-md-12" bis_skin_checked="1">
+                                {% for order in orders %}
+                                    <div class="order-item">
+                                        <h3>{{ order.product.name }}</h3>
+                                        <small>Mahsulot narxi: {{ order.product.price | intcomma }} sum</small>
+                                        <p>Soni: {{ order.quantity }}</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .order-item {
+            border: 2px solid skyblue;  
+            border-radius: 8px;         
+            padding: 15px;              
+            margin-bottom: 15px;        
+        }
+
+
+    </style>
+{% endblock %}
+
