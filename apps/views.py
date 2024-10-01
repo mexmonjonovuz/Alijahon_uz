@@ -365,3 +365,16 @@ class OperatorDetailView(DetailView):
     queryset = Order.objects.all()
     template_name = 'apps/operators/operator_detail.html'
     context_object_name = 'order'
+
+
+
+
+
+
+
+
+
+
+
+
+
