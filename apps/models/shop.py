@@ -133,3 +133,12 @@ class SiteSettings(Model):
     class Meta:
         verbose_name = 'Site Setting'
         verbose_name_plural = _('Site Settings')
+
+
+
+
+
+
+
+
+
