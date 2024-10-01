@@ -42,6 +42,3 @@ def distinct(value) -> set:
         category_list.add(value)
         return category_list
     return set()
-
-
-
