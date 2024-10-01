@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from django.contrib.auth import logout, login, get_user_model
+from django.contrib.auth import logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.db.models import Count, Q, Sum
@@ -15,7 +15,6 @@ from apps.forms import UserSettingsForm, StreamForm, UserChangePasswordForm, Use
 from apps.models import Category, Product, User, Region, District, Stream, Order, Competition, Favorite
 
 
-# select , prefetch
 class MainBaseView(ListView):
     queryset = Product.objects.prefetch_related('category').all()
     template_name = 'apps/products/product_list.html'
@@ -138,12 +137,6 @@ class MarketView(ListView):
 
         return qs
 
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     context = super().get_context_data(object_list=object_list, **kwargs)
-    #     context['categories'] = Category.objects.values('category__name', 'category__slug').distinct()
-    #
-    #     return context
-
 
 class HeaderSearchView(ListView):
     model = Product
@@ -251,9 +244,10 @@ class CompetitionListView(ListView):
     context_object_name = 'competition'
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        ctx =  super().get_context_data(object_list=object_list, **kwargs)
+        ctx = super().get_context_data(object_list=object_list, **kwargs)
         user = User.objects.filter(orders__status='Delivered').values('first_name')
         return ctx
+
 
 class ProductStatisticView(DetailView):
     queryset = Product.objects.all()
@@ -316,13 +310,6 @@ class InquiriesView(ListView):
     template_name = 'apps/parts/_inquiries.html'
     context_object_name = 'orders'
 
-    # def get_queryset(self):
-    #     qs = super().get_queryset()
-    #     # qs = qs.first(user=self.request.user)
-    #     # qs = qs.anotate(operator__user__name=)
-    #
-    #     return qs
-
 
 class UserProfileView(TemplateView):
     template_name = 'apps/auth/profile.html'
@@ -365,4 +352,3 @@ class OperatorDetailView(DetailView):
     queryset = Order.objects.all()
     template_name = 'apps/operators/operator_detail.html'
     context_object_name = 'order'
-
