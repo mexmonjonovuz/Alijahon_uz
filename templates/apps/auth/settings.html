@@ -1,4 +1,5 @@
 {% extends 'apps/base.html' %}
+{% load i18n %}
 {% block title %}
     Settings page
 {% endblock %}
@@ -18,7 +19,9 @@
                               enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="h-100 w-100 rounded-circle overflow-hidden position-relative"><img
-                                    src="{% if user.image %}{{ user.image.url }}{% else %}https://alijahon.uz/media/img/nouser.png{% endif %}"
+                                    src="
+                                            
+                                            {% if user.image %}{{ user.image.url }}{% else %}https://alijahon.uz/media/img/nouser.png{% endif %}"
                                     width="200" style="height: 162px" alt="" data-dz-thumbnail="data-dz-thumbnail">
 
                                 <input name="image" class="d-none" id="profile-image" type="file"/>
@@ -28,7 +31,7 @@
                                         class="fas fa-camera"></span><span class="d-block">Update</span></span></label>
                             </div>
                             <div class="col-12 d-flex justify-content-end" style="margin-left: 80px">
-                                <button class="btn btn-primary" type="submit">Saqlash</button>
+                                <button class="btn btn-primary" type="submit">{% trans "Saqlash" %}</button>
                             </div>
                         </form>
                     </div>
@@ -40,20 +43,20 @@
         <div class="col-lg-8 pe-lg-2" bis_skin_checked="1">
             <div class="card mb-3" bis_skin_checked="1">
                 <div class="card-header" bis_skin_checked="1">
-                    <h5 class="mb-0">Sozlamalar</h5>
+                    <h5 class="mb-0">{% trans "Sozlamalar" %}</h5>
                 </div>
                 <div class="card-body bg-light" bis_skin_checked="1">
                     <form method="post" enctype="multipart/form-data" action="{% url 'settings_page' %}">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-lg-6" bis_skin_checked="1">
-                                Ismi
+                                {% trans "Ismi" %}
                                 <input type="text" name="first_name" class="form-control" maxlength="30"
                                        id="id_first_name"
                                        value="{{ user.first_name }}">
                             </div>
                             <div class="col-lg-6" bis_skin_checked="1">
-                                Familiya
+                                {% trans "Familiya" %}
                                 <input type="text" name="last_name" class="form-control" maxlength="40"
                                        id="id_last_name"
                                        value="{{ user.last_name }}">
@@ -61,22 +64,22 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
-                                Viloyat
-                                <select name="id_region" class="form-control" id="id_region" 
+                                {% trans "Viloyat" %}
+                                <select name="id_region" class="form-control" id="id_region"
                                         onchange="getDistricts(this.value)">
-                                    <option value="">Viloyat tanlang</option>
+                                    <option value="">{% trans "Viloyat tanlang" %}</option>
                                     {% for region in regions %}
                                         <option value="{{ region.id }}"
-                                                {% if user.region.id == region.id %}selected{% endif %}>
+                                                {% if user.district.region.id == region.id %}selected{% endif %}>
                                             {{ region.name }}
                                         </option>
                                     {% endfor %}
                                 </select>
                             </div>
                             <div class="col-lg-6">
-                                Tuman
+                                {% trans "Tuman" %}
                                 <select name="district" class="form-control" id="district_id">
-                                    <option value="" selected disabled>Tuman tanlang</option>
+                                    <option value="" selected disabled>{% trans "Tuman tanlang" %}</option>
                                     {% if user.district.id %}
                                         <option value="{{ user.district.id }}"
                                                 selected>{{ user.district.name }}</option>
@@ -122,7 +125,7 @@
                                       id="id_bio">{{ user.bio|default_if_none:'' }}</textarea>
                         </div>
                         <div class="col-12 d-flex justify-content-end" bis_skin_checked="1">
-                            <button class="btn btn-primary" type="submit">Saqlash</button>
+                            <button class="btn btn-primary" type="submit">{% trans "Saqlash" %}</button>
                         </div>
                     </form>
                 </div>
@@ -132,25 +135,25 @@
             <div class="sticky-sidebar" bis_skin_checked="1">
                 <div class="card mb-3" bis_skin_checked="1">
                     <div class="card-header" bis_skin_checked="1">
-                        <h5 class="mb-0">Parolni o'zgartirish</h5>
+                        <h5 class="mb-0">{% trans "Parolni o'zgartirish" %}</h5>
                     </div>
                     <div class="card-body bg-light" bis_skin_checked="1">
                         <form method="post" action="{% url 'settings_change_page' %}" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="mb-3" bis_skin_checked="1">
-                                <label class="form-label" for="old-password">Oldingi parol</label>
+                                <label class="form-label" for="old-password">{% trans "Oldingi parol" %}</label>
                                 <input class="form-control" id="old-password" type="password" name="password">
                             </div>
                             <div class="mb-3" bis_skin_checked="1">
-                                <label class="form-label" for="new-password">Yangi parol</label>
+                                <label class="form-label" for="new-password">{% trans "Yangi parol" %}</label>
                                 <input class="form-control" id="new-password" type="password" name="password1">
                             </div>
                             <div class="mb-3" bis_skin_checked="1">
-                                <label class="form-label" for="confirm-password">Yangi parolni
-                                    takrorlash</label>
+                                <label class="form-label"
+                                       for="confirm-password">{% trans "Yangi parolni takrorlash" %}</label>
                                 <input class="form-control" id="confirm-password" type="password" name="password2">
                             </div>
-                            <button class="btn btn-primary d-block w-100" type="submit">Parolni yangilash
+                            <button class="btn btn-primary d-block w-100" type="submit">{% trans "Parolni yangilash" %}
                             </button>
                         </form>
                     </div>

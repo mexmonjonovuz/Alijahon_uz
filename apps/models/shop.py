@@ -22,6 +22,8 @@ class Product(SlugTimeBasedModel):
     discount_price = PositiveIntegerField(db_default=0)
     category = ForeignKey('apps.Category', CASCADE)
 
+    # ref_user = ForeignKey('apps.Stream', CASCADE)
+
     class Meta:
         ordering = 'created_at',
         verbose_name = 'Product'
@@ -49,6 +51,7 @@ class Order(TimeBasedModel):
         DELIVER = "deliver", 'Deliver'
         DELIVERED = "delivered", 'Delivered'
         CANT_PHONE = "cant_phone", 'Cant_phone'
+        BROKEN = "broken", 'Broken'
         CANCELED = "canceled", 'Canceled'
         ARCHIVED = "archived", 'Archived'
 
@@ -56,25 +59,20 @@ class Order(TimeBasedModel):
     status = CharField(max_length=50, choices=StatusType.choices, default=StatusType.NEW)
     full_name = CharField(max_length=255)
     phone_number = CharField(max_length=20)
-    stream = ForeignKey('apps.Stream', SET_NULL, null=True, blank=True, related_name='orders', verbose_name='oqim')
-    region = ForeignKey('apps.Region', SET_NULL, null=True, blank=True, related_name='orders', verbose_name='viloyat')
-    district = ForeignKey('apps.District', SET_NULL, null=True, blank=True, related_name='orders', verbose_name='tuman')
-    product = ForeignKey('apps.Product', CASCADE, related_name='orders', verbose_name='mahsulot')
+    stream = ForeignKey('apps.Stream', SET_NULL, null=True, blank=True, related_name='orders', verbose_name=_('stream'))
+    region = ForeignKey('apps.Region', SET_NULL, null=True, blank=True, related_name='orders', verbose_name=_('region'))
+    district = ForeignKey('apps.District', SET_NULL, null=True, blank=True, related_name='orders',
+                          verbose_name=_('district'))
+    product = ForeignKey('apps.Product', CASCADE, related_name='orders', verbose_name=_('product'))
     user = ForeignKey('apps.User', SET_NULL, null=True, blank=True, related_name='orders')
-    # operator = ForeignKey('apps.User', SET_NULL, null=True, blank=True, related_name='orders')
-    # currier = ForeignKey('apps.User', SET_NULL, null=True, blank=True, related_name='orders')
+    operator = ForeignKey('apps.User', SET_NULL, null=True, blank=True, verbose_name=_('operator'),
+                          related_name='currier_order')
+    currier = ForeignKey('apps.User', SET_NULL, null=True, blank=True, verbose_name=_('currier'),
+                         related_name='operator_order')
+
 
     def __str__(self):
         return self.status
-
-
-class SiteSettings(Model):
-    operator_sum = PositiveIntegerField(db_default=0, verbose_name="operator uchun to'lanadigan sum")
-    delivery_price_regions = FloatField(db_default=0)
-    delivery_price_tashkent_region = FloatField(db_default=0)
-    delivery_price_tashkent = FloatField(db_default=0)
-    minimum_sum = IntegerField(db_default=1000, verbose_name="eng kam yechib olinishi mumkun bo'lgam summa")
-
 
 class Favorite(SlugTimeBasedModel):
     user = ForeignKey('apps.User', CASCADE, related_name='likes')
@@ -83,14 +81,11 @@ class Favorite(SlugTimeBasedModel):
     class Meta:
         verbose_name = 'Like'
         verbose_name_plural = _('Likes')
+        unique_together = ('user', 'product')
 
     @property
     def favorite_count(self):
         return self.user.likes.count()
-
-
-class Meta:
-    unique_together = ('user', 'product')
 
 
 class Competition(Model):
@@ -109,27 +104,6 @@ class Competition(Model):
         verbose_name_plural = _('Competitions')
 
 
-class Operator(TimeBasedModel):
-    class Role(TextChoices):
-        Operator = 'operator', _('Operator')
-        SUPPORT = 'support', _('Support')
-
-    user = ForeignKey('apps.User', on_delete=SET_NULL, null=True, blank=True, related_name='operators',
-                      verbose_name=_('User'))
-    role = CharField(max_length=20, choices=Role.choices, default=Role.SUPPORT, verbose_name=_('Role'))
-    phone_number = CharField(max_length=20, blank=True, null=True, verbose_name=_('Phone Number'))
-    is_active = BooleanField(default=False, verbose_name=_('Is Active'))
-    passport = CharField(max_length=30, unique=True)
-
-    def __str__(self):
-        return f"{self.user.username} - {self.get_role_display()}"
-
-    class Meta:
-        verbose_name = _('Operator')
-        verbose_name_plural = _('Operators')
-        unique_together = ('user', 'role')
-
-
 class Transaction(TimeBasedModel):
     class Status(TextChoices):
         PROCESS = 'process', 'Process'
@@ -145,5 +119,17 @@ class Transaction(TimeBasedModel):
     check_image = ImageField(upload_to='transaction/%Y/%m/%d', null=True, blank=True)
 
     class Meta:
-        verbose_name = 'Transaction'
-        verbose_name_plural = _('Transactions')
+        verbose_name = "Transaction"
+        verbose_name_plural = _("Transactions")
+
+
+class SiteSettings(Model):
+    operator_sum = PositiveIntegerField(db_default=0, verbose_name=_('Operators price'))
+    delivery_price_regions = FloatField(db_default=0)
+    delivery_price_tashkent_region = FloatField(db_default=0)
+    delivery_price_tashkent = FloatField(db_default=0)
+    minimum_sum = IntegerField(db_default=1000, verbose_name=_('Minimum transaction sum'))
+
+    class Meta:
+        verbose_name = 'Site Setting'
+        verbose_name_plural = _('Site Settings')

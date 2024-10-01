@@ -18,6 +18,7 @@
                                         <h3>{{ order.product.name }}</h3>
                                         <small>Mahsulot narxi: {{ order.product.price | intcomma }} sum</small>
                                         <p>Soni: {{ order.quantity }}</p>
+                                        <p>Date: {{ order.created_at }}</p>
                                     </div>
                                 {% endfor %}
                             </div>

@@ -1,0 +1,143 @@
+{% load static %}
+{% load custom_tags %}
+{% load i18n %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Operatorlar bo'limi - alijahon.uz</title>
+    <link rel="stylesheet" href="{% static 'apps/bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'apps/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    <link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet">
+    <style>
+        select {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <nav class="navbar navbar-dark bg-dark text-white" style="height: 10%;">
+        {% if request.path|spliter == 'new' %}
+            <div style="margin-left: 15px;"><a href="/operator/prodcut_add">{% trans 'Zakaz +' %}</a></div>{% endif %}
+        <div>{% trans 'Buyurtmalar' %}</div>
+        <h4>ID: 721</h4>
+        <h4>Operator: {{ operator.user.first_name }}</h4>
+        <a href="{% url 'admin_page' %}" class="btn btn-danger btn-sm">{% trans 'Asosiy panel' %}</a>
+    </nav>
+    <div class="row">
+        {% include 'apps/parts/_operators_sidebar.html' %}
+        <div class="col-md-10" style="margin-left: 16%;">
+            <div class="bg-light w-75 m-auto mt-5">
+                <form method="GET">
+                    <div>
+                        <p>
+                            <label for="id_product">{% trans 'Mahsulot:' %}</label>
+                            <select name="product" id="id_product" multiple>
+                                {% for product in products %}
+                                    <option value="1">{{ product.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </p>
+                        <p>
+                            <label for="id_region">Viloyat tanlang:</label>
+                            <select name="location" id="id_region" multiple onchange="getDistricts(this.value)">
+                                {% for region in regions %}
+                                    <option value="{{ region.id }}"
+                                            {% if user.region.id == region.id %}selected{% endif %}>
+                                        {{ region.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </p>
+                        <p>
+                            <label for="id_district">Tuman:</label>
+                            <select name="district" id="district_id" multiple>
+                                <option value="" selected disabled>{% trans 'Shahar/Tuman tanlang' %}</option>
+                                {% if user.district.id %}
+                                    <option value="{{ user.district.id }}"
+                                            selected>{{ user.district.name }}</option>
+                                {% endif %}
+                            </select>
+                        </p>
+                        <p>
+                            <label for="id_name">Mahsulot nomi:</label>
+                            <input type="text" name="name" id="id_name">
+                        </p>
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="Saqlash">
+                    {% if request.path|spliter == 'deliver' %}
+                        <br>
+                        <input class="btn btn-primary" type="submit" value="Kuryer" style="margin-top: 10px;">
+                        <input type="checkbox" onclick="toggle(this)"> Toggle All<br>
+                    {% endif %}
+                </form>
+                {% for order in orders %}
+                    <div class="card border-dark mt-5">
+                        <div class="card-body">{% if request.path|spliter|title == "Delivered" %}<span
+                                style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#{{ order.pk }}
+                </span>{% endif %}
+                            <h2 class="card-title">{{ order.full_name }} - {{ order.product.price|intcomma }} sum</h2>
+                            <h3 class="card-title text-danger">{% trans 'ZAKAZ ID:' %} #{{ order.pk }}</h3>
+                            <ul class="text-muted">
+                                <li class="">{% trans 'Reklama tarqatuvchi ID:' %} uzim</li>
+                                <li class="">{% trans 'Client:' %} +9989XXXXXXXX</li>
+                                <li class="">{% trans 'Manzil' %} {{ order.district.region.name|default:'No aniq' }}</li>
+                                <li class="">
+                                    {% trans 'Narxi' %} {{ order.full_name }} sum
+                                </li>
+                                <li class="">{% trans 'Soni:' %} 1ta</li>
+                                <li class="">{% trans 'Vaqti:' %} 19-Iyul, 2024-yil 16:22</li>
+                                <li class="">{% trans 'Yangilangan vaqti:' %} 19-Iyul, 2024-yil 16:22</li>
+                                <li class="">{% trans 'Holati:' %} {{ order.status }}</li>
+                            </ul>
+                            <a href="{% url 'operator_detail' order.pk %}" class="btn btn-primary"
+                               style="float: left; margin-right: 10px;">
+                                {% trans 'Qabul qilish' %}
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                {% include 'apps/parts/_operators_pagination.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+<script src="{% static 'apps/js/regions_filter.js' %}"></script>
+<script>
+    $(function () {
+        $('select').multipleSelect({
+            multiple: true,
+            multipleWidth: 500,
+            maxHeight: 200,
+            filter: true
+        });
+    });
+
+    function getDistricts(regionId) {
+        const districtSelect = document.getElementById('district_id');
+        districtSelect.innerHTML = '<option value="" selected disabled>{% trans 'Shahar/Tuman tanlang' %}</option>';
+
+        if (regionId) {
+            fetch(`/get-districts/${regionId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(district => {
+                        const option = document.createElement('option');
+                        option.value = district.id;
+                        option.text = district.name;
+                        districtSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.log('Error:', error));
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,12 +1,11 @@
 from django.contrib import admin
-from django.contrib.admin import AdminSite, StackedInline
 from django.contrib.admin import ModelAdmin, register
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Group
 from django.utils.html import format_html
-from django.utils.translation import gettext_lazy as _
 
 from apps.forms import CustomAdminAuthenticationForm
-from apps.models import Category, Product, User, Region, District, SiteSettings, Favorite, Competition, Operator
+from apps.models import Category, Product, User, Region, District, SiteSettings, Favorite, Competition
 from apps.proxy import OrderNewProxyModel, OrderReadyProxyModel, OrderDeliverProxyModel, \
     OrderDeliveredProxyModel, OrderCantPhoneProxyModel, OrderCanceledProxyModel, OrderArchivedProxyModel, \
     UserProxyModel, UserOperatorProxyModel, UserManagerProxyModel, UserAdminProxyModel, UserDriverProxyModel
@@ -16,7 +15,6 @@ from apps.proxy import OrderNewProxyModel, OrderReadyProxyModel, OrderDeliverPro
 class UserModelAdmin(UserAdmin):
     list_display = 'phone', 'type', 'is_staff',
     ordering = 'phone',
-    # add_form = UserAuthenticatedForm
     fieldsets = (
         (
             None,
@@ -70,10 +68,11 @@ class ProductModelAdmin(ModelAdmin):
     show_image.allow_tags = True
 
 
+#
 # @register(Operator)
 # class OperatorStackedInline(StackedInline):
-#     pass
-
+#     class Meta:
+#         model = UserModelAdmin
 
 @register(Region)
 class ReginModelAdmin(ModelAdmin):
@@ -100,79 +99,39 @@ class CompetitionModelAdmin(ModelAdmin):
     pass
 
 
-class MyAdminSite(AdminSite):
-    admin.site.index_title = _('Alijahon Title')
-    admin.site.site_header = _('Alijahon Site Administration')
-    admin.site.site_title = _('Alijahon Site Management')
+def get_app_list(self, request, app_label=None):
+    app_dict = self._build_app_dict(request, app_label)
 
-    def get_app_list(self, request, app_label=None):
-        app_dict = self._build_app_dict(request, app_label)
+    app_ordering = {
+        "Apps": 1,
+    }
 
-        app_ordering = {
-            "Authentication and Authorization": 1,
-            "Apps": 2,
-            "Catalog": 3,
-            "Site Management": 4,
-            "Competitions": 5,
-            "User Roles": 6,
-            "Orders": 7,
-        }
-        model_ordering = {
-            "Groups": 1,
-            "Users": 2,
+    model_ordering = {
+        'Users': -1,
+        'Competition': 1,
+        'SiteSettings': 2,
+    }
 
-            # Apps
-            "Apps": 1,
+    app_list = sorted(app_dict.values(), key=lambda x: app_ordering.get(x["name"], 1000))
 
-            # Catalog
-            "Categorys": 1,
-            "Products": 2,
-            "Regions": 3,
-            "Districts": 4,
-            "Favorites": 5,
+    for app in app_list:
+        app["models"].sort(key=lambda x: model_ordering.get(x['object_name'], 1000))
 
-            # Site Management
-            "Site settingss": 1,
+    return app_list
 
-            # Competitions
-            "Competitions": 1,
 
-            # User Roles
-            "Foydalanuvchilar uchun": 1,
-            "Operatorlar uchun": 2,
-            "Managerlar uchun": 3,
-            "Adminlar uchun": 4,
-            "Yetqazuvchilar uchun": 5,
+admin.AdminSite.get_app_list = get_app_list
 
-            # Orders
-            "Yangi buyurtmalar": 1,
-            "Buyurtmalar tayyor": 2,
-            "Yetkazib berishga tayyor buyurtmalar": 3,
-            "Yetkazib berilgan buyurtmalar": 4,
-            "Telefon orqali bog‘lanib bo‘lmagan buyurtmalar": 5,
-            "Bekor qilingan buyurtmalar": 6,
-            "Arxivlangan buyurtmalar": 7,
-        }
 
-        app_list = sorted(
-            app_dict.values(),
-            key=lambda x: app_ordering.get(x["name"], 1000)
-        )
-
-        for app in app_list:
-            app["models"].sort(
-                key=lambda x: model_ordering.get(x["name"].upper(), 1000)
-            )
-
-        return app_list
-
-    admin.AdminSite.get_app_list = get_app_list
+@register(UserOperatorProxyModel)
+class UserOperatorProxyModelUserAdmin(UserModelAdmin):
+    pass
 
 
 admin.site.login_form = CustomAdminAuthenticationForm
-# admin.site.unregister(Group)
+admin.site.unregister(Group)
 admin.site.register(UserProxyModel)
-admin.site.register(UserOperatorProxyModel)
+# admin.site.register(UserOperatorProxyModel)
 admin.site.register(UserManagerProxyModel)
 admin.site.register(UserAdminProxyModel)
 admin.site.register(UserDriverProxyModel)
@@ -181,5 +140,6 @@ admin.site.register(OrderReadyProxyModel)
 admin.site.register(OrderDeliverProxyModel)
 admin.site.register(OrderDeliveredProxyModel)
 admin.site.register(OrderCantPhoneProxyModel)
+
 admin.site.register(OrderCanceledProxyModel)
 admin.site.register(OrderArchivedProxyModel)

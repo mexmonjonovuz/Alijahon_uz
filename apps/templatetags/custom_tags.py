@@ -33,3 +33,15 @@ def length_is(value, length):
 @register.filter('spliter')
 def split_path(path) -> str:
     return path.split('/')[-2]
+
+
+@register.filter('distinct')
+def distinct(value) -> set:
+    category_list = set()
+    if value not in category_list:
+        category_list.add(value)
+        return category_list
+    return set()
+
+
+

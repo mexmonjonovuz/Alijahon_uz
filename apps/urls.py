@@ -1,7 +1,7 @@
 from django.urls import path
 
 from apps.views import UserLoginView, ProductDetailView, MainBaseView, ProductListByCategoryListView, CoinsView, \
-    FavoriteView, UserLogautView, PaymentView, DiagramView, CompetitionView, StatisticView, MarketView, \
+    FavoriteView, UserLogautView, PaymentView, DiagramView, CompetitionListView, StatisticView, MarketView, \
     OrderListView, InquiriesView, UserProfileView, UserSettingsView, StreamView, \
     DistrictListView, StreamCreateView, UserChangePasswordView, UserChangeImage, AdminsView, \
     CreatedSuccessOrderedView, StreamDetailView, \
@@ -30,14 +30,14 @@ urlpatterns = [
     path('profile/settings/change-password/', UserChangePasswordView.as_view(), name='settings_change_page'),
 
     path('order/list/', OrderListView.as_view(), name='order_list'),
-    path('order/detail/', CreatedSuccessOrderedView.as_view(), name='success_order_page'),
+    path('order/success/', CreatedSuccessOrderedView.as_view(), name='success_order_page'),
     path('get-districts/<int:region_id>', DistrictListView.as_view(), name='get_districts'),
 
     # Admin page
     path('admin-page/', AdminsView.as_view(), name='admin_page'),
     path('admin-page/coins/', CoinsView.as_view(), name='coins_user_list'),
     path('admin-page/diagrams/', DiagramView.as_view(), name='diagrams_page'),
-    path('admin-page/competition/', CompetitionView.as_view(), name='competition_page'),
+    path('admin-page/competition/', CompetitionListView.as_view(), name='competition_page'),
     path('admin-page/statistika/', StatisticView.as_view(), name='statistika_page'),
     path('admin-page/statistika/<int:pk>', ProductStatisticView.as_view(), name='product_statistic'),
     path('admin-page/stream/', StreamView.as_view(), name='steam_page'),
@@ -51,13 +51,12 @@ urlpatterns = [
     path('operator-page/', OperatorOrderListView.as_view(), name='operator_page'),
     path('operator-page/new/', OperatorOrderListView.as_view(), name='operator_new_page'),
     path('operator-page/ready/', OperatorOrderListView.as_view(), name='operator_ready_page'),
-    path('operator-page/delivering/', OperatorOrderListView.as_view(), name='operator_delivering_page'),
-    path('operator-page/waiting/', OperatorOrderListView.as_view(), name='operator_waiting_page'),
-    path('operator-page/archived/', OperatorOrderListView.as_view(), name='operator_archived_page'),
-    path('operator-page/broken/', OperatorOrderListView.as_view(), name='operator_broken_page'),
+    path('operator-page/deliver/', OperatorOrderListView.as_view(), name='operator_deliver_page'),
     path('operator-page/delivered/', OperatorOrderListView.as_view(), name='operator_delivered_page'),
+    path('operator-page/broken/', OperatorOrderListView.as_view(), name='operator_broken_page'),
+    path('operator-page/cant_phone/', OperatorOrderListView.as_view(), name='operator_cantphone_page'),
     path('operator-page/cancelled/', OperatorOrderListView.as_view(), name='operator_cancelled_page'),
-    path('operator-page/hold/', OperatorOrderListView.as_view(), name='operator_hold_page'),
+    path('operator-page/archived/', OperatorOrderListView.as_view(), name='operator_archived_page'),
     path('operator-page/all/', OperatorOrderListView.as_view(), name='operator_all_page'),
     path('operator/detail/<int:pk>/', OperatorDetailView.as_view(), name='operator_detail'),
 

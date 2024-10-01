@@ -1,9 +1,9 @@
 from datetime import timedelta
 
-from django.contrib.auth import logout, login
+from django.contrib.auth import logout, login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.db.models import Count, Q, F, Sum
+from django.db.models import Count, Q, Sum
 from django.http import JsonResponse
 from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse_lazy
@@ -12,7 +12,7 @@ from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView, UpdateView, CreateView
 
 from apps.forms import UserSettingsForm, StreamForm, UserChangePasswordForm, UserAuthenticatedForm, OrderCreateForm
-from apps.models import Category, Product, User, Region, District, Stream, Order, SiteSettings, Competition, Favorite
+from apps.models import Category, Product, User, Region, District, Stream, Order, Competition, Favorite
 
 
 # select , prefetch
@@ -122,7 +122,7 @@ class UserChangePasswordView(LoginRequiredMixin, UpdateView):
 
 
 class MarketView(ListView):
-    queryset = Product.objects.all()
+    queryset = Product.objects.select_related('category').all()
     template_name = 'apps/market.html'
     context_object_name = 'products'
     paginate_by = 5
@@ -138,10 +138,11 @@ class MarketView(ListView):
 
         return qs
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(object_list=object_list, **kwargs)
-        context['site_settings'] = SiteSettings.objects.first()
-        return context
+    # def get_context_data(self, *, object_list=None, **kwargs):
+    #     context = super().get_context_data(object_list=object_list, **kwargs)
+    #     context['categories'] = Category.objects.values('category__name', 'category__slug').distinct()
+    #
+    #     return context
 
 
 class HeaderSearchView(ListView):
@@ -163,19 +164,22 @@ class OrderListView(ListView):
     context_object_name = 'orders'
 
     def get_queryset(self):
-        return self.queryset.filter(user_id=self.request.user.id)
+        return self.queryset.filter(user=self.request.user)
 
 
-class CreatedSuccessOrderedView(View):
-    def post(self, request):
-        form = OrderCreateForm(request.POST)
-        if form.is_valid():
-            order = form.save()
-            site_settings = SiteSettings.objects.all()
-            context = {'product': order.product,
-                       'site_settings': site_settings
-                       }
-        return render(request, 'apps/orders/success_ordered.html', context)
+class CreatedSuccessOrderedView(CreateView):
+    model = Order
+    form_class = OrderCreateForm
+    template_name = 'apps/orders/success_ordered.html'
+
+    def form_valid(self, form):
+        order = form.save()
+        context = self.get_context_data(form=form)
+        context['product'] = order.product
+        return render(self.request, self.template_name, context)
+
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 class StreamCreateView(LoginRequiredMixin, CreateView):
@@ -241,11 +245,15 @@ class FavoriteView(LoginRequiredMixin, View):
             return redirect('product_detail', pk=pk)
 
 
-class CompetitionView(ListView):
-    queryset = Competition.objects.all()
+class CompetitionListView(ListView):
+    queryset = Competition.objects.filter(is_active=True).first()
     template_name = 'apps/statistics/competition.html'
-    context_object_name = 'competitions'
+    context_object_name = 'competition'
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx =  super().get_context_data(object_list=object_list, **kwargs)
+        user = User.objects.filter(orders__status='Delivered').values('first_name')
+        return ctx
 
 class ProductStatisticView(DetailView):
     queryset = Product.objects.all()
@@ -274,21 +282,21 @@ class StatisticView(LoginRequiredMixin, ListView):
             'yesterday': now.replace(hour=0, minute=0, second=0) - timedelta(days=1),
             'weekly': now - timedelta(days=now.weekday()),
             'monthly': now.replace(day=30),
-            # 'all': None
+            'all': None
         }
-        start_date = periods.get(period) if period in periods else None
+        start_date = periods.get(period)
 
         qs = super().get_queryset().filter(owner=self.request.user)
         if start_date:
             qs = qs.filter(orders__created_at__gte=start_date)
         qs = qs.annotate(
-            new=Count('orders', filter=Q(orders__status='new') & Q(orders__stream__id=F('id'))),
-            ready=Count('orders', filter=Q(orders__status='ready') & Q(orders__stream__id=F('id'))),
-            deliver=Count('orders', filter=Q(orders__status='deliver') & Q(orders__stream__id=F('id'))),
-            delivered=Count('orders', filter=Q(orders__status='delivered') & Q(orders__stream__id=F('id'))),
-            cant_phone=Count('orders', filter=Q(orders__status='cant_phone') & Q(orders__stream__id=F('id'))),
-            canceled=Count('orders', filter=Q(orders__status='canceled') & Q(orders__stream__id=F('id'))),
-            archived=Count('orders', filter=Q(orders__status='archived') & Q(orders__stream__id=F('id'))),
+            new=Count('orders', filter=Q(orders__status='new')),
+            ready=Count('orders', filter=Q(orders__status='ready')),
+            deliver=Count('orders', filter=Q(orders__status='deliver')),
+            delivered=Count('orders', filter=Q(orders__status='delivered')),
+            cant_phone=Count('orders', filter=Q(orders__status='cant_phone')),
+            canceled=Count('orders', filter=Q(orders__status='canceled')),
+            archived=Count('orders', filter=Q(orders__status='archived')),
         )
         qs.stream = qs.aggregate(
             total_visit_count=Sum('visit_count'),
@@ -303,8 +311,17 @@ class StatisticView(LoginRequiredMixin, ListView):
         return qs
 
 
-class InquiriesView(TemplateView):
+class InquiriesView(ListView):
+    queryset = Order.objects.all()
     template_name = 'apps/parts/_inquiries.html'
+    context_object_name = 'orders'
+
+    # def get_queryset(self):
+    #     qs = super().get_queryset()
+    #     # qs = qs.first(user=self.request.user)
+    #     # qs = qs.anotate(operator__user__name=)
+    #
+    #     return qs
 
 
 class UserProfileView(TemplateView):
