@@ -11,7 +11,8 @@ from django.utils import timezone
 from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView, UpdateView, CreateView
 
-from apps.forms import UserSettingsForm, StreamForm, UserChangePasswordForm, UserAuthenticatedForm, OrderCreateForm
+from apps.forms import UserSettingsForm, StreamForm, UserChangePasswordForm, UserAuthenticatedForm, OrderCreateForm, \
+    OperatorUpdateForm
 from apps.models import Category, Product, User, Region, District, Stream, Order, Competition, Favorite
 
 
@@ -336,6 +337,13 @@ class OperatorOrderListView(ListView):
     template_name = 'apps/operators/operator.html'
     context_object_name = 'orders'
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        status = self.request.path.split('/')[-2]
+        if status:
+            qs = qs.filter(status=status)
+        return qs
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
         context['regions'] = Region.objects.all()
@@ -344,11 +352,8 @@ class OperatorOrderListView(ListView):
         return context
 
 
-class OperatorOkView(TemplateView):
-    template_name = 'apps/operators/operator_product.html'
-
-
-class OperatorDetailView(DetailView):
+class OperatorDetailView(DetailView, UpdateView):
     queryset = Order.objects.all()
     template_name = 'apps/operators/operator_detail.html'
     context_object_name = 'order'
+    form_class = OperatorUpdateForm
