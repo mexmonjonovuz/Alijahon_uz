@@ -1,11 +1,12 @@
 from django.urls import path
 
-from apps.views import UserLoginView, ProductDetailView, MainBaseView, ProductListByCategoryListView, CoinsView, \
+from apps.views import UserLoginView, MainBaseView, ProductListByCategoryListView, CoinsView, \
     FavoriteView, UserLogautView, PaymentView, DiagramView, CompetitionListView, StatisticView, MarketView, \
-    OrderListView, InquiriesView, UserProfileView, UserSettingsView, StreamView, \
+    OrderListView, InquiriesView, UserProfileView, UserSettingsView, StreamListView, \
     DistrictListView, StreamCreateView, UserChangePasswordView, UserChangeImage, AdminsView, \
-    CreatedSuccessOrderedView, StreamDetailView, \
-    ProductStatisticView, HeaderSearchView, OperatorDetailView, OperatorOrderListView, FavouriteListView
+    CreatedSuccessOrderedView, ProductStatisticView, HeaderSearchView, OperatorDetailView, OperatorOrderListView, \
+    FavouriteListView, \
+    ProductOrStreamDetailView
 
 urlpatterns = [
     path('', MainBaseView.as_view(), name='main_base'),
@@ -14,7 +15,9 @@ urlpatterns = [
     path('login/', UserLoginView.as_view(), name='login_page'),
     path('logout/', UserLogautView.as_view(), name='logaut_page'),
 
-    path('product-detail/<slug:slug>/', ProductDetailView.as_view(), name='product_detail'),
+    # path('product-detail/<slug:slug>/', ProductDetailView.as_view(), name='product_detail'),
+    path('product-detail/<int:pk>/', ProductOrStreamDetailView.as_view(), name='product_detail'),
+    path('product-detail/<slug:slug>/', ProductOrStreamDetailView.as_view(), name='product_detail'),
     path('category/<slug:slug>/', ProductListByCategoryListView.as_view(), name='category_by_slug'),
     path('category/', ProductListByCategoryListView.as_view(), name='category_list'),
     path('payment/', PaymentView.as_view(), name='payments'),
@@ -40,8 +43,8 @@ urlpatterns = [
     path('admin-page/competition/', CompetitionListView.as_view(), name='competition_page'),
     path('admin-page/statistika/', StatisticView.as_view(), name='statistika_page'),
     path('admin-page/statistika/<int:pk>', ProductStatisticView.as_view(), name='product_statistic'),
-    path('admin-page/stream/', StreamView.as_view(), name='steam_page'),
-    path('admin-page/stream/detail/<int:pk>/', StreamDetailView.as_view(), name='stream_detail'),
+    path('admin-page/stream/', StreamListView.as_view(), name='steam_page'),
+    # path('admin-page/stream/detail/<int:pk>/', StreamDetailView.as_view(), name='stream_detail'),
     path('admin-page/market/', MarketView.as_view(), name='market_page'),
     path('admin-page/market/<slug:slug>/', MarketView.as_view(), name='market_by_slug'),
     path('admin-page/requests/', InquiriesView.as_view(), name='inquiries_page'),

@@ -43,6 +43,10 @@ class Stream(TimeBasedModel):
     def __str__(self):
         return self.name
 
+    @property
+    def sale_price(self):
+        return self.product.price - self.discount
+
 
 class Order(TimeBasedModel):
     class StatusType(TextChoices):
@@ -70,9 +74,9 @@ class Order(TimeBasedModel):
     currier = ForeignKey('apps.User', SET_NULL, null=True, blank=True, verbose_name=_('currier'),
                          related_name='operator_order')
 
-
     def __str__(self):
         return self.status
+
 
 class Favorite(SlugTimeBasedModel):
     user = ForeignKey('apps.User', CASCADE, related_name='likes')

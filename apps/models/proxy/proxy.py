@@ -1,7 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 
 from apps.models import Order, User
-from apps.proxymanagers import OperatorUserManager
+from apps.models.proxy.proxymanagers import OperatorUserManager
 
 
 class OrderNewProxyModel(Order):

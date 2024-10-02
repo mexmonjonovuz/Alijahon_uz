@@ -1,4 +1,5 @@
 {% extends 'apps/base.html' %}
+{% load humanize %}
 {% block title %}
     Product statistika
 {% endblock %}
@@ -7,7 +8,7 @@
         <div class="card-body" bis_skin_checked="1">
             <div class="container border-bottom-4" bis_skin_checked="1">
                 <div class="content_name_block" bis_skin_checked="1">
-                    <a href="/admin_page" class="content_name_block_back">
+                    <a href="{% url  'market_page' %}" class="content_name_block_back">
                         <svg class="svg-inline--fa fa-arrow-right fa-w-14" aria-hidden="true" focusable="false"
                              data-prefix="fa" data-icon="arrow-right" role="img" xmlns="http://www.w3.org/2000/svg"
                              viewBox="0 0 448 512" data-fa-i2svg="">
@@ -45,8 +46,8 @@
                             </tr>
                             <tr>
                                 <td>Mahsulot narxi</td>
-                                <td>{{ product.price }}</td>
-                                <td>{{ product.price }}</td>
+                                <td>{{ product.price|intcomma }}</td>
+                                <td>{{ product.price|intcomma }}</td>
                             </tr>
                             </tbody>
                         </table>

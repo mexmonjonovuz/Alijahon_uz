@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.db.models import Count, Q, Sum
 from django.http import JsonResponse
-from django.shortcuts import redirect, get_object_or_404, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views import View
@@ -13,7 +13,7 @@ from django.views.generic import ListView, DetailView, TemplateView, UpdateView,
 
 from apps.forms import UserSettingsForm, StreamForm, UserChangePasswordForm, UserAuthenticatedForm, OrderCreateForm, \
     OperatorUpdateForm
-from apps.models import Category, Product, User, Region, District, Stream, Order, Competition, Favorite
+from apps.models import Category, Product, User, Region, District, Stream, Order, Competition, Favorite, SiteSettings
 
 
 class MainBaseView(ListView):
@@ -26,12 +26,6 @@ class MainBaseView(ListView):
         context = super().get_context_data(object_list=object_list, **kwargs)
         context['categories'] = Category.objects.all()
         return context
-
-
-class ProductDetailView(DetailView):
-    queryset = Product.objects.all()
-    template_name = 'apps/products/product_detail.html'
-    context_object_name = "product"
 
 
 class ProductListByCategoryListView(ListView):
@@ -110,11 +104,7 @@ class UserChangePasswordView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         user = form.save(commit=False)
-        new_password = form.cleaned_data.get('password1')
-        if new_password:
-            user.set_password(new_password)
-        user.save()
-        login(self.request, user)
+        login(self.request, user=user.save())
         return redirect(self.success_url)
 
     def get_object(self, queryset=None):
@@ -169,7 +159,9 @@ class CreatedSuccessOrderedView(CreateView):
     def form_valid(self, form):
         order = form.save()
         context = self.get_context_data(form=form)
-        context['product'] = order.product
+        context['order'] = order
+        context[
+            'site_settings'] = SiteSettings.objects.all().first()
         return render(self.request, self.template_name, context)
 
     def form_invalid(self, form):
@@ -183,26 +175,64 @@ class StreamCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('steam_page')
 
 
-class StreamView(LoginRequiredMixin, ListView):
+class StreamListView(LoginRequiredMixin, ListView):
     queryset = Stream.objects.all()
     template_name = 'apps/orders/stream_list.html'
     context_object_name = 'streams'
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super().get_context_data(object_list=object_list, **kwargs)
+        ctx['product'] = Product.objects.all().first()
+        return ctx
 
-class StreamDetailView(DetailView):
-    queryset = Product.objects.all()
-    template_name = 'apps/orders/stream_detail.html'
+
+# class ProductDetailView(DetailView):
+#     queryset = Product.objects.all()
+#     template_name = 'apps/products/product_detail.html'
+#     context_object_name = "product"
+
+
+# class StreamDetailView(DetailView):
+#     queryset = Product.objects.all()
+#     template_name = 'apps/orders/stream_detail.html'
+#     context_object_name = 'product'
+#
+#     def get_object(self, queryset=None):
+#         pk = self.kwargs.get(self.pk_url_kwarg)
+#         self._cache_stream = None
+#         if pk is not None:
+#             self._cache_stream = get_object_or_404(Stream.objects.all(), pk=pk)  # noqa
+#             self._cache_stream.visit_count += 1
+#             self._cache_stream.save()
+#             return self._cache_stream.product
+#         return super().get_object(queryset)
+#
+#     def get_context_data(self, **kwargs):
+#         ctx = super().get_context_data(**kwargs)
+#         price = self.object.price
+#         if self._cache_stream:
+#             price -= self._cache_stream.discount
+#         ctx['stream_id'] = self.kwargs.get(self.pk_url_kwarg, '')
+#         ctx['price'] = price
+#         return ctx
+
+
+class ProductOrStreamDetailView(DetailView):
+    template_name = 'apps/products/product_detail.html'
     context_object_name = 'product'
 
     def get_object(self, queryset=None):
-        pk = self.kwargs.get(self.pk_url_kwarg)
+        slug = self.kwargs.get('slug')
+        pk = self.kwargs.get('pk')
         self._cache_stream = None
+
         if pk is not None:
-            self._cache_stream = get_object_or_404(Stream.objects.all(), pk=pk)  # noqa
+            self._cache_stream = get_object_or_404(Stream.objects.all(), pk=pk)
             self._cache_stream.visit_count += 1
             self._cache_stream.save()
             return self._cache_stream.product
-        return super().get_object(queryset)
+        else:
+            return get_object_or_404(Product.objects.all().first(), slug=slug)
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)

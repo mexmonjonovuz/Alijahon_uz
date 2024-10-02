@@ -158,7 +158,6 @@
                 toggleValidationError(errorElementId, 'Oqim nomida raqam bo\'lishi mumkin emas');
                 return false;
             }
-
             toggleValidationError(errorElementId, '', false);
             return true;
         }
@@ -171,21 +170,102 @@
             }
         });
         document.addEventListener("DOMContentLoaded", function () {
-            // Mahsulot elementlarini tanlang
-            let productItems = document.querySelectorAll(".product-item");
-            let uniqueCategories = new Set(); // Unikal kategoriya nomlari uchun Set
 
-            // Unikal kategoriya nomlarini yig'ish
+            let productItems = document.querySelectorAll(".product-item");
+            let uniqueCategories = new Set();
+
+
             productItems.forEach(item => {
-                let categoryName = item.dataset.category.trim(); // data-category atributidan kategoriya nomini oling
+                let categoryName = item.dataset.category.trim();
                 if (!uniqueCategories.has(categoryName)) {
-                    uniqueCategories.add(categoryName); // Unikal bo'lsa, qo'sh
-                    console.log(categoryName); // Unikal kategoriya nomini chiqarish (masalan, konsolga)
+                    uniqueCategories.add(categoryName);
+                    console.log(categoryName);
                 }
             });
         });
 
 
+    </script>
+    <script>
+        $('.btn_open_modal').on('click', function () {
+            let product_id = $(this).attr('name');
+            $('#hidden_product').val(product_id);
+        });
+
+        function toggleValidationError(elementId, errorMessage, show = true) {
+            const errorElement = document.getElementById(elementId);
+            if (show) {
+                errorElement.innerText = errorMessage;
+                errorElement.style.display = 'block';
+                setTimeout(() => errorElement.style.display = 'none', 5000);
+            } else {
+                errorElement.style.display = 'none';
+            }
+        }
+
+        function validateStreamName(inputId, errorElementId) {
+            const streamNameValue = document.getElementById(inputId).value.trim();
+
+            if (streamNameValue.length < 3) {
+                toggleValidationError(errorElementId, 'Oqim nomi kamida 3 ta belgidan iborat bo\'lishi kerak.');
+                return false;
+            }
+
+            if (!/^[A-Za-z]+$/.test(streamNameValue)) {
+                toggleValidationError(errorElementId, 'Oqim nomi faqat harflardan iborat bo\'lishi kerak.');
+                return false;
+            }
+
+            toggleValidationError(errorElementId, '', false);
+            return true;
+        }
+
+        function validateDiscount(inputId, productPrice, errorElementId) {
+            const discountValue = parseFloat(document.getElementById(inputId).value);
+
+            if (isNaN(discountValue)) {
+                toggleValidationError(errorElementId, 'Chegirma miqdori raqam bo\'lishi kerak.');
+                return false;
+            }
+
+            if (discountValue < 0) {
+                toggleValidationError(errorElementId, 'Chegirma miqdori manfiy bo\'lishi mumkin emas.');
+                return false;
+            }
+
+            if (discountValue >= productPrice) {
+                toggleValidationError(errorElementId, 'Chegirma miqdori mahsulot narxidan kichik bo\'lishi kerak.');
+                return false;
+            }
+
+            toggleValidationError(errorElementId, '', false);
+            return true;
+        }
+
+        document.getElementById('submit-btn').addEventListener('click', function (event) {
+            const hasStreamValid = validateStreamName('stream_name', 'stream-error');
+            const discountInput = document.getElementById('id_discount');
+            const productPrice = parseFloat('{{ product.price }}');
+
+            const hasDiscountValid = validateDiscount('id_discount', productPrice, 'discount-error');
+
+            if (!hasStreamValid || !hasDiscountValid) {
+                event.preventDefault();
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            let productItems = document.querySelectorAll(".product-item");
+            let uniqueCategories = new Set();
+
+            productItems.forEach(item => {
+                let categoryName = item.dataset.category.trim();
+                if (!uniqueCategories.has(categoryName)) {
+                    uniqueCategories.add(categoryName);
+                    console.log(categoryName);
+                }
+            });
+        });
     </script>
 
 {% endblock %}

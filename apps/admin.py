@@ -6,7 +6,7 @@ from django.utils.html import format_html
 
 from apps.forms import CustomAdminAuthenticationForm
 from apps.models import Category, Product, User, Region, District, SiteSettings, Favorite, Competition
-from apps.proxy import OrderNewProxyModel, OrderReadyProxyModel, OrderDeliverProxyModel, \
+from apps.models.proxy.proxy import OrderNewProxyModel, OrderReadyProxyModel, OrderDeliverProxyModel, \
     OrderDeliveredProxyModel, OrderCantPhoneProxyModel, OrderCanceledProxyModel, OrderArchivedProxyModel, \
     UserProxyModel, UserOperatorProxyModel, UserManagerProxyModel, UserAdminProxyModel, UserDriverProxyModel
 

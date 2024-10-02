@@ -1,6 +1,7 @@
 {% extends 'apps/base.html' %}
 {% load static %}
 {% load humanize %}
+{% load custom_tags %}
 {% block title %}
     Success Ordered page
 {% endblock %}
@@ -24,16 +25,16 @@
             </thead>
             <tbody>
             <tr>
-                <th scope="col">{{ product.name }}</th>
-                <th scope="col">{{ product.price|intcomma }} sum</th>
+                <th scope="col">{{ order.product.name }}</th>
+                <th scope="col">{% if order.stream  %}{{ order.stream.sale_price|intcomma }}{% else %}{{ order.product.price|intcomma }}{% endif %} sum</th>
                 <th scope="col">{{ '1' }}</th>
             </tr>
             <tr>
                 <th scope="col">Yetkazib berish</th>
                 <td>
-                    Toshkent Shahar: {{ site_settings.delivery_price_tashkent }} sum<br>
-                    Toshkent Viloyatlari: {{ site_settings.delivery_price_tashkent_region }} sum<br>
-                    Viloyatlar: {{ site_settings.delivery_price_regions }} sum
+                    Toshkent Shahar: {{ site_settings.delivery_price_tashkent|remove_nulls|intcomma }} sum<br>
+                    Toshkent Viloyatlari: {{ site_settings.delivery_price_tashkent_region|remove_nulls|intcomma }} sum<br>
+                    Viloyatlar: {{ site_settings.delivery_price_regions|remove_nulls|intcomma }} sum
                 </td>
             </tr>
             </tbody>
