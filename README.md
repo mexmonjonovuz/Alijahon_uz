@@ -20,8 +20,6 @@ This project was created almost two years ago. Since then, there is a newer vers
 This is a very simple e-commerce website built with Django.
 
 ## Quick demo
-
-
 ---
 
 ## Project Summary
