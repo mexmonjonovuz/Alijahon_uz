@@ -20,7 +20,6 @@
         <p style="color: red; display: inline;">AKSIYA</p>
         <p>Dostavka narxi: 20000</p>
     </div>
-
     <form method="post">
         <input type="hidden">
         {% csrf_token %}
@@ -66,7 +65,8 @@
             <div class="col-6">
                 <label>
                     Chegirma
-                    <input class="form-control mt-3" name="discount" type="text" value="Chegirma {{ order.discount_price }}sum">
+                    <input class="form-control mt-3" name="discount" type="text"
+                           value="Chegirma {{ order.discount_price }}sum">
                 </label>
             </div>
         </div>

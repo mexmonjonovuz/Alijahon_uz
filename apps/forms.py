@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from django.forms import CharField, ModelChoiceField, ModelForm, PasswordInput
 from django.utils.translation import gettext_lazy as _
 
-from .models import User, Product, Stream, Operator
+from .models import User, Product, Stream
 from .models.shop import Order, Favorite
 
 
