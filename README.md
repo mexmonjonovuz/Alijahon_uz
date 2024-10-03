@@ -67,7 +67,6 @@ python manage.py runserver
 
 ## Follow the tutorial
 
-
 ---
 
 ## Support
