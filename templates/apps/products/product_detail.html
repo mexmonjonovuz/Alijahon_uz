@@ -39,7 +39,8 @@
                 <h5>{{ product.name }}</h5>
                 <p class="fs--1">{{ product.description|safe }}</p>
                 <h4 class="d-flex justify-content-center align-items-center">
-                    <span class="text-warning me-2">{{ product.price|intcomma }} sum</span>
+                    <span class="text-warning me-2">{% if stream_id %}{{ price|intcomma }}{% else %}
+                        {{ product.price|intcomma }}{% endif %} sum</span>
                 </h4>
             </div>
         </div>

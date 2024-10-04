@@ -12,8 +12,10 @@ from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView, UpdateView, CreateView
 
 from apps.forms import UserSettingsForm, StreamForm, UserChangePasswordForm, UserAuthenticatedForm, OrderCreateForm, \
-    OperatorUpdateForm
+    OperatorUpdateForm, TransactionCreateForm
+from apps.mixins import GetObjectMixins
 from apps.models import Category, Product, User, Region, District, Stream, Order, Competition, Favorite, SiteSettings
+from apps.models.shop import Transaction
 
 
 class MainBaseView(ListView):
@@ -65,24 +67,18 @@ class UserLogautView(LoginRequiredMixin, View):
         return redirect('main_base')
 
 
-class UserChangeImage(LoginRequiredMixin, UpdateView):
+class UserChangeImage(LoginRequiredMixin, GetObjectMixins, UpdateView):
     queryset = User.objects.values('image')
     template_name = 'apps/auth/settings.html'
     success_url = reverse_lazy('settings_page')
     fields = 'image',
 
-    def get_object(self, queryset=None):
-        return self.request.user
 
-
-class UserSettingsView(LoginRequiredMixin, UpdateView):
+class UserSettingsView(LoginRequiredMixin, GetObjectMixins, UpdateView):
     queryset = User.objects.all()
     template_name = 'apps/auth/settings.html'
     success_url = reverse_lazy('settings_page')
     form_class = UserSettingsForm
-
-    def get_object(self, queryset=None):
-        return self.request.user
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
@@ -96,7 +92,7 @@ class DistrictListView(LoginRequiredMixin, View):
         return JsonResponse(list(districts), safe=False)
 
 
-class UserChangePasswordView(LoginRequiredMixin, UpdateView):
+class UserChangePasswordView(LoginRequiredMixin, GetObjectMixins, UpdateView):
     queryset = User.objects.all()
     template_name = 'apps/auth/settings.html'
     success_url = reverse_lazy('settings_page')
@@ -106,9 +102,6 @@ class UserChangePasswordView(LoginRequiredMixin, UpdateView):
         user = form.save(commit=False)
         login(self.request, user=user.save())
         return redirect(self.success_url)
-
-    def get_object(self, queryset=None):
-        return self.request.user
 
 
 class MarketView(ListView):
@@ -186,37 +179,6 @@ class StreamListView(LoginRequiredMixin, ListView):
         return ctx
 
 
-# class ProductDetailView(DetailView):
-#     queryset = Product.objects.all()
-#     template_name = 'apps/products/product_detail.html'
-#     context_object_name = "product"
-
-
-# class StreamDetailView(DetailView):
-#     queryset = Product.objects.all()
-#     template_name = 'apps/orders/stream_detail.html'
-#     context_object_name = 'product'
-#
-#     def get_object(self, queryset=None):
-#         pk = self.kwargs.get(self.pk_url_kwarg)
-#         self._cache_stream = None
-#         if pk is not None:
-#             self._cache_stream = get_object_or_404(Stream.objects.all(), pk=pk)  # noqa
-#             self._cache_stream.visit_count += 1
-#             self._cache_stream.save()
-#             return self._cache_stream.product
-#         return super().get_object(queryset)
-#
-#     def get_context_data(self, **kwargs):
-#         ctx = super().get_context_data(**kwargs)
-#         price = self.object.price
-#         if self._cache_stream:
-#             price -= self._cache_stream.discount
-#         ctx['stream_id'] = self.kwargs.get(self.pk_url_kwarg, '')
-#         ctx['price'] = price
-#         return ctx
-
-
 class ProductOrStreamDetailView(DetailView):
     template_name = 'apps/products/product_detail.html'
     context_object_name = 'product'
@@ -225,14 +187,13 @@ class ProductOrStreamDetailView(DetailView):
         slug = self.kwargs.get('slug')
         pk = self.kwargs.get('pk')
         self._cache_stream = None
-
-        if pk is not None:
-            self._cache_stream = get_object_or_404(Stream.objects.all(), pk=pk)
+        if pk:
+            self._cache_stream = get_object_or_404(Stream, pk=pk)  # noqa
             self._cache_stream.visit_count += 1
             self._cache_stream.save()
             return self._cache_stream.product
         else:
-            return get_object_or_404(Product.objects.all().first(), slug=slug)
+            return get_object_or_404(Product, slug=slug)
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -270,7 +231,7 @@ class FavoriteView(LoginRequiredMixin, View):
 
 
 class CompetitionListView(ListView):
-    queryset = Competition.objects.filter(is_active=True).first()
+    queryset = Competition.objects.filter(is_active=True)
     template_name = 'apps/statistics/competition.html'
     context_object_name = 'competition'
 
@@ -350,8 +311,17 @@ class CoinsView(TemplateView):
     template_name = 'apps/statistics/coins.html'
 
 
-class PaymentView(TemplateView):
+class PaymentView(CreateView):
+    model = Transaction
     template_name = 'apps/payment.html'
+    context_object_name = 'transaction'
+    form_class = TransactionCreateForm
+
+    def form_valid(self, form):
+        return super().form_invalid(form)
+
+    def form_invalid(self, form):
+        return super().form_invalid(form)
 
 
 class DiagramView(TemplateView):

@@ -15,8 +15,7 @@ urlpatterns = [
     path('login/', UserLoginView.as_view(), name='login_page'),
     path('logout/', UserLogautView.as_view(), name='logaut_page'),
 
-    # path('product-detail/<slug:slug>/', ProductDetailView.as_view(), name='product_detail'),
-    path('product-detail/<int:pk>/', ProductOrStreamDetailView.as_view(), name='product_detail'),
+    path('stream/<int:pk>/', ProductOrStreamDetailView.as_view(), name='stream_detail'),
     path('product-detail/<slug:slug>/', ProductOrStreamDetailView.as_view(), name='product_detail'),
     path('category/<slug:slug>/', ProductListByCategoryListView.as_view(), name='category_by_slug'),
     path('category/', ProductListByCategoryListView.as_view(), name='category_list'),
@@ -44,7 +43,6 @@ urlpatterns = [
     path('admin-page/statistika/', StatisticView.as_view(), name='statistika_page'),
     path('admin-page/statistika/<int:pk>', ProductStatisticView.as_view(), name='product_statistic'),
     path('admin-page/stream/', StreamListView.as_view(), name='steam_page'),
-    # path('admin-page/stream/detail/<int:pk>/', StreamDetailView.as_view(), name='stream_detail'),
     path('admin-page/market/', MarketView.as_view(), name='market_page'),
     path('admin-page/market/<slug:slug>/', MarketView.as_view(), name='market_by_slug'),
     path('admin-page/requests/', InquiriesView.as_view(), name='inquiries_page'),

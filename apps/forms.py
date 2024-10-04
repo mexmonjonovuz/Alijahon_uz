@@ -8,7 +8,7 @@ from django.forms import CharField, ModelChoiceField, ModelForm, PasswordInput
 from django.utils.translation import gettext_lazy as _
 
 from .models import User, Product, Stream
-from .models.shop import Order, Favorite
+from .models.shop import Order, Favorite, Transaction
 
 
 class CustomAdminAuthenticationForm(AdminAuthenticationForm):
@@ -162,3 +162,12 @@ class OperatorUpdateForm(ModelForm):
     class Meta:
         model = Order
         fields = 'status',
+
+
+class TransactionCreateForm(ModelForm):
+    class Meta:
+        model = Transaction
+        fields = 'user', 'card_number', 'amount', 'text'
+    def clean_card_number(self):
+        cart = self.card_number
+        return

@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django_ckeditor_5.fields import CKEditor5Field
 
 from apps.models.base import SlugBasedModel, TimeBasedModel, SlugTimeBasedModel
-
+from .user import User
 
 class Category(SlugBasedModel):
     image = ImageField(upload_to='categories/%Y/%m/%d')
@@ -21,8 +21,6 @@ class Product(SlugTimeBasedModel):
     quantity = PositiveIntegerField(db_default=0)
     discount_price = PositiveIntegerField(db_default=0)
     category = ForeignKey('apps.Category', CASCADE)
-
-    # ref_user = ForeignKey('apps.Stream', CASCADE)
 
     class Meta:
         ordering = 'created_at',
@@ -70,9 +68,12 @@ class Order(TimeBasedModel):
     product = ForeignKey('apps.Product', CASCADE, related_name='orders', verbose_name=_('product'))
     user = ForeignKey('apps.User', SET_NULL, null=True, blank=True, related_name='orders')
     operator = ForeignKey('apps.User', SET_NULL, null=True, blank=True, verbose_name=_('operator'),
-                          related_name='currier_order')
+                          related_name='currier_order', limit_choices_to={'type': User.Type.OPERATOR})
     currier = ForeignKey('apps.User', SET_NULL, null=True, blank=True, verbose_name=_('currier'),
-                         related_name='operator_order')
+                         related_name='operator_order', limit_choices_to={'type': User.Type.DRIVER})
+    referral_user = ForeignKey('apps.User', SET_NULL, null=True, blank=True, related_name='referral_user')
+    send_order_date = DateField(null=True, blank=True)
+    address = CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.status
@@ -92,7 +93,7 @@ class Favorite(SlugTimeBasedModel):
         return self.user.likes.count()
 
 
-class Competition(Model):
+class Competition(TimeBasedModel):
     title = CKEditor5Field('text', config_name='extends')
     description = CKEditor5Field('text', config_name='extends')
     image = ImageField(upload_to='competition/%Y/%m/%d')
