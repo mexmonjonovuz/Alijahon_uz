@@ -4,7 +4,7 @@ from django.contrib.admin.forms import AdminAuthenticationForm
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
-from django.forms import CharField, ModelChoiceField, ModelForm, PasswordInput
+from django.forms import CharField, ModelChoiceField, ModelForm, PasswordInput, HiddenInput, Select
 from django.utils.translation import gettext_lazy as _
 
 from .models import User, Product, Stream
@@ -118,10 +118,15 @@ class UserChangePasswordForm(ModelForm):
 class OrderCreateForm(ModelForm):
     product = ModelChoiceField(queryset=Product.objects.all())
     stream = ModelChoiceField(queryset=Stream.objects.all(), required=False)
+    phone_number = CharField()
 
     class Meta:
         model = Order
         fields = ('product', 'phone_number', 'full_name', 'stream', 'user')
+
+    def clean_phone_number(self):
+        phone_number = self.data.get('phone_number')
+        return re.sub(r'[^\d]', '', phone_number)[-9:]
 
 
 class StreamForm(ModelForm):
@@ -165,9 +170,12 @@ class OperatorUpdateForm(ModelForm):
 
 
 class TransactionCreateForm(ModelForm):
+    user = ModelChoiceField(queryset=User.objects.all(), widget=Select())
+
     class Meta:
         model = Transaction
-        fields = 'user', 'card_number', 'amount', 'text'
-    def clean_card_number(self):
-        cart = self.card_number
-        return
+        fields = 'card_number', 'amount', 'text', 'user',
+
+    # def clean_card_number(self):
+    #     cart = self.card_number
+    #     return

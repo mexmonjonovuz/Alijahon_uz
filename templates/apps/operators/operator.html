@@ -20,7 +20,7 @@
 <div>
     <nav class="navbar navbar-dark bg-dark text-white" style="height: 10%;">
         {% if request.path|spliter == 'new' %}
-            <div style="margin-left: 15px;"><a href="/operator/prodcut_add">{% trans 'Zakaz +' %}</a></div>{% endif %}
+            <div style="margin-left: 15px;"><a href="{% url 'main_base' %}">{% trans 'Zakaz +' %}</a></div>{% endif %}
         <div>{% trans 'Buyurtmalar' %}</div>
         <h4>ID: 721</h4>
         <h4>Operator: {{ operator.user.first_name }}</h4>
@@ -41,26 +41,32 @@
                             </select>
                         </p>
                         <p>
-                            <label for="id_region">Viloyat tanlang:</label>
-                            <select name="location" id="id_region" multiple onchange="getDistricts(this.value)">
-                                {% for region in regions %}
-                                    <option value="{{ region.id }}"
-                                            {% if user.region.id == region.id %}selected{% endif %}>
-                                        {{ region.name }}
-                                    </option>
-                                {% endfor %}
-                            </select>
-                        </p>
-                        <p>
-                            <label for="id_district">Tuman:</label>
-                            <select name="district" id="district_id" multiple>
-                                <option value="" selected disabled>{% trans 'Shahar/Tuman tanlang' %}</option>
-                                {% if user.district.id %}
-                                    <option value="{{ user.district.id }}"
-                                            selected>{{ user.district.name }}</option>
-                                {% endif %}
-                            </select>
-                        </p>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                {% trans "Viloyat" %}
+                                <select name="id_region" class="form-control" id="id_region"
+                                        onchange="getDistricts(this.value)">
+                                    <option value="">{% trans "Viloyat tanlang" %}</option>
+                                    {% for region in regions %}
+                                        <option value="{{ region.id }}"
+                                                {% if user.district.region.id == region.id %}selected{% endif %}>
+                                            {{ region.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-lg-6">
+                                {% trans "Tuman" %}
+                                <select name="district" class="form-control" id="district_id">
+                                    <option value="" selected disabled>{% trans "Tuman tanlang" %}</option>
+                                    {% if user.district.id %}
+                                        <option value="{{ user.district.id }}"
+                                                selected>{{ user.district.name }}</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
                         <p>
                             <label for="id_name">Mahsulot nomi:</label>
                             <input type="text" name="name" id="id_name">
@@ -83,13 +89,13 @@
                             <ul class="text-muted">
                                 <li class="">{% trans 'Reklama tarqatuvchi ID:' %} uzim</li>
                                 <li class="">{% trans 'Client:' %} +9989XXXXXXXX</li>
-                                <li class="">{% trans 'Manzil' %} {{ order.district.region.name|default:'No aniq' }}</li>
+                                <li class="">{% trans 'Manzil' %}: {{ order.region.name|default:'No aniq' }}</li>
                                 <li class="">
-                                    {% trans 'Narxi' %} {{ order.full_name }} sum
+                                    {% trans 'Narxi' %} {{ order.product.price|intcomma }} sum
                                 </li>
                                 <li class="">{% trans 'Soni:' %} 1ta</li>
-                                <li class="">{% trans 'Vaqti:' %} 19-Iyul, 2024-yil 16:22</li>
-                                <li class="">{% trans 'Yangilangan vaqti:' %} 19-Iyul, 2024-yil 16:22</li>
+                                <li class="">{% trans 'Vaqti:' %} {{ order.created_at }}</li>
+                                <li class="">{% trans 'Yangilangan vaqti:' %} {{ order.updated_at }}</li>
                                 <li class="">{% trans 'Holati:' %} {{ order.status }}</li>
                             </ul>
                             <a href="{% url 'operator_detail' order.pk %}" class="btn btn-primary"
@@ -99,7 +105,6 @@
                         </div>
                     </div>
                 {% endfor %}
-
                 {% include 'apps/parts/_operators_pagination.html' %}
             </div>
         </div>
@@ -118,15 +123,19 @@
             filter: true
         });
     });
-
     function getDistricts(regionId) {
         const districtSelect = document.getElementById('district_id');
-        districtSelect.innerHTML = '<option value="" selected disabled>{% trans 'Shahar/Tuman tanlang' %}</option>';
-
+        districtSelect.innerHTML = '<option value="" selected disabled>{% trans "Shahar/Tuman tanlang" %}</option>';
         if (regionId) {
+            const loadingOption = document.createElement('option');
+            loadingOption.text = '{% trans "Yuklanmoqda..." %}';
+            loadingOption.disabled = true;
+            districtSelect.appendChild(loadingOption);
+
             fetch(`/get-districts/${regionId}`)
                 .then(response => response.json())
                 .then(data => {
+                    districtSelect.innerHTML = '<option value="" selected disabled>{% trans "Shahar/Tuman tanlang" %}</option>';
                     data.forEach(district => {
                         const option = document.createElement('option');
                         option.value = district.id;
@@ -134,7 +143,10 @@
                         districtSelect.appendChild(option);
                     });
                 })
-                .catch(error => console.log('Error:', error));
+                .catch(error => {
+                    console.log('Error:', error);
+                    districtSelect.innerHTML = '<option value="" disabled>{% trans "Tumanlarni yuklashda xatolik yuz berdi" %}</option>';
+                });
         }
     }
 </script>

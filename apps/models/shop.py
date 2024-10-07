@@ -6,6 +6,7 @@ from django_ckeditor_5.fields import CKEditor5Field
 from apps.models.base import SlugBasedModel, TimeBasedModel, SlugTimeBasedModel
 from .user import User
 
+
 class Category(SlugBasedModel):
     image = ImageField(upload_to='categories/%Y/%m/%d')
 
@@ -118,9 +119,9 @@ class Transaction(TimeBasedModel):
 
     user = ForeignKey('apps.User', SET_NULL, null=True)
     status = CharField(max_length=10, choices=Status.choices, default=Status.PROCESS)
-    card_number = CharField(max_length=16)
+    card_number = CharField(max_length=19)
     amount = PositiveIntegerField(db_default=0)
-    text = CKEditor5Field('Text', config_name='extends', null=True, blank=True)
+    text = CharField(max_length=255, null=True, blank=True)
     check_image = ImageField(upload_to='transaction/%Y/%m/%d', null=True, blank=True)
 
     class Meta:
@@ -134,6 +135,7 @@ class SiteSettings(Model):
     delivery_price_tashkent_region = FloatField(db_default=0)
     delivery_price_tashkent = FloatField(db_default=0)
     minimum_sum = IntegerField(db_default=1000, verbose_name=_('Minimum transaction sum'))
+    operator_repression = IntegerField(db_default=0, verbose_name=_('Operators repression sum'))
 
     class Meta:
         verbose_name = 'Site Setting'

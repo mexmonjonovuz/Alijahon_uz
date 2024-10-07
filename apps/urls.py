@@ -1,12 +1,12 @@
 from django.urls import path
+from django.views.generic import TemplateView
 
-from apps.views import UserLoginView, MainBaseView, ProductListByCategoryListView, CoinsView, \
-    FavoriteView, UserLogautView, PaymentView, DiagramView, CompetitionListView, StatisticView, MarketView, \
-    OrderListView, InquiriesView, UserProfileView, UserSettingsView, StreamListView, \
-    DistrictListView, StreamCreateView, UserChangePasswordView, UserChangeImage, AdminsView, \
-    CreatedSuccessOrderedView, ProductStatisticView, HeaderSearchView, OperatorDetailView, OperatorOrderListView, \
-    FavouriteListView, \
-    ProductOrStreamDetailView
+from .views import MainBaseView, UserLoginView, UserLogautView, ProductOrStreamDetailView, \
+    ProductListByCategoryListView, \
+    PaymentCreateView, HeaderSearchView, FavoriteView, FavouriteListView, OrderListView, \
+    UserChangeImageView, UserSettingsView, UserChangePasswordView, CreatedSuccessOrderedView, DiagramView, \
+    DistrictListView, CompetitionListView, CoinsView, StreamListView, StreamCreateView, StatisticView, \
+    ProductStatisticView, MarketView, InquiriesView, OperatorDetailView, OperatorOrderListView
 
 urlpatterns = [
     path('', MainBaseView.as_view(), name='main_base'),
@@ -17,17 +17,17 @@ urlpatterns = [
 
     path('stream/<int:pk>/', ProductOrStreamDetailView.as_view(), name='stream_detail'),
     path('product-detail/<slug:slug>/', ProductOrStreamDetailView.as_view(), name='product_detail'),
-    path('category/<slug:slug>/', ProductListByCategoryListView.as_view(), name='category_by_slug'),
+    path('category/(?P<slug>[\w\-]+)/$', ProductListByCategoryListView.as_view(), name='category_by_slug'),
     path('category/', ProductListByCategoryListView.as_view(), name='category_list'),
-    path('payment/', PaymentView.as_view(), name='payments'),
+    path('payment/', PaymentCreateView.as_view(), name='payment_page'),
     path('search/', HeaderSearchView.as_view(), name='search'),
 
     # Profile
     path('profile/favourite/<int:pk>/', FavoriteView.as_view(), name='add_favourite_page'),
     path('profile/liked-products/', FavouriteListView.as_view(), name='favorite_page'),
     path('profile/ordered-products/', OrderListView.as_view(), name='order_page'),
-    path('profile/', UserProfileView.as_view(), name='profile_page'),
-    path('profile/settings/image/', UserChangeImage.as_view(), name='settings_change_image_page'),
+    path('profile/', TemplateView.as_view(template_name='apps/auth/profile.html'), name='profile_page'),
+    path('profile/settings/image/', UserChangeImageView.as_view(), name='settings_change_image_page'),
     path('profile/settings/', UserSettingsView.as_view(), name='settings_page'),
     path('profile/settings/change-password/', UserChangePasswordView.as_view(), name='settings_change_page'),
 
@@ -36,7 +36,7 @@ urlpatterns = [
     path('get-districts/<int:region_id>', DistrictListView.as_view(), name='get_districts'),
 
     # Admin page
-    path('admin-page/', AdminsView.as_view(), name='admin_page'),
+    path('admin-page/', TemplateView.as_view(template_name='apps/auth/admin.html'), name='admin_page'),
     path('admin-page/coins/', CoinsView.as_view(), name='coins_user_list'),
     path('admin-page/diagrams/', DiagramView.as_view(), name='diagrams_page'),
     path('admin-page/competition/', CompetitionListView.as_view(), name='competition_page'),

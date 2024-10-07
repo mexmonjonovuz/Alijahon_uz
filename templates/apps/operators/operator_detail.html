@@ -1,171 +1,278 @@
-{% load  static %}
+{% load static %}
 {% load humanize %}
-<!Doctype html>
+{% load i18n %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% trans "Order Details" %}</title>
+    <link rel="stylesheet" href="{% static 'apps/bootstrap/css/bootstrap.css' %}">
+    <style>
+        .form-section {
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            background-color: #f9f9f9;
+        }
 
-    <link rel="stylesheet" href="{% static  'apps/bootstrap/css/bootstrap.css' %}">
-    <title>Hello, world!</title>
+        .form-section h2 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: #343a40;
+        }
+
+        .form-check p {
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .form-check p.bg-primary,
+        .form-check p.bg-warning,
+        .form-check p.bg-danger,
+        .form-check p.bg-secondary {
+            padding: 5px 10px;
+            border-radius: 4px;
+            color: #fff;
+            margin-top: 5px;
+        }
+
+        .form-check p.bg-primary {
+            background-color: #0d6efd;
+        }
+
+        .form-check p.bg-warning {
+            background-color: #ffc107;
+        }
+
+        .form-check p.bg-danger {
+            background-color: #dc3545;
+        }
+
+        .form-check p.bg-secondary {
+            background-color: #6c757d;
+        }
+
+        .required-label::after {
+            content: " *";
+            color: red;
+        }
+    </style>
 </head>
 <body>
 
 <div class="container py-5">
+    <div class="form-section">
+        <h2>{% trans "Hammasi to'g'ri kiritilganligiga e'tibor bering!" %}</h2>
+        <p><strong>{% trans "Customer:" %}</strong> <a
+                href="tel:998{{ order.phone_number }}">+998{{ order.phone_number }}</a></p>
+        <p><strong>{% trans "Product:" %}</strong> {{ order.product.name }} - {{ order.product.price|intcomma }} sum</p>
+        <p style="color: red; font-weight: bold;">AKSIYA</p>
 
-    <div class="row">
-        <h1>Hammasi to'g'ri kiritilganligiga e'tibor bering!</h1>
-        <p>Customer: <span><a href="tel:{{ order.user.phone }}">+{{ order.user.phone }}</a></span></p>
-        <p>Magnetli pardalar - {{ order.product.price|intcomma }} sum</p>
-        <p style="color: red; display: inline;">AKSIYA</p>
-        <p>Dostavka narxi: 20000</p>
+        <div class="mb-3">
+            <label for="delivery_price" class="form-label required-label"><strong>{% trans "Dostavka narxi:" %}</strong></label>
+            <select id="delivery_price" class="form-select" aria-label="{% trans 'Dostavka narxi' %}"
+                    name="delivery_price" required>
+                <option value="" disabled selected>{% trans "Dostavka narxini tanlang" %}</option>
+                {% for setting in site_settings %}
+                    <option value="{{ setting.delivery_price_regions }}">
+                        {{ setting.delivery_price_regions|intcomma }} sum
+                    </option>
+                {% endfor %}
+            </select>
+            {% if form.delivery_price.errors %}
+                <div class="text-danger">
+                    {{ form.delivery_price.errors }}
+                </div>
+            {% endif %}
+        </div>
     </div>
     <form method="post">
-        <input type="hidden">
         {% csrf_token %}
-        <div class="row">
-            <div class="col-6">
-                <p>Nechta:</p>
-                <select class="form-select" aria-label="Default select example" name="quantity">
-                    <option value="1">1 ta (foydalanuvchi tanlagan)</option>
-
-                    1
-                    <option value="1">1</option>
-
-                    2
+        <div class="row form-section">
+            <div class="col-md-6 mb-3">
+                <label for="quantity" class="form-label required-label"><strong>{% trans "Nechta:" %}</strong></label>
+                <select id="quantity" class="form-select" aria-label="{% trans 'Nechta' %}" name="quantity" required>
+                    <option value="" disabled selected>{% trans "Miqdor tanlang" %}</option>
+                    <option value="1" selected>1 ta (foydalanuvchi tanlagan)</option>
                     <option value="2">2</option>
-
-                    3
                     <option value="3">3</option>
-
-                    4
                     <option value="4">4</option>
-
-                    5
                     <option value="5">5</option>
-
-                    6
                     <option value="6">6</option>
-
-                    7
                     <option value="7">7</option>
-
-                    8
                     <option value="8">8</option>
-
-                    9
                     <option value="9">9</option>
-
-                    10
                     <option value="10">10</option>
-
                 </select>
+                {% if form.quantity.errors %}
+                    <div class="text-danger">
+                        {{ form.quantity.errors }}
+                    </div>
+                {% endif %}
             </div>
 
-            <div class="col-6">
-                <label>
-                    Chegirma
-                    <input class="form-control mt-3" name="discount" type="text"
-                           value="Chegirma {{ order.discount_price }}sum">
-                </label>
+            <div class="col-md-6 mb-3">
+                <label for="discount" class="form-label"><strong>{% trans "Chegirma:" %}</strong></label>
+                <input id="discount" class="form-control" name="discount" type="text"
+                       value="{% trans 'Chegirma' %} {{ order.discount_price|intcomma }} sum" readonly>
             </div>
         </div>
-        <br>
-        <div class="row">
-            <div class="mb-3 col-12">
-                <label for="location">Viloyat:</label>
-                <select class="form-control" id="location" name="location">
-                    <option value="Viloyatni tanlang">Viloyatni tanlang</option>
+        <div class="row form-section">
+            <div class="col-md-6 mb-3">
+                <label for="id_region" class="form-label required-label"><strong>{% trans "Viloyat" %}:</strong></label>
+                <select name="id_region" class="form-select" id="id_region" onchange="getDistricts(this.value)"
+                        required>
+                    <option value="" disabled selected>{% trans "Viloyat tanlang" %}</option>
+                    {% for region in regions %}
+                        <option value="{{ region.id }}"
+                                {% if order.user.district.region.id == region.id %}selected{% endif %}>
+                            {{ region.name }}
+                        </option>
+                    {% endfor %}
                 </select>
+                {% if form.id_region.errors %}
+                    <div class="text-danger">
+                        {{ form.id_region.errors }}
+                    </div>
+                {% endif %}
             </div>
-        </div>
-        <div class="row">
-            <div class="mb-3 col-12">
-                <p>Manzil: </p>
-                <label for="exampleFormControlInput1" class="form-label w-50">
-                    <select class="form-control" name="address" id="region">
-                        <option value="Mirobod tumani">Tanlang</option>
-                    </select>
-                </label>
+
+            <div class="col-md-6 mb-3">
+                <label for="district_id" class="form-label required-label"><strong>{% trans "Tuman" %}:</strong></label>
+                <select name="district" class="form-select" id="district_id" required>
+                    <option value="" disabled selected>{% trans "Tuman tanlang" %}</option>
+                    {% if order.district.id %}
+                        <option value="{{ order.district.id }}" selected>{{ order.district.name }}</option>
+                    {% endif %}
+                </select>
+                {% if form.district.errors %}
+                    <div class="text-danger">
+                        {{ form.district.errors }}
+                    </div>
+                {% endif %}
             </div>
         </div>
 
-        <div class="row">
-            <div class="mb-3 col-12">
-                <label for="exampleFormControlInput3" class="form-label">Yuborish vaqti
-                    <input type="date" class="form-control" name="delivering_time"
-
-                           value="2024-05-12"/></label>
+        <div class="form-section">
+            <div class="mb-3">
+                <label for="delivering_time"
+                       class="form-label required-label"><strong>{% trans "Yuborish vaqti" %}:</strong></label>
+                <input type="date" class="form-control" name="delivering_time" id="delivering_time"
+                       value="{{ order.delivering_time|date:'Y-m-d' }}" required>
+                {% if form.delivering_time.errors %}
+                    <div class="text-danger">
+                        {{ form.delivering_time.errors }}
+                    </div>
+                {% endif %}
             </div>
         </div>
 
-        <div class="row">
-            <h1>Buyurtma holati</h1>
-            <p>Buyurtma holatini o'zgartirishdan oldin har bir ma'lumot to'g'ri to'ldirilganligiga ishonch hosil
-                qiling.</p>
-            <p>Har bir noto'g'ri to'ldirilgan holat uchun 50000 so'm jarima.</p>
+        <div class="form-section">
+            <h2>{% trans "Buyurtma holati" %}</h2>
+            <p>{% trans "Buyurtma holatini o'zgartirishdan oldin har bir ma'lumot to'g'ri to'ldirilganligiga ishonch hosil qiling." %}</p>
+            <p>
+            <p>{% trans "Har bir noto'g'ri to'ldirilgan holat uchun" %} <b>{{ site_settings.operator_repression }}</b> {% trans "sum jarima." %}</p>
+            <div class="mb-3">
+                <div class="form-check">
+                    <input required class="form-check-input" type="radio" name="status" id="new_order" value="yangi"
+                           {% if order.status == order.Status.New %}checked{% endif %}>
+                    <label class="form-check-label"
+                           for="new_order"><strong>{% trans "Yangi buyurtma" %}</strong></label>
+                    <p>{% trans "Hali bog'lanilmagan qurilma" %}</p>
+                </div>
+
+                <div class="form-check">
+                    <input required class="form-check-input" type="radio" name="status" id="ready_to_deliver"
+                           value="dastavkaga_tayyor" {% if order.status == 'dastavkaga_tayyor' %}checked{% endif %}>
+                    <label class="form-check-label"
+                           for="ready_to_deliver"><strong>{% trans "Dastavkaga tayyor" %}</strong></label>
+                    <p class="bg-primary">{% trans "Klient buyurtma olishga tayyor yoki buyurtma olish uchun sana aniq qilindi" %}</p>
+                </div>
+
+                <div class="form-check">
+                    <input required class="form-check-input" type="radio" name="status" id="waiting" value="keyin_oladi"
+                           {% if order.status == 'keyin_oladi' %}checked{% endif %}>
+                    <label class="form-check-label" for="waiting"><strong>{% trans "Keyin oladi" %}</strong></label>
+                    <p class="bg-warning">{% trans "2 marta ko'tarmadi, o'chirilgan, xizmat doirasida tashqarida" %}</p>
+                </div>
+
+                <div class="form-check">
+                    <input required class="form-check-input" type="radio" name="status" id="broken"
+                           value="nosoz_mahsulot" {% if order.status == 'nosoz_mahsulot' %}checked{% endif %}>
+                    <label class="form-check-label"
+                           for="broken"><strong>{% trans "Nosoz, bekor qilindi" %}</strong></label>
+                    <p class="bg-danger">{% trans "Klient tomonidan shikoyat tushdi" %}</p>
+                </div>
+
+                <div class="form-check">
+                    <input required class="form-check-input" type="radio" name="status" id="archive" value="arxivlandi"
+                           {% if order.status == 'arxivlandi' %}checked{% endif %}>
+                    <label class="form-check-label" for="archive"><strong>{% trans "Arxivlandi" %}</strong></label>
+                    <p class="bg-secondary">{% trans "Noto'g'ri nomer, dubl buyurtma, Bekor qilindi, Olib bo'lgan" %}</p>
+                </div>
+            </div>
+            {% if form.status.errors %}
+                <div class="text-danger">
+                    {{ form.status.errors }}
+                </div>
+            {% endif %}
         </div>
 
-        <div class="row">
-            <div class="form-check">
-                <input required class="sr-only form-check-input" type="radio" name="status"
-                       id="new_order"
-                       value="yangi">
-                <label class="form-check-label" for="new_order">
-                    Yangi buyurtma
-                </label>
-                <p>Hali bog'lanilmagan qurilma</p>
-            </div>
-            <div class="form-check">
-                <input
-                        checked="checked" required class="form-check-input sr-only" type="radio" name="status"
-                        id="ready_to_deliver"
-                        value="dastavkaga_tayyor">
-                <label class="form-check-label" for="ready_to_deliver">
-                    Dastavkaga tayyor
-                </label>
-                <p class="bg-primary">Klient buyurtma olishga tayyor yoki buyurtma olish uchun sana aniq qilindi</p>
-            </div>
-            <div class="form-check">
-                <input required class="form-check-input sr-only" type="radio" name="status" id="waiting"
-                       value="keyin_oladi">
-                <label class="form-check-label" for="waiting">
-                    Keyin oladi
-                </label>
-                <p class="bg-warning">2 marta ko'tarmadi, o'chirilgan, xizmat doirasida tashqarida</p>
-            </div>
-            <div class="form-check">
-                <input required class="form-check-input sr-only" type="radio" name="status"
-                       id="broken"
-                       value="nosoz_mahsulot">
-                <label class="form-check-label" for="broken">
-                    Nosoz, bekor qilindi
-                </label>
-                <p class="bg-danger">Klient tomonidan shikoyat tushdi</p>
-            </div>
-            <div class="form-check">
-                <input required class="form-check-input sr-only" type="radio" name="status"
-                       id="archive"
-                       value="arxivlandi">
-                <label class="form-check-label" for="archive">
-                    Arxivlandi
-                </label>
-                <p class="bg-secondary">Noto'g'ri nomer, dubl buyurtma, Bekor qilindi, Olib bo'lgan</p>
+        <div class="form-section">
+            <div class="mb-3">
+                <label for="comment" class="form-label required-label"><strong>{% trans "Komment" %}:</strong></label>
+                <textarea name="comment" class="form-control" id="comment" rows="3"
+                          required>{{ order.comment|default:"Oladi." }}</textarea>
+                {% if form.comment.errors %}
+                    <div class="text-danger">
+                        {{ form.comment.errors }}
+                    </div>
+                {% endif %}
             </div>
         </div>
-        <div class="form-group">
-            <label for="exampleFormControlTextarea1">Komment</label>
-            <textarea name="comment" class="form-control" id="exampleFormControlTextarea1"
-                      rows="3">Oladi.</textarea>
-        </div>
-        <div style="display: flex; justify-content: flex-end;">
-            <a href="{% url 'operator_new_page' %}" type="button" class="btn m-3 btn-secondary">Chiqish</a>
-            <input type="submit" class="btn m-3 btn-primary" value="Yuborish"/>
+
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{% url 'operator_new_page' %}" class="btn btn-secondary me-3">{% trans "Chiqish" %}</a>
+            <button type="submit" class="btn btn-primary">{% trans "Yuborish" %}</button>
         </div>
     </form>
 
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="{% static 'apps/js/regions.js' %}"></script>
+
+<script>
+    function getDistricts(regionId) {
+        const districtSelect = document.getElementById('district_id');
+        districtSelect.innerHTML = '<option value="" selected disabled>{% trans "Shahar/Tuman tanlang" %}</option>';
+        if (regionId) {
+            const loadingOption = document.createElement('option');
+            loadingOption.text = '{% trans "Yuklanmoqda..." %}';
+            loadingOption.disabled = true;
+            districtSelect.appendChild(loadingOption);
+
+            fetch(`/get-districts/${regionId}`)
+                .then(response => response.json())
+                .then(data => {
+                    districtSelect.innerHTML = '<option value="" selected disabled>{% trans "Shahar/Tuman tanlang" %}</option>';
+                    data.forEach(district => {
+                        const option = document.createElement('option');
+                        option.value = district.id;
+                        option.text = district.name;
+                        districtSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                    districtSelect.innerHTML = '<option value="" disabled>{% trans "Tumanlarni yuklashda xatolik yuz berdi" %}</option>';
+                });
+        }
+    }
+</script>
 </body>
-</html> 
+</html>

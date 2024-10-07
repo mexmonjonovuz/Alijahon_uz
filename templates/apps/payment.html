@@ -1,4 +1,5 @@
 {% extends 'apps/base.html' %}
+{% load humanize %}
 {% load i18n %}
 {% block title %}
     Payment page
@@ -15,7 +16,8 @@
                                 <h5>{% trans 'Mening hisobim' %}</h5>
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">{% trans 'Asosiy balansda' %}: 0 sum</h5>
+                                <h5 class="card-title">{% trans 'Asosiy balansda' %}: {{ user.balance|intcomma }}
+                                    sum</h5>
                                 <h5 class="card-title">{% trans "To'lab berildi" %}: 0 sum</h5>
                             </div>
                         </div>
@@ -44,32 +46,27 @@
                             <div class="tab-content" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="nav-money" role="tabpanel"
                                      aria-labelledby="nav-money-tab">
-                                    <form class="card-body" method="post">
+                                    <form class="card-body" action="{% url 'payment_page' %}" method="post" enctype="multipart/form-data">
                                         {% csrf_token %}
+                                        <input type="hidden" name="user" id="user_id" class="form-control" value="{{ request.user }}" required>
                                         <div class="form-group">
                                             {% trans "Karta raqami" %} <input type="text" name="card_number"
                                                                               class="form-control"
                                                                               placeholder="**** **** **** ****"
                                                                               maxlength="19"
-                                                                              required="" id="inputNumber">
+                                                                              id="card_number_id" required>
                                         </div>
                                         <div class="form-group">
                                             {% trans "Pul Miqdori" %}<input type="number" name="amount"
                                                                             class="form-control"
-                                                                            placeholder={% trans "Miqdorini kiriting" %} required=""
-                                                                            id="id_amount">
+                                                                            placeholder={% trans "Miqdorini kiriting" %}
+                                                                                    id="id_amount" required>
                                         </div>
                                         <div class="form-group">
                                             {% trans "Izoh" %}
-                                            <input type="text" name="description" id="" class="form-control"
+                                            <input type="text" name="text" id="text_id" class="form-control"
                                                    placeholder={% trans "O'tkazish sababini kiriting (ixtiyoriy)" %}
                                                            maxlength="255">
-                                        </div>
-                                        <div class="form-group">
-                                            <select name="type" class="form-control class-type" style="display: none;"
-                                                    id="id_type">
-                                                <option value="money">Pul</option>
-                                            </select>
                                         </div>
                                         <input type="submit" value="{% trans "Tasdiqlash" %}" class="btn btn-primary">
                                     </form>
@@ -89,20 +86,35 @@
                             <th scope="col">{% trans "Summa" %}</th>
                             <th scope="col">{% trans "Holat" %}</th>
                             <th scope="col">{% trans "Xabar" %}</th>
+                            <th scope="col">{% trans "Isbot" %}</th>
                         </tr>
                         </thead>
                         <tbody>
+                        {#                                                {% if transaction %}#}
                         <tr class="text-center">
-                            <th colspan="5">{% trans "Hozircha sizda pul yechish so'rovlari mavjud emas" %}</th>
+                            <td>{{ transaction.created_at }}</td>
+                            <td>{{ transaction.card_number }}</td>
+                            <td>{{ transaction.amount }}</td>
+                            <td>{{ transaction.status }}</td>
+                            <td>{{ transaction.text }}</td>
+                            <td>{{ transaction.check_image }}</td>
                         </tr>
+                        {#                        {% else %}#}
+                        {#                            <tr>#}
+                        {#                                <td colspan="5" class="text-center">#}
+                        {#                                    {% trans "Hozircha sizda pul yechish so'rovlari mavjud emas" %}#}
+                        {#                                </td>#}
+                        {#                            </tr>#}
+                        {#                        {% endif %}#}
                         </tbody>
                     </table>
                 </div>
+
             </div>
         </div>
     </div>
     <script>
-        const inputNumber = document.getElementById('inputNumber');
+        const inputNumber = document.getElementById('card_number_id');
 
         inputNumber.addEventListener('input', function (e) {
             let value = e.target.value.replace(/\D/g, '');
