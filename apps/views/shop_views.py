@@ -1,5 +1,4 @@
 from datetime import timedelta
-from time import timezone
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Q, Sum
@@ -136,6 +135,7 @@ class StatisticView(LoginRequiredMixin, ListView):
             deliver=Count('orders', filter=Q(orders__status=Order.StatusType.DELIVERING)),
             delivered=Count('orders', filter=Q(orders__status=Order.StatusType.DELIVERED)),
             cant_phone=Count('orders', filter=Q(orders__status=Order.StatusType.CANT_PHONE)),
+            broken=Count('orders', filter=Q(orders__status=Order.StatusType.BROKEN)),
             canceled=Count('orders', filter=Q(orders__status=Order.StatusType.CANCELED)),
             archived=Count('orders', filter=Q(orders__status=Order.StatusType.ARCHIVED)),
         )
@@ -146,6 +146,7 @@ class StatisticView(LoginRequiredMixin, ListView):
             total_deliver_count=Sum(Order.StatusType.DELIVERING),
             total_delivered_count=Sum(Order.StatusType.DELIVERED),
             total_cant_phone_count=Sum(Order.StatusType.CANT_PHONE),
+            total_broken_count=Sum(Order.StatusType.CANCELED),
             total_canceled_count=Sum(Order.StatusType.CANCELED),
             total_archived_count=Sum(Order.StatusType.ARCHIVED),
         )

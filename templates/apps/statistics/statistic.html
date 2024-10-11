@@ -1,4 +1,5 @@
 {% extends 'apps/base.html' %}
+{% load i18n %}
 {% block title %}
     Stastika page
 {% endblock %}
@@ -21,16 +22,17 @@
                     <table class="table">
                         <thead class="text-center">
                         <tr>
-                            <th scope="col">Oqim</th>
-                            <th scope="col">Mahsulot</th>
-                            <th scope="col">Tashrif</th>
-                            <th scope="col">Yangi</th>
-                            <th scope="col">Dastavkaga tayyor</th>
-                            <th scope="col">Yetkazilmoqda</th>
-                            <th scope="col">Yetqazib berildi</th>
-                            <th scope="col">Telefon ko'tarmadi</th>
-                            <th scope="col">Bekor qilindi</th>
-                            <th scope="col">Arxivlandi</th>
+                            <th scope="col">{% trans "Oqim" %}</th>
+                            <th scope="col">{% trans "Mahsulot" %}</th>
+                            <th scope="col">{% trans "Tashrif" %}</th>
+                            <th scope="col">{% trans "Yangi" %}</th>
+                            <th scope="col">{% trans "Dastavkaga tayyor" %}</th>
+                            <th scope="col">{% trans "Yetkazilmoqda" %}</th>
+                            <th scope="col">{% trans "Yetqazib berildi" %}</th>
+                            <th scope="col">{% trans "Telefon ko'tarmadi" %}</th>
+                            <th scope="col">{% trans "Nosoz, Buzuq" %}</th>
+                            <th scope="col">{% trans "Bekor qilindi" %}</th>
+                            <th scope="col">{% trans "Arxivlandi" %}</th>
                         </tr>
                         <tr class="bg-info">
                             <td> JAMI</td>
@@ -41,6 +43,7 @@
                             <td> {{ streams.stream.total_deliver_count }}</td>
                             <td> {{ streams.stream.total_delivered_count }}</td>
                             <td> {{ streams.stream.total_cant_phone_count }}</td>
+                            <td> {{ streams.stream.total_broken_count }}</td>
                             <td> {{ streams.stream.total_canceled_count }}</td>
                             <td> {{ streams.stream.total_archived_count }}</td>
                         </tr>
@@ -57,6 +60,7 @@
                                 <td>{{ stream.deliver }}</td>
                                 <td>{{ stream.delivered }}</td>
                                 <td>{{ stream.cant_phone }}</td>
+                                <td>{{ stream.broken }}</td>
                                 <td>{{ stream.canceled }}</td>
                                 <td>{{ stream.archived }}</td>
                             </tr>
@@ -73,6 +77,7 @@
                             <td> {{ streams.stream.total_deliver_count }}</td>
                             <td> {{ streams.stream.total_delivered_count }}</td>
                             <td> {{ streams.stream.total_cant_phone_count }}</td>
+                            <td> {{ streams.stream.total_broken_count }}</td>
                             <td> {{ streams.stream.total_canceled_count }}</td>
                             <td> {{ streams.stream.total_archived_count }}</td>
                         </tr>

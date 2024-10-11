@@ -182,9 +182,9 @@ class TransactionCreateForm(ModelForm):
 
     def clean_card_number(self):
         card_number = self.data.get('card_number').replace(' ', '')
-        if len(card_number) == 16:
-            return card_number
-        return ValidationError("Karta raqamlari noto'gri bo'lishi mumkin tekshirib qaytadan uruning !!!")
+        if len(card_number) != 16:
+            raise ValidationError("Karta raqamlari noto'gri bo'lishi mumkin tekshirib qaytadan uruning !!!")
+        return card_number
 
     def clean_amount(self):
         amount = self.data.get('amount')
