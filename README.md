@@ -86,6 +86,8 @@ If you're learning Django and want to take your next step to become a profession
 
 ---
 
+
+
 <div align="center">
 
 <i>Other places you can find us:</i><br>
