@@ -151,3 +151,6 @@ class StatisticView(LoginRequiredMixin, ListView):
             total_archived_count=Sum(Order.StatusType.ARCHIVED),
         )
         return qs
+
+
+
