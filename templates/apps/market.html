@@ -5,7 +5,6 @@
 {% block title %}
     Market page
 {% endblock %}
-
 {% block custom_css %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
@@ -26,14 +25,14 @@
                             </button>
                         </div>
                         <div class="modal-body" bis_skin_checked="1">
-                            <form method="post" action="{% url 'create_stream_page' %}"
-                                  enctype="multipart/form-data">
+                            <form method="post" action="{% url 'create_stream_page' %}" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <input class="form-control" name="stream" type="hidden" required
                                        value="{{ stream_id }}"/>
                                 <input name="owner" id="hidden_owner" type="hidden" value="{{ user.id }}">
                                 <input name="product" id="hidden_product" type="hidden" value="{{ product.pk }}"
                                        required>
+
                                 <label for="stream_name">Oqim nomi</label>
                                 <input type="text" name="name" id="stream_name" class="form-control"
                                        placeholder="Oqim uchun nom kiriting" required>
@@ -42,7 +41,9 @@
                                 <label for="discount">Chegirma</label>
                                 <input type="number" name="discount" class="form-control"
                                        placeholder="Chegirma miqdori: {{ product.discount }} sumgacha" id="id_discount">
-                                <input type="submit" class="btn btn-primary mt-4" value="Oqim yaratish">
+                                <span id="discount-error" style="color: red; display: none;"></span>
+
+                                <input type="submit" id="submit-btn" class="btn btn-primary mt-4" value="Oqim yaratish">
                             </form>
                         </div>
                     </div>
@@ -146,125 +147,39 @@
             }
         }
 
-        function validateStreamName(inputId, errorElementId) {
-            const streamNameValue = document.getElementById(inputId).value.trim();
-
-            if (streamNameValue.length < 3) {
-                toggleValidationError(errorElementId, 'Oqim uzunligi kamida 3 ta belgidan iborat bo\'lishi kerak');
+        function validateStreamName() {
+            const nameValue = document.getElementById('stream_name').value.trim();
+            if (nameValue.length < 3) {
+                toggleValidationError('stream-error', 'Oqim nomi kamida 3 ta belgidan iborat bo\'lishi kerak');
                 return false;
             }
-
-            if (/\d/.test(streamNameValue)) {
-                toggleValidationError(errorElementId, 'Oqim nomida raqam bo\'lishi mumkin emas');
+            if (/\d/.test(nameValue)) {
+                toggleValidationError('stream-error', 'Oqim nomida raqam bo\'lishi mumkin emas');
                 return false;
             }
-            toggleValidationError(errorElementId, '', false);
+            toggleValidationError('stream-error', '', false);
+            return true;
+        }
+
+        function validateDiscount() {
+            let discountValue = document.getElementById('id_discount').value;
+
+            if (discountValue === '' || isNaN(discountValue) || discountValue < 0) {
+                document.getElementById('id_discount').value = 0;
+                discountValue = 0;
+            }
+
+            toggleValidationError('discount-error', '', false);
             return true;
         }
 
         document.getElementById('submit-btn').addEventListener('click', function (event) {
-            const hasStreamValid = validateStreamName('stream_name', 'stream-error');
+            const isNameValid = validateStreamName();
+            const isDiscountValid = validateDiscount();
 
-            if (!hasStreamValid) {
+            if (!isNameValid || !isDiscountValid) {
                 event.preventDefault();
             }
-        });
-        document.addEventListener("DOMContentLoaded", function () {
-
-            let productItems = document.querySelectorAll(".product-item");
-            let uniqueCategories = new Set();
-
-
-            productItems.forEach(item => {
-                let categoryName = item.dataset.category.trim();
-                if (!uniqueCategories.has(categoryName)) {
-                    uniqueCategories.add(categoryName);
-                    console.log(categoryName);
-                }
-            });
-        });
-
-
-    </script>
-    <script>
-        $('.btn_open_modal').on('click', function () {
-            let product_id = $(this).attr('name');
-            $('#hidden_product').val(product_id);
-        });
-
-        function toggleValidationError(elementId, errorMessage, show = true) {
-            const errorElement = document.getElementById(elementId);
-            if (show) {
-                errorElement.innerText = errorMessage;
-                errorElement.style.display = 'block';
-                setTimeout(() => errorElement.style.display = 'none', 5000);
-            } else {
-                errorElement.style.display = 'none';
-            }
-        }
-
-        function validateStreamName(inputId, errorElementId) {
-            const streamNameValue = document.getElementById(inputId).value.trim();
-
-            if (streamNameValue.length < 3) {
-                toggleValidationError(errorElementId, 'Oqim nomi kamida 3 ta belgidan iborat bo\'lishi kerak.');
-                return false;
-            }
-
-            if (!/^[A-Za-z]+$/.test(streamNameValue)) {
-                toggleValidationError(errorElementId, 'Oqim nomi faqat harflardan iborat bo\'lishi kerak.');
-                return false;
-            }
-
-            toggleValidationError(errorElementId, '', false);
-            return true;
-        }
-
-        function validateDiscount(inputId, productPrice, errorElementId) {
-            const discountValue = parseFloat(document.getElementById(inputId).value);
-
-            if (isNaN(discountValue)) {
-                toggleValidationError(errorElementId, 'Chegirma miqdori raqam bo\'lishi kerak.');
-                return false;
-            }
-
-            if (discountValue < 0) {
-                toggleValidationError(errorElementId, 'Chegirma miqdori manfiy bo\'lishi mumkin emas.');
-                return false;
-            }
-
-            if (discountValue >= productPrice) {
-                toggleValidationError(errorElementId, 'Chegirma miqdori mahsulot narxidan kichik bo\'lishi kerak.');
-                return false;
-            }
-
-            toggleValidationError(errorElementId, '', false);
-            return true;
-        }
-
-        document.getElementById('submit-btn').addEventListener('click', function (event) {
-            const hasStreamValid = validateStreamName('stream_name', 'stream-error');
-            const discountInput = document.getElementById('id_discount');
-            const productPrice = parseFloat('{{ product.price }}');
-
-            const hasDiscountValid = validateDiscount('id_discount', productPrice, 'discount-error');
-
-            if (!hasStreamValid || !hasDiscountValid) {
-                event.preventDefault();
-            }
-        });
-
-        document.addEventListener("DOMContentLoaded", function () {
-            let productItems = document.querySelectorAll(".product-item");
-            let uniqueCategories = new Set();
-
-            productItems.forEach(item => {
-                let categoryName = item.dataset.category.trim();
-                if (!uniqueCategories.has(categoryName)) {
-                    uniqueCategories.add(categoryName);
-                    console.log(categoryName);
-                }
-            });
         });
     </script>
 

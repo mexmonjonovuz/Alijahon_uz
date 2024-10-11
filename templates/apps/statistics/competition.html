@@ -6,34 +6,34 @@
 {% block main_content %}
     <div class="card-group mt-2" bis_skin_checked="1">
         <div class="card overflow-hidden" bis_skin_checked="1">
-                <div class="card-img-top" bis_skin_checked="1"><img class="img-fluid" src="{{ competition.image.url }}"
-                                                                    alt="Konkurs"></div>
-                <div class="card-body" bis_skin_checked="1">
-                    <h3 class="card-title">alijahon.uz</h3>
-                    <p class="card-text"></p>
-                    <p>{% trans competition.title|safe %}</p>
+            <div class="card-img-top" bis_skin_checked="1"><img class="img-fluid" src="{{ competition.image.url }}"
+                                                                alt="Konkurs"></div>
+            <div class="card-body" bis_skin_checked="1">
+                <h3 class="card-title">alijahon.uz</h3>
+                <p class="card-text"></p>
+                <p>{% trans competition.title|safe %}</p>
 
-                    <p>{% trans competition.description|safe %}</p>
-                    <p></p>
-                    <div class="row light" bis_skin_checked="1">
-                        <div class="col-6 col-sm-6 col-lg-4 mb-4" bis_skin_checked="1">
-                            <div class="card text-white bg-info" bis_skin_checked="1">
-                                <div class="card-body" bis_skin_checked="1">
-                                    <div class="card-title" bis_skin_checked="1">{% trans 'Boshlash' %}</div>
-                                    <p class="card-text">{{ competition.start_date }}</p>
-                                </div>
+                <p>{% trans competition.description|safe %}</p>
+                <p></p>
+                <div class="row light" bis_skin_checked="1">
+                    <div class="col-6 col-sm-6 col-lg-4 mb-4" bis_skin_checked="1">
+                        <div class="card text-white bg-info" bis_skin_checked="1">
+                            <div class="card-body" bis_skin_checked="1">
+                                <div class="card-title" bis_skin_checked="1">{% trans 'Boshlash' %}</div>
+                                <p class="card-text">{{ competition.start_date }}</p>
                             </div>
                         </div>
-                        <div class="col-6 col-sm-6 col-lg-4 mb-4" bis_skin_checked="1">
-                            <div class="card text-white bg-danger" bis_skin_checked="1">
-                                <div class="card-body" bis_skin_checked="1">
-                                    <div class="card-title" bis_skin_checked="1">{% trans 'Yakunlash' %}</div>
-                                    <p class="card-text">{{ competition.end_date }}</p>
-                                </div>
+                    </div>
+                    <div class="col-6 col-sm-6 col-lg-4 mb-4" bis_skin_checked="1">
+                        <div class="card text-white bg-danger" bis_skin_checked="1">
+                            <div class="card-body" bis_skin_checked="1">
+                                <div class="card-title" bis_skin_checked="1">{% trans 'Yakunlash' %}</div>
+                                <p class="card-text">{{ competition.end_date }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
     <div class="card mb-3" bis_skin_checked="1">
@@ -58,18 +58,19 @@
                             <table class="table table-bordered table-striped fs--1 mb-0">
                                 <thead class="bg-200 text-900">
                                 <tr>
-                                    <th class="sort" data-sort="name">№</th>
+                                    <th class="sort" data-sort="table_number">№</th>
                                     <th class="sort" data-sort="email">{% trans 'Sotuvchi' %}</th>
                                     <th class="sort" data-sort="age">{% trans 'Sotilgan' %}</th>
                                 </tr>
                                 </thead>
                                 <tbody class="list">
-
-                                <tr>
-                                    <td class="name">1</td>
-                                    <td class="email">Asadbekuz</td>
-                                    <td class="age">1000</td>
-                                </tr>
+                                {% for  user__ in users %}
+                                    <tr>
+                                        <td class="text">#{{ forloop.counter }}</td>
+                                        <td class="email">{{ user__.first_name }}</td>
+                                        <td class="age">{{ user__.order_product_count }}</td>
+                                    </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>

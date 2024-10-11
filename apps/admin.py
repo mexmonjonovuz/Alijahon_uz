@@ -5,10 +5,15 @@ from django.contrib.auth.models import Group
 from django.utils.html import format_html
 
 from apps.forms import CustomAdminAuthenticationForm
-from apps.models import Category, Product, User, Region, District, SiteSettings, Favorite, Competition
+from apps.models import Category, Product, User, SiteSettings, Favorite, Competition, Order, District, Region
 from apps.models.proxy.proxy import OrderNewProxyModel, OrderReadyProxyModel, OrderDeliverProxyModel, \
     OrderDeliveredProxyModel, OrderCantPhoneProxyModel, OrderCanceledProxyModel, OrderArchivedProxyModel, \
     UserProxyModel, UserOperatorProxyModel, UserManagerProxyModel, UserAdminProxyModel, UserDriverProxyModel
+from apps.models.shop import Transaction
+
+admin.site.site_title = "Alijahon Admin Paneli"
+admin.site.site_header = "Alijahon Administratsiyasi"
+admin.site.index_title = "Xush kelibsiz! Alijahon Admin Paneli"
 
 
 @register(User)
@@ -68,6 +73,12 @@ class ProductModelAdmin(ModelAdmin):
     show_image.allow_tags = True
 
 
+@register(Order)
+class OrderModelAdmin(ModelAdmin):
+    list_display = 'full_name', 'phone_number', 'status',
+    list_filter = 'status',
+
+
 #
 # @register(Operator)
 # class OperatorStackedInline(StackedInline):
@@ -91,6 +102,11 @@ class SiteSettingsModelAdmin(ModelAdmin):
 
 @register(Favorite)
 class FavouriteModelAdmin(ModelAdmin):
+    pass
+
+
+@register(Transaction)
+class TransactionModelAdmin(ModelAdmin):
     pass
 
 

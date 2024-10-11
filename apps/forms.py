@@ -4,7 +4,7 @@ from django.contrib.admin.forms import AdminAuthenticationForm
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
-from django.forms import CharField, ModelChoiceField, ModelForm, PasswordInput, HiddenInput, Select
+from django.forms import CharField, ModelChoiceField, ModelForm, PasswordInput
 from django.utils.translation import gettext_lazy as _
 
 from .models import User, Product, Stream
@@ -47,7 +47,7 @@ class UserAuthenticatedForm(ModelForm):
 
     def clean_phone(self):
         phone = self.data.get('phone')
-        return re.sub(r'[^\d]', '', phone)
+        return re.sub(r'[^\d]', '', phone)[-9:]
 
     def clean(self):
         phone = self.cleaned_data.get("phone")
@@ -166,16 +166,32 @@ class AuthAdminsLogin(AuthenticationForm):
 class OperatorUpdateForm(ModelForm):
     class Meta:
         model = Order
-        fields = 'status',
+        fields = 'quantity', 'region', 'district', 'send_order_date', 'status',
 
 
 class TransactionCreateForm(ModelForm):
-    user = ModelChoiceField(queryset=User.objects.all(), widget=Select())
-
     class Meta:
         model = Transaction
         fields = 'card_number', 'amount', 'text', 'user',
 
-    # def clean_card_number(self):
-    #     cart = self.card_number
-    #     return
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.instance.user = user
+
+    def clean_card_number(self):
+        card_number = self.data.get('card_number').replace(' ', '')
+        if len(card_number) == 16:
+            return card_number
+        return ValidationError("Karta raqamlari noto'gri bo'lishi mumkin tekshirib qaytadan uruning !!!")
+
+    def clean_amount(self):
+        amount = self.data.get('amount')
+        user = self.data.get('user')
+        user_balance = User.objects.filter(phone=user).values_list('balance', flat=True)[0]
+        if user_balance < int(amount):
+            return ValidationError("Mablag' yetarli Emas !!!")
+        _user = User.objects.filter(phone=user)
+        _user.update(balance=(user_balance - int(amount)))
+        return amount

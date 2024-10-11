@@ -1,7 +1,8 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 
 
-class GetObjectMixins(View):
+class GetObjectMixins(LoginRequiredMixin, View):
 
     def get_object(self, queryset=None):
         return self.request.user

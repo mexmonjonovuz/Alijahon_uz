@@ -1,5 +1,4 @@
 {% extends "admin/base_site.html" %}
-
 {% load static %}
 {% load i18n %}
 {% load i18n_switcher %}
@@ -48,11 +47,14 @@
     <div class="language-switcher" style="float: left;">
         <a href="{{ request|switch_i18n:'en' }}">
             <img class="i18n_flag" src="{% static 'admin/images/flag-Stars-and-Stripes-May-1-1795.webp' %}"/>
-        </a> /
+        </a> /&nbsp;
         <a href="{{ request|switch_i18n:'ru' }}">
             <img class="i18n_flag" src="{% static 'admin/images/Flag_of_Russia.svg.png' %}"/>
-        </a> /
+        </a> /&nbsp;
         <a href="{{ request|switch_i18n:'uz' }}">
+            <img class="i18n_flag" src="{% static 'admin/images/Flag-Uzbekistan.webp' %}"/>
+        </a> /&nbsp;
+        <a href="{{ request|switch_i18n:'oz' }}">
             <img class="i18n_flag" src="{% static 'admin/images/Flag-Uzbekistan.webp' %}"/>
         </a>
         &nbsp;
@@ -68,8 +70,7 @@
         <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
     {% endif %}
     <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
-
-
+    
 
 {% endblock %}
 

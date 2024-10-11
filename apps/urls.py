@@ -1,9 +1,9 @@
-from django.urls import path
+from django.urls import path, re_path
 from django.views.generic import TemplateView
 
 from .views import MainBaseView, UserLoginView, UserLogautView, ProductOrStreamDetailView, \
     ProductListByCategoryListView, \
-    PaymentCreateView, HeaderSearchView, FavoriteView, FavouriteListView, OrderListView, \
+    TransactionCreateView, HeaderSearchView, FavoriteView, FavouriteListView, OrderListView, \
     UserChangeImageView, UserSettingsView, UserChangePasswordView, CreatedSuccessOrderedView, DiagramView, \
     DistrictListView, CompetitionListView, CoinsView, StreamListView, StreamCreateView, StatisticView, \
     ProductStatisticView, MarketView, InquiriesView, OperatorDetailView, OperatorOrderListView
@@ -16,10 +16,10 @@ urlpatterns = [
     path('logout/', UserLogautView.as_view(), name='logaut_page'),
 
     path('stream/<int:pk>/', ProductOrStreamDetailView.as_view(), name='stream_detail'),
-    path('product-detail/<slug:slug>/', ProductOrStreamDetailView.as_view(), name='product_detail'),
-    path('category/(?P<slug>[\w\-]+)/$', ProductListByCategoryListView.as_view(), name='category_by_slug'),
+    path('product-detail/<str:slug>/', ProductOrStreamDetailView.as_view(), name='product_detail'),
+    re_path(r'category/(?P<slug>[\w\-]+)/$', ProductListByCategoryListView.as_view(), name='category_by_slug'),
     path('category/', ProductListByCategoryListView.as_view(), name='category_list'),
-    path('payment/', PaymentCreateView.as_view(), name='payment_page'),
+    path('payment/', TransactionCreateView.as_view(), name='payment_page'),
     path('search/', HeaderSearchView.as_view(), name='search'),
 
     # Profile
@@ -52,7 +52,7 @@ urlpatterns = [
     path('operator-page/', OperatorOrderListView.as_view(), name='operator_page'),
     path('operator-page/new/', OperatorOrderListView.as_view(), name='operator_new_page'),
     path('operator-page/ready/', OperatorOrderListView.as_view(), name='operator_ready_page'),
-    path('operator-page/deliver/', OperatorOrderListView.as_view(), name='operator_deliver_page'),
+    path('operator-page/delivering/', OperatorOrderListView.as_view(), name='operator_delivering_page'),
     path('operator-page/delivered/', OperatorOrderListView.as_view(), name='operator_delivered_page'),
     path('operator-page/broken/', OperatorOrderListView.as_view(), name='operator_broken_page'),
     path('operator-page/cant_phone/', OperatorOrderListView.as_view(), name='operator_cantphone_page'),

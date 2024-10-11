@@ -31,8 +31,7 @@ class CreatedSuccessOrderedView(CreateView):
         order = form.save()
         context = self.get_context_data(form=form)
         context['order'] = order
-        context[
-            'site_settings'] = SiteSettings.objects.all().first()
+        context['site_settings'] = SiteSettings.objects.first()
         return render(self.request, self.template_name, context)
 
     def form_invalid(self, form):
@@ -83,14 +82,31 @@ class FavoriteView(LoginRequiredMixin, View):
 
 
 class CompetitionListView(ListView):
-    queryset = Competition.objects.filter(is_active=True)
+    queryset = User.objects.all()
     template_name = 'apps/statistics/competition.html'
-    context_object_name = 'competition'
+    context_object_name = 'users'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super().get_context_data(object_list=object_list, **kwargs)
-        user = User.objects.filter(orders__status='Delivered').values('first_name')
+        ctx['competition'] = Competition.objects.filter(is_active=True).first()
         return ctx
+
+    def get_queryset(self):
+        qs = super().get_queryset().exclude(type=User.Type.ADMIN)
+        competition = Competition.objects.filter(is_active=True).first()
+        if competition:
+            start_date = competition.start_date
+            end_date = competition.end_date
+
+            qs = qs.annotate(
+                order_product_count=Sum(
+                    'streams__orders__quantity',
+                    filter=Q(streams__orders__status=Order.StatusType.DELIVERED) &
+                           Q(streams__orders__created_at__range=(start_date, end_date))
+                )
+            ).filter(order_product_count__isnull=False).order_by('-order_product_count')
+
+        return qs
 
 
 class StatisticView(LoginRequiredMixin, ListView):
@@ -115,22 +131,22 @@ class StatisticView(LoginRequiredMixin, ListView):
         if start_date:
             qs = qs.filter(orders__created_at__gte=start_date)
         qs = qs.annotate(
-            new=Count('orders', filter=Q(orders__status='new')),
-            ready=Count('orders', filter=Q(orders__status='ready')),
-            deliver=Count('orders', filter=Q(orders__status='deliver')),
-            delivered=Count('orders', filter=Q(orders__status='delivered')),
-            cant_phone=Count('orders', filter=Q(orders__status='cant_phone')),
-            canceled=Count('orders', filter=Q(orders__status='canceled')),
-            archived=Count('orders', filter=Q(orders__status='archived')),
+            new=Count('orders', filter=Q(orders__status=Order.StatusType.NEW)),
+            ready=Count('orders', filter=Q(orders__status=Order.StatusType.READY)),
+            deliver=Count('orders', filter=Q(orders__status=Order.StatusType.DELIVERING)),
+            delivered=Count('orders', filter=Q(orders__status=Order.StatusType.DELIVERED)),
+            cant_phone=Count('orders', filter=Q(orders__status=Order.StatusType.CANT_PHONE)),
+            canceled=Count('orders', filter=Q(orders__status=Order.StatusType.CANCELED)),
+            archived=Count('orders', filter=Q(orders__status=Order.StatusType.ARCHIVED)),
         )
         qs.stream = qs.aggregate(
             total_visit_count=Sum('visit_count'),
-            total_new_count=Sum('new'),
-            total_ready_count=Sum('ready'),
-            total_deliver_count=Sum('deliver'),
-            total_delivered_count=Sum('delivered'),
-            total_cant_phone_count=Sum('cant_phone'),
-            total_canceled_count=Sum('canceled'),
-            total_archived_count=Sum('archived'),
+            total_new_count=Sum(Order.StatusType.NEW),
+            total_ready_count=Sum(Order.StatusType.READY),
+            total_deliver_count=Sum(Order.StatusType.DELIVERING),
+            total_delivered_count=Sum(Order.StatusType.DELIVERED),
+            total_cant_phone_count=Sum(Order.StatusType.CANT_PHONE),
+            total_canceled_count=Sum(Order.StatusType.CANCELED),
+            total_archived_count=Sum(Order.StatusType.ARCHIVED),
         )
         return qs

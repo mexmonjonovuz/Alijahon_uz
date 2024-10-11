@@ -4,11 +4,11 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import UpdateView, DetailView, ListView
+from django.views.generic import UpdateView, ListView
 
 from apps.forms import UserAuthenticatedForm, UserSettingsForm, UserChangePasswordForm, OperatorUpdateForm
 from apps.mixins import GetObjectMixins
-from apps.models import User, Region, Product, Order, SiteSettings
+from apps.models import User, Region, Product, Order, SiteSettings, District
 
 
 class UserLoginView(LoginView):
@@ -29,14 +29,14 @@ class UserLogautView(LoginRequiredMixin, View):
         return redirect('main_base')
 
 
-class UserChangeImageView(LoginRequiredMixin, GetObjectMixins, UpdateView):
+class UserChangeImageView(GetObjectMixins, UpdateView):
     queryset = User.objects.values('image')
     template_name = 'apps/auth/settings.html'
     success_url = reverse_lazy('settings_page')
     fields = 'image',
 
 
-class UserSettingsView(LoginRequiredMixin, GetObjectMixins, UpdateView):
+class UserSettingsView(GetObjectMixins, UpdateView):
     queryset = User.objects.all()
     template_name = 'apps/auth/settings.html'
     success_url = reverse_lazy('settings_page')
@@ -48,7 +48,7 @@ class UserSettingsView(LoginRequiredMixin, GetObjectMixins, UpdateView):
         return context
 
 
-class UserChangePasswordView(LoginRequiredMixin, GetObjectMixins, UpdateView):
+class UserChangePasswordView(GetObjectMixins, UpdateView):
     queryset = User.objects.all()
     template_name = 'apps/auth/settings.html'
     success_url = reverse_lazy('settings_page')
@@ -64,6 +64,7 @@ class OperatorOrderListView(ListView):
     queryset = Order.objects.all()
     template_name = 'apps/operators/operator.html'
     context_object_name = 'orders'
+    paginate_by = 3
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -75,19 +76,35 @@ class OperatorOrderListView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
         context['regions'] = Region.objects.all()
+        context['districts'] = District.objects.all()
         context['products'] = Product.objects.all()
-
         return context
 
 
-class OperatorDetailView(DetailView, UpdateView):
+class OperatorDetailView(UpdateView):
     queryset = Order.objects.all()
     template_name = 'apps/operators/operator_detail.html'
     context_object_name = 'order'
     form_class = OperatorUpdateForm
+    success_url = reverse_lazy('operator_new_page')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
         context['regions'] = Region.objects.all()
         context['site_settings'] = SiteSettings.objects.all()
         return context
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super().form_invalid(form)
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        session_operator = self.request.user
+        if obj.status == Order.StatusType.NEW:
+            obj.operator = session_operator
+            obj.save()
+        return obj

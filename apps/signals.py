@@ -1,9 +1,6 @@
 from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
-from root import settings
 
 USER = get_user_model()
 
@@ -17,3 +14,8 @@ USER = get_user_model()
 #             from_email=settings.EMAIL_HOST_USER,
 #             recipient_list=[instance.email],
 #         )
+
+
+@receiver(post_save, sender=USER)
+def transaction_to_user(sender, instance, *args, **kwargs):
+    pass

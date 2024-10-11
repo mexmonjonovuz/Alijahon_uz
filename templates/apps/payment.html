@@ -1,6 +1,7 @@
 {% extends 'apps/base.html' %}
 {% load humanize %}
 {% load i18n %}
+{% load custom_tags %}
 {% block title %}
     Payment page
 {% endblock %}
@@ -28,7 +29,17 @@
                             <div class="card-header">
                                 <h5>{% trans "To'lovga so'rov berish formasi" %}</h5>
                             </div>
-
+                            {% for message in messages %}
+                                {% if message.level == 25 %}
+                                    <div class="alert alert-success">
+                                        {{ message }}
+                                    </div>
+                                {% else %}
+                                    <div class="alert alert-danger">
+                                        {{ message }}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
                             <div class="card-body">
                                 <p class="text-muted">
                                     {% trans "Iltimos, kartangiz ma'lumotlarini va yechib olmoqchi bo'lgan miqdorni to'ldiring. So'rovingizni yuborishdan oldin ma'lumotlarning to'g'riligiga ishonch hosil qiling." %}
@@ -46,9 +57,11 @@
                             <div class="tab-content" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="nav-money" role="tabpanel"
                                      aria-labelledby="nav-money-tab">
-                                    <form class="card-body" action="{% url 'payment_page' %}" method="post" enctype="multipart/form-data">
+                                    <form class="card-body" action="{% url 'payment_page' %}" method="POST"
+                                          enctype="multipart/form-data">
                                         {% csrf_token %}
-                                        <input type="hidden" name="user" id="user_id" class="form-control" value="{{ request.user }}" required>
+                                        <input type="hidden" name="user" id="user_id" class="form-control"
+                                               value="{{ request.user }}" required>
                                         <div class="form-group">
                                             {% trans "Karta raqami" %} <input type="text" name="card_number"
                                                                               class="form-control"
@@ -86,26 +99,35 @@
                             <th scope="col">{% trans "Summa" %}</th>
                             <th scope="col">{% trans "Holat" %}</th>
                             <th scope="col">{% trans "Xabar" %}</th>
-                            <th scope="col">{% trans "Isbot" %}</th>
+                            <th scope="col">{% trans "Rasmi" %}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {#                                                {% if transaction %}#}
-                        <tr class="text-center">
-                            <td>{{ transaction.created_at }}</td>
-                            <td>{{ transaction.card_number }}</td>
-                            <td>{{ transaction.amount }}</td>
-                            <td>{{ transaction.status }}</td>
-                            <td>{{ transaction.text }}</td>
-                            <td>{{ transaction.check_image }}</td>
-                        </tr>
-                        {#                        {% else %}#}
-                        {#                            <tr>#}
-                        {#                                <td colspan="5" class="text-center">#}
-                        {#                                    {% trans "Hozircha sizda pul yechish so'rovlari mavjud emas" %}#}
-                        {#                                </td>#}
-                        {#                            </tr>#}
-                        {#                        {% endif %}#}
+                        {% if transactions %}
+                            {% for transaction in transactions %}
+                                <tr class="text-center">
+                                    <td>{{ transaction.created_at }}</td>
+                                    <td>{{ transaction.card_number }}</td>
+                                    <td>{{ transaction.amount|intcomma }} sum</td>
+                                    <td>{{ transaction.status }}</td>
+                                    <td>{{ transaction.text|slice:5 }}</td>
+                                    <td>
+                                        {% if transaction.check_image %}
+                                            <a href="{{ transaction.check_image.url }}" target="_blank">
+                                                <img src="{{ transaction.check_image.url }}" alt="Check Image" style="width: 30px; height: auto;" />
+                                            </a>
+                                        {% else %}
+                                            No Image Available
+                                        {% endif %}
+                                    </td>                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    {% trans "Hozircha sizda pul yechish so'rovlari mavjud emas" %}
+                                </td>
+                            </tr>
+                        {% endif %}
                         </tbody>
                     </table>
                 </div>

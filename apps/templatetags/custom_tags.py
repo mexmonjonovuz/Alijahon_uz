@@ -44,7 +44,6 @@ def distinct(value) -> set:
     return set()
 
 
-
 @register.filter('remove_nulls')
 def remove_nulls(value):
     return str(value)[:-2]

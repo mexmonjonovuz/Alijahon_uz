@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView
 
-from apps.models import Category, Product
+from apps.models import Category, Product, Stream
 
 
 class MainBaseView(ListView):

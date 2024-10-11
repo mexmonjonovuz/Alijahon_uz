@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Operatorlar bo'limi - alijahon.uz</title>
+    <title>{% trans "Operatorlar bo'limi " %}- alijahon.uz</title>
     <link rel="stylesheet" href="{% static 'apps/bootstrap/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'apps/font-awesome-4.7.0/css/font-awesome.min.css' %}">
     <link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet">
@@ -33,55 +33,83 @@
                 <form method="GET">
                     <div>
                         <p>
-                            <label for="id_product">{% trans 'Mahsulot:' %}</label>
+                            <label for="id_product"><strong>{% trans 'Mahsulot:' %}</strong></label>
                             <select name="product" id="id_product" multiple>
                                 {% for product in products %}
                                     <option value="1">{{ product.name }}</option>
                                 {% endfor %}
                             </select>
                         </p>
-                        <p>
-
-                        <div class="row">
-                            <div class="col-lg-6">
-                                {% trans "Viloyat" %}
-                                <select name="id_region" class="form-control" id="id_region"
-                                        onchange="getDistricts(this.value)">
-                                    <option value="">{% trans "Viloyat tanlang" %}</option>
+                        <div class="row form-section">
+                            <div class="col-md-6 mb-3">
+                                <label for="region_id"
+                                       class="form-label required-label"><strong>{% trans "Viloyat" %}:</strong></label>
+                                <select name="region" class="form-select" id="region_id"
+                                        onchange="getDistricts(this.value)"
+                                        required>
+                                    <option value="" disabled selected>{% trans "Viloyat tanlang" %}</option>
                                     {% for region in regions %}
                                         <option value="{{ region.id }}"
-                                                {% if user.district.region.id == region.id %}selected{% endif %}>
+                                                {% if true %}selected{% endif %}>
                                             {{ region.name }}
                                         </option>
                                     {% endfor %}
                                 </select>
+                                {% if form.region_id.errors %}
+                                    <div class="text-danger">
+                                        {{ form.region_id.errors }}
+                                    </div>
+                                {% endif %}
                             </div>
-                            <div class="col-lg-6">
-                                {% trans "Tuman" %}
-                                <select name="district" class="form-control" id="district_id">
-                                    <option value="" selected disabled>{% trans "Tuman tanlang" %}</option>
-                                    {% if user.district.id %}
-                                        <option value="{{ user.district.id }}"
-                                                selected>{{ user.district.name }}</option>
+                            <div class="col-md-6 mb-3">
+                                <label for="district_id"
+                                       class="form-label required-label"><strong>{% trans "Tuman" %}:</strong></label>
+                                <select name="district" class="form-select" id="district_id" required>
+                                    <option value="" disabled selected>{% trans "Tuman tanlang" %}</option>
+                                    {% if order.district.id %}
+                                        <option value="{{ order.district.id }}"
+                                                selected>{{ order.district.name }}</option>
                                     {% endif %}
                                 </select>
+                                {% if form.district.errors %}
+                                    <div class="text-danger">
+                                        {{ form.district.errors }}
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
+
+                        <script>
+                            function getDistricts(regionId) {
+                                const districtSelect = document.getElementById('district_id');
+                                districtSelect.innerHTML = '<option value="" disabled selected>{% trans "Tuman tanlang" %}</option>';
+                                fetch(`/api/districts?region_id=${regionId}`)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        data.districts.forEach(district => {
+                                            const option = document.createElement('option');
+                                            option.value = district.id;
+                                            option.textContent = district.name;
+                                            districtSelect.appendChild(option);
+                                        });
+                                    })
+                                    .catch(error => {
+                                        console.error('Error fetching districts:', error);
+                                    });
+                            }
+                        </script>
                         <p>
-                            <label for="id_name">Mahsulot nomi:</label>
-                            <input type="text" name="name" id="id_name">
-                        </p>
                     </div>
                     <input class="btn btn-primary" type="submit" value="Saqlash">
-                    {% if request.path|spliter == 'deliver' %}
+                    {% if request.path|spliter == 'delivering' %}
                         <br>
-                        <input class="btn btn-primary" type="submit" value="Kuryer" style="margin-top: 10px;">
+                        <input class="btn btn-primary" type="submit" value="currier" style="margin-top: 10px;">
                         <input type="checkbox" onclick="toggle(this)"> Toggle All<br>
                     {% endif %}
                 </form>
                 {% for order in orders %}
                     <div class="card border-dark mt-5">
-                        <div class="card-body">{% if request.path|spliter|title == "Delivered" %}<span
+                        <div class="card-body">{% if request.path|spliter|title == 'Delivering' %}<span
                                 style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#{{ order.pk }}
                 </span>{% endif %}
                             <h2 class="card-title">{{ order.full_name }} - {{ order.product.price|intcomma }} sum</h2>
@@ -102,15 +130,18 @@
                                style="float: left; margin-right: 10px;">
                                 {% trans 'Qabul qilish' %}
                             </a>
+                            <a href="{% url 'operator_detail' order.pk %}" class="btn btn-primary"
+                               style="float: right; margin-right: 10px;">
+                                {% trans 'Hold' %}
+                            </a>
                         </div>
                     </div>
                 {% endfor %}
-                {% include 'apps/parts/_operators_pagination.html' %}
+                {% include 'apps/parts/_pagination.html' %}
             </div>
         </div>
     </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
 <script src="{% static 'apps/js/regions_filter.js' %}"></script>
@@ -123,32 +154,6 @@
             filter: true
         });
     });
-    function getDistricts(regionId) {
-        const districtSelect = document.getElementById('district_id');
-        districtSelect.innerHTML = '<option value="" selected disabled>{% trans "Shahar/Tuman tanlang" %}</option>';
-        if (regionId) {
-            const loadingOption = document.createElement('option');
-            loadingOption.text = '{% trans "Yuklanmoqda..." %}';
-            loadingOption.disabled = true;
-            districtSelect.appendChild(loadingOption);
-
-            fetch(`/get-districts/${regionId}`)
-                .then(response => response.json())
-                .then(data => {
-                    districtSelect.innerHTML = '<option value="" selected disabled>{% trans "Shahar/Tuman tanlang" %}</option>';
-                    data.forEach(district => {
-                        const option = document.createElement('option');
-                        option.value = district.id;
-                        option.text = district.name;
-                        districtSelect.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.log('Error:', error);
-                    districtSelect.innerHTML = '<option value="" disabled>{% trans "Tumanlarni yuklashda xatolik yuz berdi" %}</option>';
-                });
-        }
-    }
 </script>
 
 </body>
