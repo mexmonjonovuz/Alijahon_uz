@@ -7,6 +7,7 @@ from .views import MainBaseView, UserLoginView, UserLogautView, ProductOrStreamD
     UserChangeImageView, UserSettingsView, UserChangePasswordView, CreatedSuccessOrderedView, DiagramView, \
     DistrictListView, CompetitionListView, CoinsView, StreamListView, StreamCreateView, StatisticView, \
     ProductStatisticView, MarketView, InquiriesView, OperatorDetailView, OperatorOrderListView
+from .views.auth_views import OperatorAddOrderView
 
 urlpatterns = [
     path('', MainBaseView.as_view(), name='main_base'),
@@ -50,6 +51,7 @@ urlpatterns = [
 
     # Operator page
     path('operator-page/', OperatorOrderListView.as_view(), name='operator_page'),
+    path('operator-page/add/', OperatorAddOrderView.as_view(), name='operator_add_order'),
     path('operator-page/new/', OperatorOrderListView.as_view(), name='operator_new_page'),
     path('operator-page/ready/', OperatorOrderListView.as_view(), name='operator_ready_page'),
     path('operator-page/delivering/', OperatorOrderListView.as_view(), name='operator_delivering_page'),

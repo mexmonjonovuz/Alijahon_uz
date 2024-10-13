@@ -1,0 +1,95 @@
+{% extends 'apps/operators/operator_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load i18n_switcher %}
+
+{% block operator_main %}
+
+    <div class="container mt-5">
+        <h1 class="text-center">{% trans "Mahsulot qo'shish" %}</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <strong>{% trans "Iltimos, quyidagi xatoliklarni tuzating:" %}</strong>
+                    <ul>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="name">{% trans "Ism Familiyasi" %}</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="{% trans 'Ism Familiyasi' %}"
+                       value="{{ form.name.value|default_if_none:'' }}" required>
+                {% if form.name.errors %}
+                    <small class="form-text text-danger">{{ form.name.errors }}</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="region">{% trans "Viloyat" %}</label>
+                <select class="form-control" id="region" name="region" required>
+                    <option value="Samarqand"
+                            {% if form.region.value == "Samarqand" %}selected{% endif %}>{% trans "Samarqand" %}</option>
+                    <option value="Toshkent"
+                            {% if form.region.value == "Toshkent" %}selected{% endif %}>{% trans "Toshkent" %}</option>
+                </select>
+                {% if form.region.errors %}
+                    <small class="form-text text-danger">{{ form.region.errors }}</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="district">{% trans "Tumani" %}</label>
+                <input type="text" class="form-control" id="district" name="district" placeholder="{% trans 'Tumani' %}"
+                       value="{{ form.district.value|default_if_none:'' }}" required>
+                {% if form.district.errors %}
+                    <small class="form-text text-danger">{{ form.district.errors }}</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">{% trans "Soni" %}</label>
+                <input type="number" class="form-control" id="quantity" name="quantity"
+                       value="{{ form.quantity.value|default_if_none:1 }}" min="1" required>
+                {% if form.quantity.errors %}
+                    <small class="form-text text-danger">{{ form.quantity.errors }}</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="phone">{% trans "Telefon nomer" %}</label>
+                <input type="tel" class="form-control" id="phone" name="phone" placeholder="+998 () ___-__-__"
+                       pattern="^\+998\s\(\d{2}\)\s\d{3}-\d{2}-\d{2}$" value="{{ form.phone.value|default_if_none:'' }}"
+                       required>
+                <small class="form-text text-muted">{% trans "Format: +998 (XX) XXX-XX-XX" %}</small>
+                {% if form.phone.errors %}
+                    <small class="form-text text-danger">{{ form.phone.errors }}</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="product">{% trans "Mahsulot" %}</label>
+                <input type="text" class="form-control" id="product" name="product"
+                       placeholder="{% trans 'Mahsulot nomi' %}" value="{{ form.product.value|default_if_none:'' }}"
+                       required>
+                {% if form.product.errors %}
+                    <small class="form-text text-danger">{{ form.product.errors }}</small>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">{% trans "Mahsulot qo'shish" %}</button>
+            <a href="{% url 'operator_page' %}" class="btn btn-danger mt-2 ml-2" style="position: absolute; right: 10px; ">
+                {% trans "Ortga Qaytish" %}
+            </a>
+        </form>
+    </div>
+{% endblock %}

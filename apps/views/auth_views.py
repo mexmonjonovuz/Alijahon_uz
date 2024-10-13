@@ -4,9 +4,10 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import UpdateView, ListView
+from django.views.generic import UpdateView, ListView, CreateView
 
-from apps.forms import UserAuthenticatedForm, UserSettingsForm, UserChangePasswordForm, OperatorUpdateForm
+from apps.forms import UserAuthenticatedForm, UserSettingsForm, UserChangePasswordForm, OperatorUpdateForm, \
+    OperatorAddOrderForm
 from apps.mixins import GetObjectMixins
 from apps.models import User, Region, Product, Order, SiteSettings, District
 
@@ -108,3 +109,15 @@ class OperatorDetailView(UpdateView):
             obj.operator = session_operator
             obj.save()
         return obj
+
+
+class OperatorAddOrderView(CreateView):
+    queryset = Product.objects.all()
+    template_name = 'apps/operators/operator_add_product.html'
+    form_class = OperatorAddOrderForm
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super().form_invalid(form)

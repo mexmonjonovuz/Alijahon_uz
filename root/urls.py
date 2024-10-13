@@ -5,21 +5,17 @@ from django.urls import include, path
 
 from root import settings
 
-urlpatterns = [
-                  path('', include('apps.urls')),
-                  path("ckeditor5/", include('django_ckeditor_5.urls')),
-
-              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL,
-                                                                                         document_root=settings.STATIC_ROOT)
-
 if settings.DEBUG:
     import debug_toolbar
 
-    urlpatterns = [
-                      path('__debug__/', include(debug_toolbar.urls)),
-                  ] + urlpatterns
+urlpatterns = [
+                  path('', include('apps.urls')),
+                  path("ckeditor5/", include('django_ckeditor_5.urls')),
+                  path("i18n/", include("django.conf.urls.i18n")),
+                  path('__debug__/', include(debug_toolbar.urls)),
 
-urlpatterns = i18n_patterns(
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL,
+                                                                                         document_root=settings.STATIC_ROOT) + i18n_patterns(
     path('admin/', admin.site.urls),
     prefix_default_language=False
-) + urlpatterns
+)

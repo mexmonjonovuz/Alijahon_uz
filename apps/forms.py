@@ -195,3 +195,9 @@ class TransactionCreateForm(ModelForm):
         _user = User.objects.filter(phone=user)
         _user.update(balance=(user_balance - int(amount)))
         return amount
+
+
+class OperatorAddOrderForm(ModelForm):
+    class Meta:
+        model = Product
+        exclude = "__all__"
