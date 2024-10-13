@@ -142,7 +142,6 @@
                 });
         }
 
-        // Toggle All Checkboxes (Define the function)
         function toggleAll(source) {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
             checkboxes.forEach(checkbox => {
@@ -163,18 +162,15 @@
         });
     </script>
 
-    <!-- Include jQuery and multipleSelect Plugin -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{% static 'admin/js/multiple-select.min.js' %}"></script> <!-- Ensure this path is correct -->
-    <link rel="stylesheet" href="{% static 'admin/css/multiple-select.css' %}"/> <!-- Ensure this path is correct -->
+    <script src="{% static 'admin/js/multiple-select.min.js' %}"></script> 
+    <link rel="stylesheet" href="{% static 'admin/css/multiple-select.css' %}"/> 
 
     <style>
-        /* Enhanced Styling for Select Elements */
         select.form-control, select.form-select {
             width: 100%;
         }
 
-        /* Additional Custom Styles */
         .badge-success {
             background-color: chartreuse;
             color: #fff;
