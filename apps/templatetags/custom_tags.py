@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.template import Library
 
 register = Library()
@@ -47,3 +49,43 @@ def distinct(value) -> set:
 @register.filter('remove_nulls')
 def remove_nulls(value):
     return str(value)[:-2]
+
+
+@register.filter('custom_date')
+def custom_date(value):
+    months = {
+        1: 'Yanvar',
+        2: 'Fevral',
+        3: 'Mart',
+        4: 'Aprel',
+        5: 'May',
+        6: 'Iyun',
+        7: 'Iyul',
+        8: 'Avgust',
+        9: 'Sentabr',
+        10: 'Oktabr',
+        11: 'Noyabr',
+        12: 'Dekabr',
+    }
+    if value.minute:
+        return f"{value.day} - {months.get(value.month, '')} - {value.month} - {value.year}  {value.hour}:{value.minute}"
+    return f"{value.day} - {months.get(value.month, '')} - {value.month} - {value.year}"
+
+
+@register.filter(is_safe=True)
+def custom_intcomma(value):
+    """
+    Split the given number into groups of four digits from the left.
+    For example, 1234412321342131 becomes '1234 4123 2134 2131'.
+    """
+    try:
+        if not isinstance(value, (float, Decimal)):
+            value = int(value)
+    except (TypeError, ValueError):
+        return value
+
+    result = str(value)
+
+    result_with_spaces = ' '.join([result[i:i + 4] for i in range(0, len(result), 4)])
+
+    return result_with_spaces

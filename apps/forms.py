@@ -197,7 +197,7 @@ class TransactionCreateForm(ModelForm):
         return amount
 
 
-class OperatorAddOrderForm(ModelForm):
+class OperatorOrderCreateForm(ModelForm):
     class Meta:
-        model = Product
-        exclude = "__all__"
+        model = Order
+        fields = "full_name", "region", 'district', "quantity", "phone_number", "product",
