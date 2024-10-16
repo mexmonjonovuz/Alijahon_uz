@@ -46,11 +46,11 @@
       return true;
     };
 
-    var global$2 = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global$2 = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
-    var global$1 = tinymce.util.Tools.resolve('tinymce.util.URI');
+    var global$1 = tinymce.util.Tools.resolve('tinymce.utils.URI');
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.XHR');
+    var global = tinymce.util.Tools.resolve('tinymce.utils.XHR');
 
     var fireSpellcheckStart = function (editor) {
       return editor.fire('SpellcheckStart');

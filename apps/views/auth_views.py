@@ -7,7 +7,7 @@ from django.views import View
 from django.views.generic import UpdateView, ListView, CreateView
 
 from apps.forms import UserAuthenticatedForm, UserSettingsForm, UserChangePasswordForm, OperatorUpdateForm, \
-    OperatorAddOrderForm
+    OperatorOrderCreateForm
 from apps.mixins import GetObjectMixins
 from apps.models import User, Region, Product, Order, SiteSettings, District
 
@@ -65,7 +65,7 @@ class OperatorOrderListView(ListView):
     queryset = Order.objects.all()
     template_name = 'apps/operators/operator.html'
     context_object_name = 'orders'
-    paginate_by = 3
+    paginate_by = 5
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -112,12 +112,24 @@ class OperatorDetailView(UpdateView):
 
 
 class OperatorAddOrderView(CreateView):
-    queryset = Product.objects.all()
+    queryset = Order.objects.all()
     template_name = 'apps/operators/operator_add_product.html'
-    form_class = OperatorAddOrderForm
+    form_class = OperatorOrderCreateForm
+    success_url = reverse_lazy('operator_new_page')
 
     def form_valid(self, form):
         return super().form_valid(form)
 
     def form_invalid(self, form):
         return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['regions'] = Region.objects.all()
+        ctx['products'] = Product.objects.all()
+        return ctx
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect('admin:login')

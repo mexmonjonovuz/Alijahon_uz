@@ -38,7 +38,7 @@
       return __assign.apply(this, arguments);
     };
 
-    var global$3 = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global$3 = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
     var global$2 = tinymce.util.Tools.resolve('tinymce.html.DomParser');
 

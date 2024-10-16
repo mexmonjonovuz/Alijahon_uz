@@ -11,7 +11,7 @@
 
     var global$1 = tinymce.util.Tools.resolve('tinymce.PluginManager');
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
     var html2bbcode = function (s) {
       s = global.trim(s);

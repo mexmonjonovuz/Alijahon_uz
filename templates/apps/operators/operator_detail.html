@@ -102,40 +102,35 @@
                 <label for="delivering_time"
                        class="form-label required-label"><strong>{% trans "Yuborish vaqti" %}:</strong></label>
                 <input type="date" class="form-control" name="send_order_date" id="delivering_time"
-                       value="{{ order.send_order_date|date:'Y-m-d' }}" required>
+                       value="{{ order.send_order_date|date:'Y-m-d' }}">
                 {% if form.delivering_time.errors %}
                     <div class="text-danger">
                         {{ form.delivering_time.errors }}
-                    </div>
+                    </div>l
                 {% endif %}
             </div>
         </div>
 
         <div class="row form-section">
             <div class="col-md-6 mb-3">
-                <label for="region_id" class="form-label required-label"><strong>{% trans "Viloyat" %}:</strong></label>
-                <select name="region" class="form-select" id="region_id" onchange="getDistricts(this.value)"
-                        required>
+                <label for="region">{% trans "Viloyat" %}</label>
+                <select class="form-control" id="region" name="region" required onchange="getDistricts(this.value)">
                     <option value="" disabled selected>{% trans "Viloyat tanlang" %}</option>
                     {% for region in regions %}
-                        <option value="{{ region.id }}"
-                                {% if true %}selected{% endif %}>
-                            {{ region.name }}
-                        </option>
+                        <option value="{{ region.id }}">{{ region.name }}</option>
                     {% endfor %}
                 </select>
-                {% if form.region_id.errors %}
-                    <div class="text-danger">
-                        {{ form.region_id.errors }}
-                    </div>
+                {% if form.region.errors %}
+                    <small class="form-text text-danger">{{ form.region.errors }}</small>
                 {% endif %}
             </div>
+
             <div class="col-md-6 mb-3">
-                <label for="district_id" class="form-label required-label"><strong>{% trans "Tuman" %}:</strong></label>
-                <select name="district" class="form-select" id="district_id" required>
-                    <option value="" disabled selected>{% trans "Tuman tanlang" %}</option>
-                    {% if order.district.id %}
-                        <option value="{{ order.district.id }}" selected>{{ order.district.name }}</option>
+                <label for="district_id">{% trans "Viloyat" %}</label>
+                <select name="district" class="form-control" id="district_id">
+                    <option value="" selected disabled>{% trans "Tuman tanlang" %}</option>
+                    {% if district.id %}
+                        <option value="{{ district.id }}" selected>{{ district.name }}</option>
                     {% endif %}
                 </select>
                 {% if form.district.errors %}
@@ -145,24 +140,24 @@
                 {% endif %}
             </div>
         </div>
-
         <script>
             function getDistricts(regionId) {
                 const districtSelect = document.getElementById('district_id');
-                districtSelect.innerHTML = '<option value="" disabled selected>{% trans "Tuman tanlang" %}</option>';
-                fetch(`/api/districts?region_id=${regionId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        data.districts.forEach(district => {
-                            const option = document.createElement('option');
-                            option.value = district.id;
-                            option.textContent = district.name;
-                            districtSelect.appendChild(option);
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error fetching districts:', error);
-                    });
+                districtSelect.innerHTML = '<option value="" selected disabled>Shahar/Tuman tanlang</option>';
+
+                if (regionId) {
+                    fetch(`/get-districts/${regionId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            data.forEach(district => {
+                                const option = document.createElement('option');
+                                option.value = district.id;
+                                option.text = district.name;
+                                districtSelect.appendChild(option);
+                            });
+                        })
+                        .catch(error => console.log('Error:', error));
+                }
             }
         </script>
 
@@ -298,13 +293,13 @@
                 <label for="comment" class="form-label required-label">
                     <strong>{% trans "Komment" %}:</strong>
                 </label>
-                <textarea
-                        name="comment"
+                <textarea type="text"
+                        name="comment_operator"
                         class="form-control"
                         id="comment"
                         rows="3"
                         placeholder="{% trans 'Ushbu buyurtma uchun izoh...' %}"
-                >{{ order.comment }}</textarea>
+                ></textarea>
             </div>
         </div>
         <div class="d-flex justify-content-end mb-3">

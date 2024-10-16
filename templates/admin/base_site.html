@@ -44,57 +44,7 @@
         });
     </script>
 
-    <div class="language-switcher" style="float: left;">
-        <select id="language" onchange="changeLanguage()" class="language-dropdown">
-            <option data-img-src="{% static 'admin/images/flag-Stars-and-Stripes-May-1-1795.webp' %}" value="en"
-                    {% if LANGUAGE_CODE == 'en' %} selected {% endif %}>English
-            </option>
-            <option data-img-src="{% static 'admin/images/Flag_of_Russia.svg.png' %}" value="ru"
-                    {% if LANGUAGE_CODE == 'ru' %} selected {% endif %}>Russian
-            </option>
-            <option data-img-src="{% static 'admin/images/Flag-Uzbekistan.webp' %}" value="uz"
-                    {% if LANGUAGE_CODE == 'uz' %} selected {% endif %}>Uzbek
-            </option>
-            <option data-img-src="{% static 'admin/images/Flag-Uzbekistan.webp' %}" value="oz"
-                    {% if LANGUAGE_CODE == 'oz' %} selected {% endif %}>Uzbek (Cyrillic)
-            </option>
-        </select>
-    &nbsp;
-    </div>
-    <style>
-        .language-dropdown {
-            background-repeat: no-repeat;
-            background-position: 5px center;
-            padding-left: 45px;
-            height: 40px;
-            background-size: 30px;
-        }
-    </style>
-
-    <script>
-        function changeLanguage() {
-            var selectElement = document.getElementById("language");
-            var selectedOption = selectElement.options[selectElement.selectedIndex];
-            var languageCode = selectedOption.value;
-            var imgSrc = selectedOption.getAttribute("data-img-src");
-
-            window.location.href = window.location.pathname.replace(/^\/[a-z]{2}\//, '/' + languageCode + '/');
-        }
-        window.onload = function () {
-            var selectElement = document.getElementById("language");
-            var selectedOption = selectElement.options[selectElement.selectedIndex];
-            var imgSrc = selectedOption.getAttribute("data-img-src");
-
-            selectElement.style.backgroundImage = "url('" + imgSrc + "')";
-        };
-
-        document.getElementById("language").addEventListener("change", function () {
-            var selectedOption = this.options[this.selectedIndex];
-            var imgSrc = selectedOption.getAttribute("data-img-src");
-            this.style.backgroundImage = "url('" + imgSrc + "')";
-        });
-    </script>
-
+    
     {% if user.is_active and user.is_staff %}
         {% url 'django-admindocs-docroot' as docsroot %}
         {% if docsroot %}
@@ -105,7 +55,7 @@
     {% if user.has_usable_password %}
         <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
     {% endif %}
-    <a href="{% url 'admin:logout' %}">{% trans 'Logout' %}</a>
+    <a href="{% url 'logout' %}" class="grp-logout">{% trans 'Logout' %}</a>
 
 {% endblock %}
 

@@ -63,9 +63,9 @@
     var never = constant(false);
     var always = constant(true);
 
-    var global$3 = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global$3 = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
-    var global$2 = tinymce.util.Tools.resolve('tinymce.util.XHR');
+    var global$2 = tinymce.util.Tools.resolve('tinymce.utils.XHR');
 
     var getCreationDateClasses = function (editor) {
       return editor.getParam('template_cdate_classes', 'cdate');
@@ -328,7 +328,7 @@
 
     var global$1 = tinymce.util.Tools.resolve('tinymce.Env');
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.Promise');
+    var global = tinymce.util.Tools.resolve('tinymce.utils.Promise');
 
     var hasOwnProperty = Object.hasOwnProperty;
     var get = function (obj, key) {

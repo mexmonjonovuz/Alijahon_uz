@@ -173,7 +173,7 @@
 
     var punctuation = punctuation$1;
 
-    var global$2 = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global$2 = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
     var nativeSlice = Array.prototype.slice;
     var nativePush = Array.prototype.push;

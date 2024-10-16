@@ -284,9 +284,9 @@
 
     var global$4 = tinymce.util.Tools.resolve('tinymce.dom.DOMUtils');
 
-    var global$3 = tinymce.util.Tools.resolve('tinymce.util.Promise');
+    var global$3 = tinymce.util.Tools.resolve('tinymce.utils.Promise');
 
-    var global$2 = tinymce.util.Tools.resolve('tinymce.util.XHR');
+    var global$2 = tinymce.util.Tools.resolve('tinymce.utils.XHR');
 
     var hasDimensions = function (editor) {
       return editor.getParam('image_dimensions', true, 'boolean');
@@ -830,9 +830,9 @@
       return s.length > 0;
     };
 
-    var global$1 = tinymce.util.Tools.resolve('tinymce.util.ImageUploader');
+    var global$1 = tinymce.util.Tools.resolve('tinymce.utils.ImageUploader');
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
     var getValue = function (item) {
       return isString(item.value) ? item.value : '';

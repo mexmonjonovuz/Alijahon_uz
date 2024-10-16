@@ -5,11 +5,11 @@ from django.contrib.auth.models import Group
 from django.utils.html import format_html
 
 from apps.forms import CustomAdminAuthenticationForm
-from apps.models import Category, Product, User, SiteSettings, Favorite, Competition, Order, District, Region
+from apps.models import Category, Product, User, SiteSettings, Favorite, Competition, Order, District, Region, \
+    Transaction
 from apps.models.proxy.proxy import OrderNewProxyModel, OrderReadyProxyModel, OrderDeliverProxyModel, \
     OrderDeliveredProxyModel, OrderCantPhoneProxyModel, OrderCanceledProxyModel, OrderArchivedProxyModel, \
     UserProxyModel, UserOperatorProxyModel, UserManagerProxyModel, UserAdminProxyModel, UserDriverProxyModel
-from apps.models.shop import Transaction
 
 admin.site.site_title = "Alijahon Admin Paneli"
 admin.site.site_header = "Alijahon Administratsiyasi"
@@ -79,11 +79,13 @@ class OrderModelAdmin(ModelAdmin):
     list_filter = 'status',
 
 
-#
+# #
 # @register(Operator)
 # class OperatorStackedInline(StackedInline):
+#     # pass
 #     class Meta:
-#         model = UserModelAdmin
+#         model = Operator
+
 
 @register(Region)
 class ReginModelAdmin(ModelAdmin):
@@ -123,16 +125,32 @@ def get_app_list(self, request, app_label=None):
     }
 
     model_ordering = {
-        'Users': -1,
-        'Competition': 1,
-        'SiteSettings': 2,
+        'Orders': 0,
+        "New Orders": 1,
+        "Orders ready": 2,
+        "Orders Ready to ship": 3,
+        "Orders Delivered": 4,
+        "Cant to Phone": 5,
+        "Orders Canceled": 6,
+        "Archived Order": 7,
+        'Operators': 8,
+        "Currier's": 9,
+        "Categories": 10,
+        "Products": 11,
+        "Likes": 12,
+        'Competition': 13,
+        "Regions": 14,
+        "Districts": 15,
+        "Managers": 17,
+        "Admins": 18,
+        "Transactions": 19,
+        'SiteSettings': 20,
     }
 
     app_list = sorted(app_dict.values(), key=lambda x: app_ordering.get(x["name"], 1000))
 
     for app in app_list:
-        app["models"].sort(key=lambda x: model_ordering.get(x['object_name'], 1000))
-
+        app["models"].sort(key=lambda x: model_ordering.get(x['name'], 1000))
     return app_list
 
 

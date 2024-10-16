@@ -25,7 +25,7 @@
       });
     };
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
     var getNumberStyles = function (editor) {
       var styles = editor.getParam('advlist_number_styles', 'default,lower-alpha,lower-greek,lower-roman,upper-alpha,upper-roman');

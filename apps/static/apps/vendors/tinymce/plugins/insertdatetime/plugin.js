@@ -118,7 +118,7 @@
       };
     };
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
     var register = function (editor) {
       var formats = getFormats(editor);

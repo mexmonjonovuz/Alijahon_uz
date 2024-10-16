@@ -18,11 +18,11 @@
     };
     var isUndefined = eq(undefined);
 
-    var global$3 = tinymce.util.Tools.resolve('tinymce.util.Delay');
+    var global$3 = tinymce.util.Tools.resolve('tinymce.utils.Delay');
 
-    var global$2 = tinymce.util.Tools.resolve('tinymce.util.LocalStorage');
+    var global$2 = tinymce.util.Tools.resolve('tinymce.utils.LocalStorage');
 
-    var global$1 = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global$1 = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
     var fireRestoreDraft = function (editor) {
       return editor.fire('RestoreDraft');

@@ -7361,7 +7361,7 @@
       });
     };
 
-    var global$2 = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global$2 = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
     var getTDTHOverallStyle = function (dom, elm, name) {
       var cells = dom.select('td,th', elm);
@@ -9490,7 +9490,7 @@
       });
     };
 
-    var global$1 = tinymce.util.Tools.resolve('tinymce.util.VK');
+    var global$1 = tinymce.util.Tools.resolve('tinymce.utils.VK');
 
     var forward = function (editor, isRoot, cell) {
       return go$1(editor, isRoot, next(cell, isEditable$1));

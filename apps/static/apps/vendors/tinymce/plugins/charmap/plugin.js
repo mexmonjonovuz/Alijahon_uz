@@ -191,7 +191,7 @@
       return flatten(map(xs, f));
     };
 
-    var global$1 = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global$1 = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
     var getCharMap$1 = function (editor) {
       return editor.getParam('charmap');
@@ -1644,7 +1644,7 @@
       });
     };
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.Promise');
+    var global = tinymce.util.Tools.resolve('tinymce.utils.Promise');
 
     var init = function (editor, all) {
       editor.ui.registry.addAutocompleter('charmap', {

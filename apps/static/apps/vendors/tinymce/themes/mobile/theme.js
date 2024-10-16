@@ -7067,7 +7067,7 @@
       active: ActiveTabstopping
     });
 
-    var global$3 = tinymce.util.Tools.resolve('tinymce.util.I18n');
+    var global$3 = tinymce.util.Tools.resolve('tinymce.utils.I18n');
 
     var clearInputBehaviour = 'input-clearing';
     var field = function (name, placeholder) {
@@ -9666,7 +9666,7 @@
       return capture$1(element, event, filter, handler);
     };
 
-    var global$2 = tinymce.util.Tools.resolve('tinymce.util.Delay');
+    var global$2 = tinymce.util.Tools.resolve('tinymce.utils.Delay');
 
     var INTERVAL = 50;
     var INSURANCE = 1000 / INTERVAL;

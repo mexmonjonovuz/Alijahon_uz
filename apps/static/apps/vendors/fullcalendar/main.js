@@ -264,7 +264,7 @@ var FullCalendar = (function (exports) {
     // Event Handling
     // ----------------------------------------------------------------------------------------------------------------
     // if intercepting bubbled events at the document/window/body level,
-    // and want to see originating element (the 'target'), use this util instead
+    // and want to see originating element (the 'target'), use this utils instead
     // of `ev.target` because it goes within web-component boundaries.
     function getEventTargetViaRoot(ev) {
         var _a, _b;
@@ -1065,7 +1065,7 @@ var FullCalendar = (function (exports) {
         return "GMT" + sign + hours + (mins ? ":" + padStart(mins, 2) : '');
     }
 
-    // TODO: new util arrayify?
+    // TODO: new utils arrayify?
     function removeExact(array, exactVal) {
         var removeCnt = 0;
         var i = 0;
@@ -1824,7 +1824,7 @@ var FullCalendar = (function (exports) {
         didMount: identity,
         willUnmount: identity,
     };
-    // util funcs
+    // utils funcs
     // ----------------------------------------------------------------------------------------------------
     function mergeRawOptions(optionSets) {
         return mergeProps(optionSets, COMPLEX_OPTION_COMPARATORS);
@@ -2723,7 +2723,7 @@ var FullCalendar = (function (exports) {
             };
         }
         // in case event was all-day but the supplied deltas were not
-        // better util for this?
+        // better utils for this?
         if (eventDef.allDay) {
             copy.range = {
                 start: startOfDay(copy.range.start),
@@ -3140,7 +3140,7 @@ var FullCalendar = (function (exports) {
                 if (!currentData.eventStore.defs[def.defId]) {
                     this.dispatch({
                         type: 'ADD_EVENTS',
-                        eventStore: eventTupleToStore({ def: def, instance: instance }), // TODO: better util for two args?
+                        eventStore: eventTupleToStore({ def: def, instance: instance }), // TODO: better utils for two args?
                     });
                     this.triggerEventAdd(eventInput);
                 }
@@ -4052,7 +4052,7 @@ var FullCalendar = (function (exports) {
         };
         /*
         DUMB: the omitTime arg is dumb. if we omit the time, we want to omit the timezone offset. and if we do that,
-        might as well use buildIsoString or some other util directly
+        might as well use buildIsoString or some other utils directly
         */
         DateEnv.prototype.formatIso = function (marker, extraOptions) {
             if (extraOptions === void 0) { extraOptions = {}; }
@@ -6274,7 +6274,7 @@ var FullCalendar = (function (exports) {
     function excludeEventsBySourceId(eventStore, sourceId) {
         return filterEventStoreDefs(eventStore, function (eventDef) { return eventDef.sourceId !== sourceId; });
     }
-    // QUESTION: why not just return instances? do a general object-property-exclusion util
+    // QUESTION: why not just return instances? do a general object-property-exclusion utils
     function excludeInstances(eventStore, removals) {
         return {
             defs: eventStore.defs,
@@ -6712,8 +6712,8 @@ var FullCalendar = (function (exports) {
         el.innerHTML = html;
     }
     function injectDomNodes(el, domNodes) {
-        var oldNodes = Array.prototype.slice.call(el.childNodes); // TODO: use array util
-        var newNodes = Array.prototype.slice.call(domNodes); // TODO: use array util
+        var oldNodes = Array.prototype.slice.call(el.childNodes); // TODO: use array utils
+        var newNodes = Array.prototype.slice.call(domNodes); // TODO: use array utils
         if (!isArraysEqual(oldNodes, newNodes)) {
             for (var _i = 0, newNodes_1 = newNodes; _i < newNodes_1.length; _i++) {
                 var newNode = newNodes_1[_i];
@@ -7562,7 +7562,7 @@ var FullCalendar = (function (exports) {
         }
         return null;
     }
-    // general util
+    // general utils
     // ---------------------------------------------------------------------------------------------------------------------
     function insertAt(arr, index, item) {
         arr.splice(index, 0, item);
@@ -13418,7 +13418,7 @@ var FullCalendar = (function (exports) {
         processNodes(topLevelNodes, 0, 0);
         return rects; // TODO: sort rects by levelCoord to be consistent with toRects?
     }
-    // TODO: move to general util
+    // TODO: move to general utils
     function cacheable(keyFunc, workFunc) {
         var cache = {};
         return function () {
@@ -14473,7 +14473,7 @@ var FullCalendar = (function (exports) {
         };
     }
     // Injects a string like "arg=value" into the querystring of a URL
-    // TODO: move to a general util file?
+    // TODO: move to a general utils file?
     function injectQsComponent(url, component) {
         // inject it after the querystring but before the fragment
         return url.replace(/(\?.*?)?(#|$)/, function (whole, qs, hash) { return (qs ? qs + '&' : '?') + component + hash; });

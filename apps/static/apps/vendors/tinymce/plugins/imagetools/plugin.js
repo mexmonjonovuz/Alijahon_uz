@@ -25,7 +25,7 @@
 
     var global$4 = tinymce.util.Tools.resolve('tinymce.PluginManager');
 
-    var global$3 = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global$3 = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
     var typeOf = function (x) {
       var t = typeof x;
@@ -1004,11 +1004,11 @@
       });
     };
 
-    var global$2 = tinymce.util.Tools.resolve('tinymce.util.Delay');
+    var global$2 = tinymce.util.Tools.resolve('tinymce.utils.Delay');
 
-    var global$1 = tinymce.util.Tools.resolve('tinymce.util.Promise');
+    var global$1 = tinymce.util.Tools.resolve('tinymce.utils.Promise');
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.URI');
+    var global = tinymce.util.Tools.resolve('tinymce.utils.URI');
 
     var getToolbarItems = function (editor) {
       return editor.getParam('imagetools_toolbar', 'rotateleft rotateright flipv fliph editimage imageoptions');

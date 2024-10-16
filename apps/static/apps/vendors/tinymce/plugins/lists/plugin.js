@@ -735,7 +735,7 @@
 
     var global$5 = tinymce.util.Tools.resolve('tinymce.dom.TreeWalker');
 
-    var global$4 = tinymce.util.Tools.resolve('tinymce.util.VK');
+    var global$4 = tinymce.util.Tools.resolve('tinymce.utils.VK');
 
     var keys = Object.keys;
     var each = function (obj, f) {
@@ -874,7 +874,7 @@
 
     var global$3 = tinymce.util.Tools.resolve('tinymce.dom.DOMUtils');
 
-    var global$2 = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global$2 = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
     var matchNodeName = function (name) {
       return function (node) {

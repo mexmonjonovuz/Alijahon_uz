@@ -9398,7 +9398,7 @@
       return layout(anchor, element, bubbles, placee, bounds);
     };
 
-    var global$g = tinymce.util.Tools.resolve('tinymce.util.Delay');
+    var global$g = tinymce.util.Tools.resolve('tinymce.utils.Delay');
 
     var factory$l = function (detail) {
       var events = events$a(detail.action);
@@ -9472,7 +9472,7 @@
       };
     };
 
-    var global$f = tinymce.util.Tools.resolve('tinymce.util.I18n');
+    var global$f = tinymce.util.Tools.resolve('tinymce.utils.I18n');
 
     var rtlTransform = {
       'indent': true,
@@ -10065,7 +10065,7 @@
     };
     var AutocompleterEditorEvents = { setup: setup$e };
 
-    var global$d = tinymce.util.Tools.resolve('tinymce.util.Promise');
+    var global$d = tinymce.util.Tools.resolve('tinymce.utils.Promise');
 
     var point = function (container, offset) {
       return {
@@ -11877,7 +11877,7 @@
       });
     };
 
-    var global$9 = tinymce.util.Tools.resolve('tinymce.util.LocalStorage');
+    var global$9 = tinymce.util.Tools.resolve('tinymce.utils.LocalStorage');
 
     var storageName = 'tinymce-custom-colors';
     function ColorCache (max) {
@@ -16910,7 +16910,7 @@
       };
     };
 
-    var global$6 = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global$6 = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
     var processors = objOf([
       defaulted('preprocess', identity$1),
@@ -19396,9 +19396,9 @@
 
     var global$4 = tinymce.util.Tools.resolve('tinymce.dom.DomQuery');
 
-    var global$3 = tinymce.util.Tools.resolve('tinymce.util.Observable');
+    var global$3 = tinymce.util.Tools.resolve('tinymce.utils.Observable');
 
-    var global$2 = tinymce.util.Tools.resolve('tinymce.util.VK');
+    var global$2 = tinymce.util.Tools.resolve('tinymce.utils.VK');
 
     var getDocumentSize = function (doc) {
       var max = Math.max;
@@ -32494,7 +32494,7 @@
       };
     };
 
-    var global$1 = tinymce.util.Tools.resolve('tinymce.util.URI');
+    var global$1 = tinymce.util.Tools.resolve('tinymce.utils.URI');
 
     var getUrlDialogApi = function (root) {
       var withRoot = function (f) {

@@ -303,9 +303,9 @@
 
     var global$2 = tinymce.util.Tools.resolve('tinymce.Resource');
 
-    var global$1 = tinymce.util.Tools.resolve('tinymce.util.Delay');
+    var global$1 = tinymce.util.Tools.resolve('tinymce.utils.Delay');
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.Promise');
+    var global = tinymce.util.Tools.resolve('tinymce.utils.Promise');
 
     var DEFAULT_ID = 'tinymce.plugins.emoticons';
     var getEmoticonDatabase = function (editor) {

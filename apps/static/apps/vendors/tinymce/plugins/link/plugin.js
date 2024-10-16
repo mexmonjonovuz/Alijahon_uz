@@ -11,7 +11,7 @@
 
     var global$6 = tinymce.util.Tools.resolve('tinymce.PluginManager');
 
-    var global$5 = tinymce.util.Tools.resolve('tinymce.util.VK');
+    var global$5 = tinymce.util.Tools.resolve('tinymce.utils.VK');
 
     var typeOf = function (x) {
       var t = typeof x;
@@ -265,7 +265,7 @@
       return editor.getParam('link_default_protocol', 'http', 'string');
     };
 
-    var global$4 = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global$4 = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
     var getValue = function (item) {
       return isString(item.value) ? item.value : '';
@@ -680,9 +680,9 @@
       getDelta: getDelta
     };
 
-    var global$2 = tinymce.util.Tools.resolve('tinymce.util.Delay');
+    var global$2 = tinymce.util.Tools.resolve('tinymce.utils.Delay');
 
-    var global$1 = tinymce.util.Tools.resolve('tinymce.util.Promise');
+    var global$1 = tinymce.util.Tools.resolve('tinymce.utils.Promise');
 
     var delayedConfirm = function (editor, message, callback) {
       var rng = editor.selection.getRng();
@@ -758,7 +758,7 @@
     };
     var ClassListOptions = { getClasses: getClasses };
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.XHR');
+    var global = tinymce.util.Tools.resolve('tinymce.utils.XHR');
 
     var parseJson = function (text) {
       try {

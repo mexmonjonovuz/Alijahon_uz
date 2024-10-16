@@ -13,7 +13,7 @@
 
     var global$1 = tinymce.util.Tools.resolve('tinymce.dom.RangeUtils');
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
     var allowHtmlInNamedAnchor = function (editor) {
       return editor.getParam('allow_html_in_named_anchor', false, 'boolean');

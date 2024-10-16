@@ -262,11 +262,11 @@
 
     var global$a = tinymce.util.Tools.resolve('tinymce.Env');
 
-    var global$9 = tinymce.util.Tools.resolve('tinymce.util.Delay');
+    var global$9 = tinymce.util.Tools.resolve('tinymce.utils.Delay');
 
-    var global$8 = tinymce.util.Tools.resolve('tinymce.util.Promise');
+    var global$8 = tinymce.util.Tools.resolve('tinymce.utils.Promise');
 
-    var global$7 = tinymce.util.Tools.resolve('tinymce.util.VK');
+    var global$7 = tinymce.util.Tools.resolve('tinymce.utils.VK');
 
     var firePastePreProcess = function (editor, html, internal, isWordHtml) {
       return editor.fire('PastePreProcess', {
@@ -289,7 +289,7 @@
       return editor.fire('paste', { ieFake: ieFake });
     };
 
-    var global$6 = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global$6 = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
     var shouldBlockDrop = function (editor) {
       return editor.getParam('paste_block_drop', false);

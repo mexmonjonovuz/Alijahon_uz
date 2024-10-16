@@ -57,7 +57,7 @@
       editor.insertContent(editor.dom.createHTML('img', { src: blobInfo.blobUri() }));
     };
 
-    var global$2 = tinymce.util.Tools.resolve('tinymce.util.Promise');
+    var global$2 = tinymce.util.Tools.resolve('tinymce.utils.Promise');
 
     var blobToBase64 = function (blob) {
       return new global$2(function (resolve) {
@@ -71,7 +71,7 @@
 
     var global$1 = tinymce.util.Tools.resolve('tinymce.Env');
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.Delay');
+    var global = tinymce.util.Tools.resolve('tinymce.utils.Delay');
 
     var pickFile = function (editor) {
       return new global$2(function (resolve) {

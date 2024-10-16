@@ -32,7 +32,7 @@
 
     var global$1 = tinymce.util.Tools.resolve('tinymce.Env');
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.Delay');
+    var global = tinymce.util.Tools.resolve('tinymce.utils.Delay');
 
     var fireResizeEditor = function (editor) {
       return editor.fire('ResizeEditor');

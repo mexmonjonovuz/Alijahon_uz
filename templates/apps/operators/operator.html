@@ -4,6 +4,7 @@
 {% load humanize %}
 {% load static %}
 {% block operator_main %}
+
     <div class="form-group">
         <label for="id_product"><strong>{% trans "Mahsulot:" %}</strong></label>
         <select name="product" id="id_product" class="form-control" multiple required>
@@ -18,37 +19,27 @@
         {% endif %}
     </div>
 
+
     <div class="row form-section">
         <div class="col-md-6 mb-3">
-            <label for="region_id"
-                   class="form-label required-label"><strong>{% trans "Viloyat" %}:</strong></label>
-            <select name="region" class="form-select" id="region_id" onchange="getDistricts(this.value)"
-                    required>
-                <option value="" disabled
-                        {% if not form.region.value %}selected{% endif %}>{% trans "Viloyat tanlang" %}</option>
+            <label for="region">{% trans "Viloyat" %}</label>
+            <select class="form-control" id="region" name="region" required onchange="getDistricts(this.value)">
+                <option value="" disabled selected>{% trans "Viloyat tanlang" %}</option>
                 {% for region in regions %}
-                    <option value="{{ region.id }}"
-                            {% if form.region.value == region.id %}selected{% endif %}>
-                        {{ region.name }}
-                    </option>
+                    <option value="{{ region.id }}">{{ region.name }}</option>
                 {% endfor %}
             </select>
             {% if form.region.errors %}
-                <div class="text-danger">
-                    {{ form.region.errors }}
-                </div>
+                <small class="form-text text-danger">{{ form.region.errors }}</small>
             {% endif %}
         </div>
 
         <div class="col-md-6 mb-3">
-            <label for="district_id"
-                   class="form-label required-label"><strong>{% trans "Tuman" %}:</strong></label>
-            <select name="district" class="form-select" id="district_id" required>
-                <option value="" disabled
-                        {% if not form.district.value %}selected{% endif %}>{% trans "Tuman tanlang" %}</option>
-                {% if form.district.value %}
-                    <option value="{{ form.district.value }}"
-                            selected>{{ form.district.label }}</option>
+            <label for="district_id">{% trans "Viloyat" %}</label>
+            <select name="district" class="form-control" id="district_id">
+                <option value="" selected disabled>{% trans "Tuman tanlang" %}</option>
+                {% if district.id %}
+                    <option value="{{ district.id }}" selected>{{ district.name }}</option>
                 {% endif %}
             </select>
             {% if form.district.errors %}
@@ -58,7 +49,6 @@
             {% endif %}
         </div>
     </div>
-
 
     <div class="form-group">
         <label for="product"><strong>{% trans "Mahsulot" %}:</strong></label>
@@ -96,9 +86,9 @@
                 <h3 class="card-subtitle mb-2 text-danger">{% trans "ZAKAZ ID:" %} #{{ order.pk }}</h3>
                 <ul class="list-unstyled text-muted">
                     <li>
-                        <strong>{% trans "Reklama tarqatuvchi ID:" %}</strong> {{ order.reklama_tarqatuvchi_id }}
+                        <strong>{% trans "Reklama tarqatuvchi ID:" %}</strong> {{ order.ref_user.id }}
                     </li>
-                    <li><strong>{% trans "Client:" %}</strong> +998{{ order.client_phone }}</li>
+                    <li><strong>{% trans "Client:" %}</strong> +998{{ order.phone_number }}</li>
                     <li>
                         <strong>{% trans "Manzil" %}:</strong> {{ order.region.name|default:"{% trans 'No aniq' %}" }}
                     </li>
@@ -111,7 +101,7 @@
                     <li>
                         <strong>{% trans "Yangilangan vaqti:" %}</strong> {{ order.updated_at|date:"Y-m-d H:i" }}
                     </li>
-                    <li><strong>{% trans "Holati:" %}</strong> {{ order.status }}</li>
+                    <li><strong>{% trans "Holati:" %}</strong> {{ order.status.title }}</li>
                 </ul>
                 <a href="{% url 'operator_detail' order.pk %}"
                    class="btn btn-primary mt-2">{% trans "Qabul qilish" %}</a>
@@ -124,22 +114,24 @@
     {% include 'apps/parts/_operators_pagination.html' %}
 
     <script>
+
         function getDistricts(regionId) {
             const districtSelect = document.getElementById('district_id');
-            districtSelect.innerHTML = '<option value="" disabled selected>{% trans "Tuman tanlang" %}</option>';
-            fetch(`/api/districts?region_id=${regionId}`)
-                .then(response => response.json())
-                .then(data => {
-                    data.districts.forEach(district => {
-                        const option = document.createElement('option');
-                        option.value = district.id;
-                        option.textContent = district.name;
-                        districtSelect.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching districts:', error);
-                });
+            districtSelect.innerHTML = '<option value="" selected disabled>Shahar/Tuman tanlang</option>';
+
+            if (regionId) {
+                fetch(`/get-districts/${regionId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(district => {
+                            const option = document.createElement('option');
+                            option.value = district.id;
+                            option.text = district.name;
+                            districtSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.log('Error:', error));
+            }
         }
 
         function toggleAll(source) {
@@ -150,7 +142,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', function () {
-            // Initialize multipleSelect plugin if it's included
             if ($.fn.multipleSelect) {
                 $('select[multiple]').multipleSelect({
                     filter: true,
@@ -163,8 +154,8 @@
     </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{% static 'admin/js/multiple-select.min.js' %}"></script> 
-    <link rel="stylesheet" href="{% static 'admin/css/multiple-select.css' %}"/> 
+    <script src="{% static 'admin/js/multiple-select.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'admin/css/multiple-select.css' %}"/>
 
     <style>
         select.form-control, select.form-select {

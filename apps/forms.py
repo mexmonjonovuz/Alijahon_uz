@@ -201,3 +201,7 @@ class OperatorOrderCreateForm(ModelForm):
     class Meta:
         model = Order
         fields = "full_name", "region", 'district', "quantity", "phone_number", "product",
+
+    def clean_phone_number(self):
+        phone_number = self.data.get('phone_number')
+        return re.sub(r'[^\d]', '', phone_number)[-9:]

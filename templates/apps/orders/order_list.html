@@ -1,5 +1,6 @@
 {% extends 'apps/base.html' %}
 {% load humanize %}
+{% load custom_tags %}
 {% block title %}
     Order page
 {% endblock %}
@@ -18,7 +19,7 @@
                                         <h3>{{ order.product.name }}</h3>
                                         <small>Mahsulot narxi: {{ order.product.price | intcomma }} sum</small>
                                         <p>Soni: {{ order.quantity }}</p>
-                                        <p>Date: {{ order.created_at }}</p>
+                                        <p>Sana: {{ order.created_at|custom_date }}</p>
                                     </div>
                                 {% endfor %}
                             </div>

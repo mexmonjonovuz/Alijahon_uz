@@ -1,0 +1,1936 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Kuryerlar bo'limi - Yangi
+        - jin.uz</title>
+    <link rel="stylesheet" href="/static/app/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/app/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet">
+    <style>
+        select {
+            width: 100%;
+        }
+    </style>
+
+</head>
+<body>
+<div>
+    <nav class="navbar navbar-dark bg-dark text-white" style="height: 10%;">
+
+
+
+
+        <div>Buyurtmalar</div>
+        <h4>ID: 1</h4>
+        <h5>Kuryer balans: 17 227 000</h5>
+
+
+
+
+        <a href="/currier/withdraw" class="btn btn-success btn-sm">Pul chiqarish</a>
+        <a href="/admin_page" class="btn btn-danger btn-sm">Asosiy panel</a>
+    </nav>
+    <div class="row">
+        <div class="col-md-2 h-70 text-center" style="background-color: #38ffae; padding-right: 0; position:absolute;">
+            <div class="list-group text-light w-100 h-100">
+                <a style="height: 13%" href="/currier/new"
+                   class="btn btn-primary list-group-item text-dark mt-1  active ">
+                    <div>
+                        <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                    </div>
+                    <h6>Yangi (2967)</h6>
+                </a>
+                <a style="height: 13%" href="/currier/delivering"
+                   class="btn btn-primary list-group-item text-dark mt-1 ">
+                    <div>
+                        <i class="fa fa-truck" aria-hidden="true"></i>
+                    </div>
+                    <h6>Yetkazilmoqda (0)</h6>
+                </a>
+                <a style="height: 13%" href="/currier/waiting"
+                   class="btn btn-primary list-group-item text-dark mt-1 ">
+                    <div>
+                        <i class="fa fa-clock-o" aria-hidden="true"></i>
+                    </div>
+                    <h6>Keyin oladi (1)</h6>
+                </a>
+                <a style="height: 13%" href="/currier/cancelled"
+                   class="btn btn-primary list-group-item text-dark mt-1 ">
+                    <div>
+                        <i class="fa fa-chain-broken" aria-hidden="true"></i>
+                    </div>
+                    <h6>Nosoz, bekor qilindi (2)</h6>
+                </a>
+                <a style="height: 13%" href="/currier/delivered"
+                   class="btn btn-primary list-group-item text-dark mt-1 ">
+                    <div>
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    </div>
+                    <h6>Yetkazib berildi</h6>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-10" style="margin-left: 16%;">
+
+            <div class="bg-light w-75 m-auto mt-5">
+
+                <form method="GET">
+
+                    <div><p>
+                        <label for="id_currier">Kuryer:</label>
+                        <select name="currier" id="id_currier" multiple>
+                            <option value="21">Toshkent shahar</option>
+
+                            <option value="57">Abror</option>
+
+                            <option value="93">Temur</option>
+
+                            <option value="109">Sardor</option>
+
+                            <option value="174">Rustam</option>
+
+                            <option value="175">Baxtiyor</option>
+
+                            <option value="181"></option>
+
+                            <option value="182"></option>
+
+                            <option value="195">Jizzax</option>
+
+                            <option value="196">Samarqand</option>
+
+                            <option value="197"></option>
+
+                            <option value="198"></option>
+
+                            <option value="199"></option>
+
+                            <option value="200"></option>
+
+                            <option value="201"></option>
+
+                            <option value="202"></option>
+
+                            <option value="203"></option>
+
+                            <option value="204"></option>
+
+                            <option value="205"></option>
+
+                            <option value="206"></option>
+
+                            <option value="213">Jizzax shahar</option>
+
+                        </select>
+
+
+                    </p>
+
+
+                        <p>
+                            <label for="id_region">Viloyat:</label>
+                            <select name="region" id="id_region" multiple>
+                                <option value="1">Qoraqalpog&#x27;iston</option>
+
+                                <option value="2">Xorazm</option>
+
+                                <option value="3">Navoiy</option>
+
+                                <option value="4">Buxoro</option>
+
+                                <option value="5">Samarqand</option>
+
+                                <option value="6">Qashqadaryo</option>
+
+                                <option value="7">Surxondaryo</option>
+
+                                <option value="8">Jizzax</option>
+
+                                <option value="9">Sirdaryo</option>
+
+                                <option value="10">Toshkent viloyati</option>
+
+                                <option value="11">Namangan</option>
+
+                                <option value="12">Farg&#x27;ona</option>
+
+                                <option value="13">Andijon</option>
+
+                                <option value="14">Toshkent shahar</option>
+
+                            </select>
+
+
+
+
+                        </p></div>
+                    <input class="btn btn-primary" type="submit" value="Saqlash">
+                </form>
+
+                <form method="POST" action="/currier/currier-page">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="zUPBhVLmSBa2Bxet7K4uKxblVYKkTOpcnGKuHu4dW9FJDviAq2yFpEfN2sOhnMWL">
+
+
+                    <input class="btn btn-primary" type="submit" value="Avto Kuryer" style="margin-top: 10px;">
+
+
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Daraxt tabiiy</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Shoxrux Isakov - <a
+                                        href="tel:+998946413697">+998946413697</a></li>
+                                <li class="">
+                                    Manzil: Toshkent viloyati, Ohangaron tumani</li>
+                                <li class="">Narxi: 189 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: zakazq-ch</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #64828</li>
+                                <li class="">Vaqti: 24-Sentabr, 2024-yil 21:56</li>
+                                <li class="">Yangilangan vaqti: 14-Oktabr, 2024-yil 19:40</li>
+                            </ul>
+
+                            <a href="/currier/order/64828" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/64828" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Samyun wan</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Ozodbek Turdimurodov - <a
+                                        href="tel:+998940861704">+998940861704</a></li>
+                                <li class="">
+                                    Manzil: Surxondaryo, Termiz shahri</li>
+                                <li class="">Narxi: 99 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Yashil dunyo</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67420</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 23:14</li>
+                                <li class="">Yangilangan vaqti: 14-Oktabr, 2024-yil 19:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67420" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67420" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Zolotoy olen</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Firdavs - <a
+                                        href="tel:+998334817627">+998334817627</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Chilonzor tumani</li>
+                                <li class="">Narxi: 102 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67475</li>
+                                <li class="">Vaqti: 4-Oktabr, 2024-yil 7:58</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67475" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67475" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Zolotoy olen</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: муратов одилжон - <a
+                                        href="tel:+998998392745">+998998392745</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Sergeli tumani</li>
+                                <li class="">Narxi: 102 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67311</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 17:19</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67311" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67311" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Zolotoy olen</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Saidxon - <a
+                                        href="tel:+998909051242">+998909051242</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Olmazor tumani</li>
+                                <li class="">Narxi: 102 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Islom akademiya</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67222</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 11:30</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67222" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67222" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Zolotoy olen</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Айбек Саидов - <a
+                                        href="tel:+998944818776">+998944818776</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Yashnobod tumani</li>
+                                <li class="">Narxi: 102 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz</li>
+                                <li class="">Yetkazilish vaqti: 4-Oktabr, 2024-yil</li>
+                                <li class="">ID: #66299</li>
+                                <li class="">Vaqti: 30-Sentabr, 2024-yil 13:00</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/66299" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/66299" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Samyun wan</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism:  - <a
+                                        href="tel:+998901014867">+998901014867</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Mirzo Ulug&#x27;bek tumani</li>
+                                <li class="">Narxi: 163 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 2ta</li>
+                                <li class="">Komment: Ttz 168 000 3dona</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67263</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 13:49</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67263" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67263" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Q7</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: farruh - <a
+                                        href="tel:+998996307828">+998996307828</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Chilonzor tumani</li>
+                                <li class="">Narxi: 232 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 3ta</li>
+                                <li class="">Komment: 1 Ayollarniki 2 ta erkak Bunyodkor stadioni</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67327</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 18:46</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67327" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67327" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Кадамбой Аллабергенов - <a
+                                        href="tel:+998941455885">+998941455885</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Olmazor tumani</li>
+                                <li class="">Narxi: 112 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Lakatsia</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67459</li>
+                                <li class="">Vaqti: 4-Oktabr, 2024-yil 3:39</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67459" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67459" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Жавлонбек - <a
+                                        href="tel:+998937418409">+998937418409</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Chilonzor tumani</li>
+                                <li class="">Narxi: 112 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Xorazm stayanka</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67447</li>
+                                <li class="">Vaqti: 4-Oktabr, 2024-yil 1:56</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67447" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67447" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Улугбек Махмудов Батирович - <a
+                                        href="tel:+998935010213">+998935010213</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Shayhontohur tumani</li>
+                                <li class="">Narxi: 112 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67355</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 20:28</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67355" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67355" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Ashurov Alisher - <a
+                                        href="tel:+998889911166">+998889911166</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Chilonzor tumani</li>
+                                <li class="">Narxi: 112 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Abu sahiy</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67349</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 20:05</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67349" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67349" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Ннн - <a
+                                        href="tel:+998953440316">+998953440316</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Yashnobod tumani</li>
+                                <li class="">Narxi: 112 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67344</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 19:57</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67344" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67344" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Soxib Xolmuminov - <a
+                                        href="tel:+998945773924">+998945773924</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Olmazor tumani</li>
+                                <li class="">Narxi: 112 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Заказ олинди</li>
+                                <li class="">Yetkazilish vaqti: 4-Oktabr, 2024-yil</li>
+                                <li class="">ID: #67300</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 16:26</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67300" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67300" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Салиев Дилмурод - <a
+                                        href="tel:+998977322200">+998977322200</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Mirobod tumani</li>
+                                <li class="">Narxi: 112 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: 5gacha kelishi kk uzbum</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67282</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 15:06</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67282" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67282" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: rahim - <a
+                                        href="tel:+998915180180">+998915180180</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Uchtepa tumani</li>
+                                <li class="">Narxi: 112 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Shiringòja</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67270</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 14:24</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67270" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67270" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Fazliddin - <a
+                                        href="tel:+998990306990">+998990306990</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Shayhontohur tumani</li>
+                                <li class="">Narxi: 112 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67268</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 14:21</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67268" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67268" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Турсунов Матлаб - <a
+                                        href="tel:+998915443460">+998915443460</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Chilonzor tumani</li>
+                                <li class="">Narxi: 112 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67259</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 13:37</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67259" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67259" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Дадамухамедов Абдумажид - <a
+                                        href="tel:+998977110025">+998977110025</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Yakkasaroy tumani</li>
+                                <li class="">Narxi: 112 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Rovd oldi kechga</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67226</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 11:59</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67226" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67226" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Чингиз - <a
+                                        href="tel:+998901217794">+998901217794</a></li>
+                                <li class="">
+                                    Manzil: Toshkent shahar, Chilonzor tumani</li>
+                                <li class="">Narxi: 112 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Абусахий стаянка.  Соат 10.  11 гаq-ch</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #65997</li>
+                                <li class="">Vaqti: 29-Sentabr, 2024-yil 11:14</li>
+                                <li class="">Yangilangan vaqti: 4-Oktabr, 2024-yil 9:40</li>
+                            </ul>
+
+                            <a href="/currier/order/65997" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/65997" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Zolotoy olen</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Хабиб Сунат - <a
+                                        href="tel:+998999148202">+998999148202</a></li>
+                                <li class="">
+                                    Manzil: Toshkent viloyati, Toshkent tumani</li>
+                                <li class="">Narxi: 107 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: 184 000  keles</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67366</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 20:56</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 21:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67366" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67366" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Zolotoy olen</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Ilxom Davlatov - <a
+                                        href="tel:+998938778855">+998938778855</a></li>
+                                <li class="">
+                                    Manzil: Buxoro, Buxoro shahar</li>
+                                <li class="">Narxi: 261 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 3ta</li>
+                                <li class="">Komment: 231000</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67027</li>
+                                <li class="">Vaqti: 2-Oktabr, 2024-yil 17:36</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 21:40</li>
+                            </ul>
+
+                            <a href="/currier/order/67027" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67027" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Q7</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Bexzod_shuxratbekov - <a
+                                        href="tel:+998940210833">+998940210833</a></li>
+                                <li class="">
+                                    Manzil: Andijon, Shahrixon tumani</li>
+                                <li class="">Narxi: 99 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67228</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 12:05</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 21:21</li>
+                            </ul>
+
+                            <a href="/currier/order/67228" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67228" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Бекзод - <a
+                                        href="tel:+998971617511">+998971617511</a></li>
+                                <li class="">
+                                    Manzil: Andijon, Asaka tumani</li>
+                                <li class="">Narxi: 117 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Niyoz Botir paselkasi</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67354</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 20:24</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 21:21</li>
+                            </ul>
+
+                            <a href="/currier/order/67354" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67354" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Hikmatillo - <a
+                                        href="tel:+998880617101">+998880617101</a></li>
+                                <li class="">
+                                    Manzil: Andijon, Buloqboshi tumani</li>
+                                <li class="">Narxi: 117 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Заказ олинди</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67336</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 19:18</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 21:21</li>
+                            </ul>
+
+                            <a href="/currier/order/67336" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67336" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Q7</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Ixtiyor - <a
+                                        href="tel:+998338800505">+998338800505</a></li>
+                                <li class="">
+                                    Manzil: Namangan, Norin tumani (Ozbekiston)</li>
+                                <li class="">Narxi: 168 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 2ta</li>
+                                <li class="">Komment: 1jenski 2ta mujski</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67345</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 19:58</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 21:21</li>
+                            </ul>
+
+                            <a href="/currier/order/67345" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67345" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Aqilli tarozi</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: zilola - <a
+                                        href="tel:+998958056161">+998958056161</a></li>
+                                <li class="">
+                                    Manzil: Namangan, Pop tumani</li>
+                                <li class="">Narxi: 179 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67339</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 19:38</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 21:21</li>
+                            </ul>
+
+                            <a href="/currier/order/67339" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67339" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Zolotoy olen</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Sayfulla Abdullaev - <a
+                                        href="tel:+998974049463">+998974049463</a></li>
+                                <li class="">
+                                    Manzil: Toshkent viloyati, Chinoz tumani</li>
+                                <li class="">Narxi: 184 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 2ta</li>
+                                <li class="">Komment: 184 000</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67346</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 19:58</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 21:21</li>
+                            </ul>
+
+                            <a href="/currier/order/67346" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67346" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Камолов@ - <a
+                                        href="tel:+998999899298">+998999899298</a></li>
+                                <li class="">
+                                    Manzil: Surxondaryo, Sariosiyo tumani</li>
+                                <li class="">Narxi: 117 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #66845</li>
+                                <li class="">Vaqti: 2-Oktabr, 2024-yil 0:37</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 21:21</li>
+                            </ul>
+
+                            <a href="/currier/order/66845" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/66845" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Zolotoy olen</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Шамурат Рузимуратов - <a
+                                        href="tel:+998915459707">+998915459707</a></li>
+                                <li class="">
+                                    Manzil: Samarqand, Pastdarg&#x27;om tumani</li>
+                                <li class="">Narxi: 107 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Ustazoda kòchasi</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67363</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 20:50</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 21:21</li>
+                            </ul>
+
+                            <a href="/currier/order/67363" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67363" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Zolotoy olen</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Жахонгир Камолов - <a
+                                        href="tel:+998973987300">+998973987300</a></li>
+                                <li class="">
+                                    Manzil: Samarqand, Samarqand shahar</li>
+                                <li class="">Narxi: 107 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67309</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 17:03</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 21:21</li>
+                            </ul>
+
+                            <a href="/currier/order/67309" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67309" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Komil - <a
+                                        href="tel:+998973923089">+998973923089</a></li>
+                                <li class="">
+                                    Manzil: Samarqand, Payariq tumani</li>
+                                <li class="">Narxi: 117 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz qimmat</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67364</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 20:53</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 21:21</li>
+                            </ul>
+
+                            <a href="/currier/order/67364" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67364" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Samyun wan</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Alisher_Aminovich - <a
+                                        href="tel:+998991216377">+998991216377</a></li>
+                                <li class="">
+                                    Manzil: Buxoro, Romitan tumani</li>
+                                <li class="">Narxi: 168 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 2ta</li>
+                                <li class="">Komment: 168 000 3dona</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67360</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 20:40</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 21:21</li>
+                            </ul>
+
+                            <a href="/currier/order/67360" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67360" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: _JENKA_717_, - <a
+                                        href="tel:+998904247700">+998904247700</a></li>
+                                <li class="">
+                                    Manzil: Qoraqalpog&#x27;iston, Beruniy tumani</li>
+                                <li class="">Narxi: 291 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 3ta</li>
+                                <li class="">Komment: 261ming</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67342</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 19:52</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 21:21</li>
+                            </ul>
+
+                            <a href="/currier/order/67342" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67342" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Umarhon Muhiddinov - <a
+                                        href="tel:+998930699100">+998930699100</a></li>
+                                <li class="">
+                                    Manzil: Namangan, Kosonsoy tumani</li>
+                                <li class="">Narxi: 204 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 2ta</li>
+                                <li class="">Komment: Zakaz olindi</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #65101</li>
+                                <li class="">Vaqti: 25-Sentabr, 2024-yil 22:25</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 20:33</li>
+                            </ul>
+
+                            <a href="/currier/order/65101" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/65101" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Собир Мирзажонов - <a
+                                        href="tel:+998973474966">+998973474966</a></li>
+                                <li class="">
+                                    Manzil: Toshkent viloyati, Bo&#x27;stonliq tumani</li>
+                                <li class="">Narxi: 117 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Oqtosh</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #65430</li>
+                                <li class="">Vaqti: 27-Sentabr, 2024-yil 1:43</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 20:33</li>
+                            </ul>
+
+                            <a href="/currier/order/65430" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/65430" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Daraxt tabiiy</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Uchqun Mahkambek o&#x27;g&#x27;li - <a
+                                        href="tel:+998995169148">+998995169148</a></li>
+                                <li class="">
+                                    Manzil: Qashqadaryo, Mirishkor tumani</li>
+                                <li class="">Narxi: 189 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz olindi</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #64871</li>
+                                <li class="">Vaqti: 25-Sentabr, 2024-yil 0:31</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 20:33</li>
+                            </ul>
+
+                            <a href="/currier/order/64871" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/64871" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Zolotoy olen</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Tolanboy - <a
+                                        href="tel:+998949079535">+998949079535</a></li>
+                                <li class="">
+                                    Manzil: Andijon, Shahrixon tumani</li>
+                                <li class="">Narxi: 107 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakazq-ch</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #63812</li>
+                                <li class="">Vaqti: 20-Sentabr, 2024-yil 14:54</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 20:33</li>
+                            </ul>
+
+                            <a href="/currier/order/63812" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/63812" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Давлат Хусаинов - <a
+                                        href="tel:+998979187145">+998979187145</a></li>
+                                <li class="">
+                                    Manzil: Samarqand, Samarqand shahar</li>
+                                <li class="">Narxi: 117 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz olindi</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #64994</li>
+                                <li class="">Vaqti: 25-Sentabr, 2024-yil 15:19</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 20:33</li>
+                            </ul>
+
+                            <a href="/currier/order/64994" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/64994" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Zolotoy olen</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Jahongirbek - <a
+                                        href="tel:+998335140414">+998335140414</a></li>
+                                <li class="">
+                                    Manzil: Andijon, Andijon shahar</li>
+                                <li class="">Narxi: 107 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz olindi</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67147</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 0:54</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 19:28</li>
+                            </ul>
+
+                            <a href="/currier/order/67147" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67147" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Абдуманнон Хошимов - <a
+                                        href="tel:+998934120633">+998934120633</a></li>
+                                <li class="">
+                                    Manzil: Andijon, Asaka tumani</li>
+                                <li class="">Narxi: 117 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67174</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 6:41</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 19:28</li>
+                            </ul>
+
+                            <a href="/currier/order/67174" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67174" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Isroiljon_8179 - <a
+                                        href="tel:+998930648179">+998930648179</a></li>
+                                <li class="">
+                                    Manzil: Andijon, Andijon shahar</li>
+                                <li class="">Narxi: 117 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Jahon bozoriga Nayman mahallasi</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67109</li>
+                                <li class="">Vaqti: 2-Oktabr, 2024-yil 22:28</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 19:28</li>
+                            </ul>
+
+                            <a href="/currier/order/67109" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67109" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Юсупжон Сабиров - <a
+                                        href="tel:+998979985170">+998979985170</a></li>
+                                <li class="">
+                                    Manzil: Andijon, Andijon shahar</li>
+                                <li class="">Narxi: 117 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz olindi</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67100</li>
+                                <li class="">Vaqti: 2-Oktabr, 2024-yil 22:14</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 19:28</li>
+                            </ul>
+
+                            <a href="/currier/order/67100" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67100" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Isroiljon_8179 - <a
+                                        href="tel:+998930648179">+998930648179</a></li>
+                                <li class="">
+                                    Manzil: Andijon, Andijon shahar</li>
+                                <li class="">Narxi: 117 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Жахон бозори</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #66900</li>
+                                <li class="">Vaqti: 2-Oktabr, 2024-yil 10:20</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 19:28</li>
+                            </ul>
+
+                            <a href="/currier/order/66900" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/66900" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Zolotoy olen</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Muzaffarxon Ahrorov - <a
+                                        href="tel:+998916608539">+998916608539</a></li>
+                                <li class="">
+                                    Manzil: Farg&#x27;ona, Marg&#x27;ilon shahri</li>
+                                <li class="">Narxi: 107 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz</li>
+                                <li class="">Yetkazilish vaqti: 3-Oktabr, 2024-yil</li>
+                                <li class="">ID: #66208</li>
+                                <li class="">Vaqti: 30-Sentabr, 2024-yil 7:16</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 19:28</li>
+                            </ul>
+
+                            <a href="/currier/order/66208" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/66208" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Sidiqjon xasanov - <a
+                                        href="tel:+998940838414">+998940838414</a></li>
+                                <li class="">
+                                    Manzil: Farg&#x27;ona, Dang&#x27;ara tumani</li>
+                                <li class="">Narxi: 117 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67188</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 8:29</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 19:28</li>
+                            </ul>
+
+                            <a href="/currier/order/67188" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67188" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Зафар Рахимов - <a
+                                        href="tel:+998993677110">+998993677110</a></li>
+                                <li class="">
+                                    Manzil: Farg&#x27;ona, Farg&#x27;ona shahar</li>
+                                <li class="">Narxi: 117 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67180</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 7:36</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 19:28</li>
+                            </ul>
+
+                            <a href="/currier/order/67180" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67180" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card border-dark mt-5">
+
+                        <span style="position: absolute; right: 0px; border: 1px solid chartreuse; background: chartreuse; padding: 15px; font-size: 26px; font-weight: 700;">#</span>
+
+                        <div class="card-body">
+                            <h2 class="card-title">Macun</h2>
+                            <ul class="text-muted">
+                                <li class="">Ism: Akbarjon Mamadiyev - <a
+                                        href="tel:+998916930474">+998916930474</a></li>
+                                <li class="">
+                                    Manzil: Farg&#x27;ona, Qo&#x27;qon shahri</li>
+                                <li class="">Narxi: 117 000 so'm
+
+
+                                </li>
+                                <li class="">Soni: 1ta</li>
+                                <li class="">Komment: Zakaz olindi</li>
+                                <li class="">Yetkazilish vaqti: ...</li>
+                                <li class="">ID: #67156</li>
+                                <li class="">Vaqti: 3-Oktabr, 2024-yil 1:27</li>
+                                <li class="">Yangilangan vaqti: 3-Oktabr, 2024-yil 19:28</li>
+                            </ul>
+
+                            <a href="/currier/order/67156" class="btn btn-primary">
+                                Holatini o'zgartirish
+                            </a>
+
+
+                            <a href="/order-spam/67156" class="btn btn-primary"
+                               style="background: red; border-color: red; float: right;">Spam</a>
+
+
+                        </div>
+                    </div>
+
+                </form>
+
+
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+
+
+
+
+
+
+
+
+                        <li class="page-item active disabled">
+                            <a class="page-link" href="/currier/new?page=1">
+                                1
+                            </a>
+                        </li>
+
+                        <li class="page-item">
+                            <a class="page-link" href="/currier/new?page=2">
+                                2
+                            </a>
+                        </li>
+
+
+
+                        <li class="page-item disabled">
+                            <a class="page-link" href="">
+                                ...
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="/currier/new?page=62">
+                                62
+                            </a>
+                        </li>
+
+
+
+                        <li class="page-item">
+                            <a class="page-link" href="/currier/new?page=2">
+                                Keyingisi
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </nav>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+<script>
+    $(function () {
+        $('select').multipleSelect({
+            multiple: true,
+            multipleWidth: 500,
+            maxHeight: 200,
+            maxHeightUnit: 50,
+            filter: true
+        })
+    })
+</script>
+
+</body>
+</html>

@@ -53,7 +53,7 @@
       });
     };
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.VK');
+    var global = tinymce.util.Tools.resolve('tinymce.utils.VK');
 
     var setup = function (editor) {
       var spaces = getKeyboardSpaces(editor);

@@ -401,7 +401,7 @@
       };
     };
 
-    var global$1 = tinymce.util.Tools.resolve('tinymce.util.I18n');
+    var global$1 = tinymce.util.Tools.resolve('tinymce.utils.I18n');
 
     var premiumType = 'premium';
     var openSourceType = 'opensource';

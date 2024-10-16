@@ -17,11 +17,11 @@
 
     var global$3 = tinymce.util.Tools.resolve('tinymce.Env');
 
-    var global$2 = tinymce.util.Tools.resolve('tinymce.util.Delay');
+    var global$2 = tinymce.util.Tools.resolve('tinymce.utils.Delay');
 
-    var global$1 = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global$1 = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.VK');
+    var global = tinymce.util.Tools.resolve('tinymce.utils.VK');
 
     var getTabFocusElements = function (editor) {
       return editor.getParam('tabfocus_elements', ':prev,:next');

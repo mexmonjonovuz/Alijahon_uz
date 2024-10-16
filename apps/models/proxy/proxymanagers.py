@@ -15,7 +15,7 @@ class ReadyOrderManager(Manager):
 
 class DeliverOrderManager(Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(status=self.model.Status.DELIVER)
+        return super().get_queryset().filter(status=self.model.Status.DELIVERING)
 
 
 class DeliveredOrderManager(Manager):
@@ -26,6 +26,11 @@ class DeliveredOrderManager(Manager):
 class CantPhoneOrderManager(Manager):
     def get_queryset(self):
         return super().get_queryset().filter(status=self.model.Status.CANT_PHONE)
+
+
+class BrokenOrderManager(Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(status=self.model.Status.BROKEN)
 
 
 class CanceledOrderManager(Manager):

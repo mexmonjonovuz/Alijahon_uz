@@ -747,14 +747,14 @@
       }
     };
 
-    var global$4 = tinymce.util.Tools.resolve('tinymce.util.Delay');
+    var global$4 = tinymce.util.Tools.resolve('tinymce.utils.Delay');
 
-    var global$3 = tinymce.util.Tools.resolve('tinymce.util.VK');
+    var global$3 = tinymce.util.Tools.resolve('tinymce.utils.VK');
 
     var zeroWidth = '\uFEFF';
     var nbsp = '\xA0';
 
-    var global$2 = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global$2 = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
     var global$1 = tinymce.util.Tools.resolve('tinymce.dom.DOMUtils');
 

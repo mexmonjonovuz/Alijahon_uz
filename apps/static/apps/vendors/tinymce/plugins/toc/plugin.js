@@ -13,9 +13,9 @@
 
     var global$2 = tinymce.util.Tools.resolve('tinymce.dom.DOMUtils');
 
-    var global$1 = tinymce.util.Tools.resolve('tinymce.util.I18n');
+    var global$1 = tinymce.util.Tools.resolve('tinymce.utils.I18n');
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var global = tinymce.util.Tools.resolve('tinymce.utils.Tools');
 
     var getTocClass = function (editor) {
       return editor.getParam('toc_class', 'mce-toc');

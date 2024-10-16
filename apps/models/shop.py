@@ -1,5 +1,6 @@
 from django.db.models import TextChoices, IntegerField, CharField, SET_NULL, FloatField, Model, ImageField, \
-    PositiveIntegerField, ForeignKey, CASCADE, BooleanField, DateField
+    PositiveIntegerField, ForeignKey, CASCADE, BooleanField, DateField, TextField
+from django.forms import DateTimeField
 from django.utils.translation import gettext_lazy as _
 from django_ckeditor_5.fields import CKEditor5Field
 
@@ -58,10 +59,10 @@ class Order(TimeBasedModel):
         CANCELED = "canceled", _('Canceled')
         ARCHIVED = "archived", _('Archived')
 
-    quantity = IntegerField(db_default=1,verbose_name=_("quantity"))
-    status = CharField(max_length=50, choices=StatusType.choices, default=StatusType.NEW,verbose_name=_("status"))
-    full_name = CharField(max_length=255,verbose_name=_("full name"))
-    phone_number = CharField(max_length=20,verbose_name=_("phone number"))
+    quantity = IntegerField(db_default=1, verbose_name=_("quantity"))
+    status = CharField(max_length=50, choices=StatusType.choices, default=StatusType.NEW, verbose_name=_("status"))
+    full_name = CharField(max_length=255, verbose_name=_("full name"))
+    phone_number = CharField(max_length=20, verbose_name=_("phone number"))
     stream = ForeignKey('apps.Stream', SET_NULL, null=True, blank=True, related_name='orders', verbose_name=_('stream'))
     region = ForeignKey('apps.Region', SET_NULL, null=True, blank=True, related_name='orders', verbose_name=_('region'))
     district = ForeignKey('apps.District', SET_NULL, null=True, blank=True, related_name='orders',
@@ -73,9 +74,10 @@ class Order(TimeBasedModel):
     currier = ForeignKey('apps.User', SET_NULL, null=True, blank=True, verbose_name=_('currier'),
                          related_name='currier_order', limit_choices_to={'type': User.Type.CURRIER})
     referral_user = ForeignKey('apps.User', SET_NULL, null=True, blank=True, related_name='referral_user')
-    send_order_date = DateField(null=True, blank=True,verbose_name=_("send order date"))
-    address = CharField(max_length=255, null=True, blank=True,verbose_name=_("address for order"))
-    comment_operator = CharField(max_length=255, null=True, blank=True,verbose_name=_("the operator's comment for the order"))
+    send_order_date = DateField(null=True, blank=True, verbose_name=_("send order date"))
+    address = CharField(max_length=255, null=True, blank=True, verbose_name=_("address for order"))
+    comment_operator = CharField(max_length=255, null=True, blank=True,
+                                 verbose_name=_("the operator's comment for the order"))
 
     def __str__(self):
         return self.status
@@ -98,10 +100,10 @@ class Favorite(SlugTimeBasedModel):
 class Competition(TimeBasedModel):
     title = CKEditor5Field('text', config_name='extends')
     description = CKEditor5Field('text', config_name='extends')
-    image = ImageField(upload_to='competition/%Y/%m/%d',verbose_name=_("Competition image"))
-    start_date = DateField(null=True, blank=True,verbose_name=_("Competition start time"))
-    end_date = DateField(null=True, blank=True,verbose_name=_("Competition end time"))
-    is_active = BooleanField(db_default=False,verbose_name=_("Active competitions"))
+    image = ImageField(upload_to='competition/%Y/%m/%d', verbose_name=_("Competition image"))
+    start_date = DateField(null=True, blank=True, verbose_name=_("Competition start time"))
+    end_date = DateField(null=True, blank=True, verbose_name=_("Competition end time"))
+    is_active = BooleanField(db_default=False, verbose_name=_("Active competitions"))
 
     def __str__(self):
         return self.title
@@ -119,11 +121,13 @@ class Transaction(TimeBasedModel):
         ERROR = 'error', _('Error')
 
     user = ForeignKey('apps.User', SET_NULL, null=True)
-    status = CharField(max_length=10, choices=Status.choices, default=Status.PROCESS,verbose_name=_("Transaction status"))
-    card_number = CharField(max_length=19,verbose_name=_("Transaction card for user"))
-    amount = PositiveIntegerField(db_default=0,verbose_name=_("Transaction amount"))
-    text = CharField(max_length=255, null=True, blank=True,verbose_name=_("Transaction description"))
-    check_image = ImageField(upload_to='transaction/%Y/%m/%d', null=True, blank=True,verbose_name=_("Transaction image check"))
+    status = CharField(max_length=10, choices=Status.choices, default=Status.PROCESS,
+                       verbose_name=_("Transaction status"))
+    card_number = CharField(max_length=19, verbose_name=_("Transaction card for user"))
+    amount = PositiveIntegerField(db_default=0, verbose_name=_("Transaction amount"))
+    text = CharField(max_length=255, null=True, blank=True, verbose_name=_("Transaction description"))
+    check_image = ImageField(upload_to='transaction/%Y/%m/%d', null=True, blank=True,
+                             verbose_name=_("Transaction image check"))
 
     class Meta:
         verbose_name = "Transaction"
@@ -132,9 +136,9 @@ class Transaction(TimeBasedModel):
 
 class SiteSettings(Model):
     operator_sum = PositiveIntegerField(db_default=0, verbose_name=_('Operators price'))
-    delivery_price_regions = FloatField(db_default=0,verbose_name=_("delivery price for regions"))
-    delivery_price_tashkent_region = FloatField(db_default=0,verbose_name=_("delivery price for tashkent regions"))
-    delivery_price_tashkent = FloatField(db_default=0,verbose_name=_("delivery price for tashkent"))
+    delivery_price_regions = FloatField(db_default=0, verbose_name=_("delivery price for regions"))
+    delivery_price_tashkent_region = FloatField(db_default=0, verbose_name=_("delivery price for tashkent regions"))
+    delivery_price_tashkent = FloatField(db_default=0, verbose_name=_("delivery price for tashkent"))
     minimum_sum = IntegerField(db_default=1000, verbose_name=_('Minimum transaction sum'))
     operator_repression = IntegerField(db_default=0, verbose_name=_('Operators repression sum'))
 
@@ -145,3 +149,32 @@ class SiteSettings(Model):
     @property
     def operator_rep(self):
         return self.operator_repression
+
+
+# TEST UCHUN
+class Item(Model):
+    name = CharField(max_length=255)
+    description = TextField(null=True)
+    price = FloatField(default=0)
+
+    def __str__(self):
+        return f"{self.name} (${self.price})"
+
+
+class Purchase(Model):
+    customer_full_name = CharField(max_length=64)
+    item = ForeignKey(to=Item, on_delete=CASCADE)
+    PAYMENT_METHODS = [
+        ("CC", "Credit card"),
+        ("DC", "Debit card"),
+        ("ET", "Ethereum"),
+        ("BC", "Bitcoin"),
+    ]
+    payment_method = CharField(max_length=2, default="CC", choices=PAYMENT_METHODS)
+    time = DateTimeField()
+    successful = BooleanField(default=False)
+
+
+
+    def __str__(self):
+        return f"{self.customer_full_name}, {self.payment_method} ({self.item.name})"
