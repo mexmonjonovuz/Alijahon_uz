@@ -1,7 +1,8 @@
 import os
 from pathlib import Path
-from telnetlib import LOGOUT
 
+import django.conf.locale
+from django.conf import global_settings
 from django.conf import settings
 from django.contrib.messages import constants as messages
 from django.utils.translation import gettext_lazy as _
@@ -98,11 +99,27 @@ USE_I18N = True
 USE_TZ = True
 USE_L10N = True
 
+gettext_noop = lambda s: s
+
+EXTRA_LANG_INFO = {
+    'oz': {
+        'bidi': False,
+        'code': 'oz',
+        'name': 'Ozbek',
+        'name_local': u'Ozbek',
+    },
+}
+
+LANG_INFO = dict(django.conf.locale.LANG_INFO, **EXTRA_LANG_INFO)
+django.conf.locale.LANG_INFO = LANG_INFO
+
+LANGUAGES_BIDI = global_settings.LANGUAGES_BIDI + (["oz", "Ozbek"])
+
 LANGUAGES = [
     ('en', _('English')),
     ('ru', _('Russian')),
     ('uz', _('Uzbek')),
-    ('oz', _('Ozbek')),
+    ('oz', gettext_noop(_('Ozbek'))),
 ]
 
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
@@ -233,5 +250,3 @@ MESSAGE_TAGS = {
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
-
-LOGOUT_REDIRECT_URL = '/'

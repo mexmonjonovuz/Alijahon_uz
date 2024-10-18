@@ -2,6 +2,7 @@
 {% load static %}
 {% load i18n %}
 {% load i18n_switcher %}
+{{ block.super }}
 
 {% block extrahead %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -43,8 +44,33 @@
             });
         });
     </script>
+    &nbsp;
+    <a href="{{ request|switch_i18n:'en' }}">
+        <img class="i18n_flag" src="{% static 'admin/images/flag-Stars-and-Stripes-May-1-1795.webp' %}"/>
+    </a>
+    &nbsp;
+    /
+    &nbsp;
+    <a href="{{ request|switch_i18n:'ru' }}">
+        <img class="i18n_flag" src="{% static 'admin/images/Flag_of_Russia.svg.png' %}"/>
+    </a>
+    &nbsp;
+    /
+    &nbsp;
+    <a href="{{ request|switch_i18n:'uz' }}">
+        <img class="i18n_flag" src="{% static 'admin/images/Flag-Uzbekistan.webp' %}"/>
+    </a>
+    &nbsp;
+    /
+    &nbsp;
+    <a href="{{ request|switch_i18n:'oz' }}">
+        <img class="i18n_flag" src="{% static 'admin/images/Flag-Uzbekistan.webp' %}"/>
+    </a>
+    &nbsp;
+    /
+    &nbsp;
 
-    
+
     {% if user.is_active and user.is_staff %}
         {% url 'django-admindocs-docroot' as docsroot %}
         {% if docsroot %}
@@ -55,7 +81,10 @@
     {% if user.has_usable_password %}
         <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
     {% endif %}
-    <a href="{% url 'logout' %}" class="grp-logout">{% trans 'Logout' %}</a>
+    <form action="{% url 'admin:logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">{% trans 'Logout' %}</button>
+    </form>
 
 {% endblock %}
 

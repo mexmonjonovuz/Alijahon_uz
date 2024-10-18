@@ -67,7 +67,9 @@
 <div class="container py-5">
     <div class="form-section">
         <h2>{% trans "Hammasi to'g'ri kiritilganligiga e'tibor bering!" %}</h2>
-        <p><strong>{% trans "Buyurtma Beruvchi:" %}</strong> <a
+        <p><strong>{% trans "Buyurtma Beruvchi Ism Sharifi:" %}</strong>
+            {{ order.full_name }}</p>
+        <p><strong>{% trans "Buyurtma Beruvchi Raqami:" %}</strong> <a
                 href="tel:998{{ order.phone_number }}">+998{{ order.phone_number }}</a></p>
         <p><strong>{% trans "Mahsulot:" %}</strong> {{ order.product.name }} - {{ order.product.price|intcomma }} sum
         </p>
@@ -294,11 +296,11 @@
                     <strong>{% trans "Komment" %}:</strong>
                 </label>
                 <textarea type="text"
-                        name="comment_operator"
-                        class="form-control"
-                        id="comment"
-                        rows="3"
-                        placeholder="{% trans 'Ushbu buyurtma uchun izoh...' %}"
+                          name="comment_operator"
+                          class="form-control"
+                          id="comment"
+                          rows="3"
+                          placeholder="{% trans 'Ushbu buyurtma uchun izoh...' %}"
                 ></textarea>
             </div>
         </div>

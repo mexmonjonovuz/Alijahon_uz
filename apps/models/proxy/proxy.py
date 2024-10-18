@@ -1,10 +1,14 @@
 from django.utils.translation import gettext_lazy as _
 
 from apps.models import Order, User
-from apps.models.proxy.proxymanagers import OperatorUserManager
+from apps.models.proxy.proxymanagers import AdminUserManager, ManagerUserManager, CurrierUserManager, UserManager, \
+    OperatorUserManager, ArchivedOrderManager, CanceledOrderManager, CantPhoneOrderManager, DeliveredOrderManager, \
+    DeliveringOrderManager, ReadyOrderManager, NewOrderManager
 
 
 class OrderNewProxyModel(Order):
+    objects = NewOrderManager()
+
     class Meta:
         proxy = True
         verbose_name = _('New Order')
@@ -12,6 +16,8 @@ class OrderNewProxyModel(Order):
 
 
 class OrderReadyProxyModel(Order):
+    objects = ReadyOrderManager()
+
     class Meta:
         proxy = True
         verbose_name = _('Order ready')
@@ -19,6 +25,8 @@ class OrderReadyProxyModel(Order):
 
 
 class OrderDeliverProxyModel(Order):
+    objects = DeliveringOrderManager()
+
     class Meta:
         proxy = True
         verbose_name = _('Ready to ship')
@@ -26,6 +34,8 @@ class OrderDeliverProxyModel(Order):
 
 
 class OrderDeliveredProxyModel(Order):
+    objects = DeliveredOrderManager()
+
     class Meta:
         proxy = True
         verbose_name = _('Delivered')
@@ -33,6 +43,8 @@ class OrderDeliveredProxyModel(Order):
 
 
 class OrderCantPhoneProxyModel(Order):
+    objects = CantPhoneOrderManager()
+
     class Meta:
         proxy = True
         verbose_name = _('Cant to Phone')
@@ -40,6 +52,8 @@ class OrderCantPhoneProxyModel(Order):
 
 
 class OrderCanceledProxyModel(Order):
+    objects = CanceledOrderManager()
+
     class Meta:
         proxy = True
         verbose_name = _('Order Canceled')
@@ -47,6 +61,8 @@ class OrderCanceledProxyModel(Order):
 
 
 class OrderArchivedProxyModel(Order):
+    objects = ArchivedOrderManager()
+
     class Meta:
         proxy = True
         verbose_name = _('Archived Order')
@@ -63,6 +79,8 @@ class UserOperatorProxyModel(User):
 
 
 class UserManagerProxyModel(User):
+    objects = ManagerUserManager()
+
     class Meta:
         proxy = True
         verbose_name = _('Manager')
@@ -70,13 +88,17 @@ class UserManagerProxyModel(User):
 
 
 class UserAdminProxyModel(User):
+    objects = AdminUserManager()
+
     class Meta:
         proxy = True
         verbose_name = _('Admin')
         verbose_name_plural = _('Admins')
 
 
-class UserDriverProxyModel(User):
+class UserCurrierProxyModel(User):
+    objects = CurrierUserManager()
+
     class Meta:
         proxy = True
         verbose_name = _('Currier')
@@ -84,6 +106,8 @@ class UserDriverProxyModel(User):
 
 
 class UserProxyModel(User):
+    objects = UserManager()
+
     class Meta:
         proxy = True
         verbose_name = _('User')

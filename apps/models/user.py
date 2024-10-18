@@ -24,7 +24,7 @@ class User(AbstractUser):
     telegram_id = CharField(max_length=30, blank=True, null=True, unique=True, validators=[
         RegexValidator(regex=r'^\d+$', message="Telegram ID must contain only numbers.")],
                             verbose_name=_("telegram id"))
-    bio = CKEditor5Field('Text', config_name='basic', null=True, blank=True)
+    bio = CKEditor5Field('Text', config_name='extends', null=True, blank=True)
     district = ForeignKey('District', CASCADE, blank=True, null=True)
     image = ImageField(upload_to='user/%Y/%m/%d/', default='default.jpg', blank=True, verbose_name=_("image"))
     type = CharField(max_length=25, choices=Type.choices, default=Type.USER, verbose_name=_("user type"))

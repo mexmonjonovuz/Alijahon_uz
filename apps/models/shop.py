@@ -1,6 +1,5 @@
 from django.db.models import TextChoices, IntegerField, CharField, SET_NULL, FloatField, Model, ImageField, \
-    PositiveIntegerField, ForeignKey, CASCADE, BooleanField, DateField, TextField
-from django.forms import DateTimeField
+    PositiveIntegerField, ForeignKey, CASCADE, BooleanField, DateField
 from django.utils.translation import gettext_lazy as _
 from django_ckeditor_5.fields import CKEditor5Field
 
@@ -82,6 +81,10 @@ class Order(TimeBasedModel):
     def __str__(self):
         return self.status
 
+    @property
+    def order_count(self):
+        return self.status.count('new')
+
 
 class Favorite(SlugTimeBasedModel):
     user = ForeignKey('apps.User', CASCADE, related_name='likes')
@@ -149,32 +152,3 @@ class SiteSettings(Model):
     @property
     def operator_rep(self):
         return self.operator_repression
-
-
-# TEST UCHUN
-class Item(Model):
-    name = CharField(max_length=255)
-    description = TextField(null=True)
-    price = FloatField(default=0)
-
-    def __str__(self):
-        return f"{self.name} (${self.price})"
-
-
-class Purchase(Model):
-    customer_full_name = CharField(max_length=64)
-    item = ForeignKey(to=Item, on_delete=CASCADE)
-    PAYMENT_METHODS = [
-        ("CC", "Credit card"),
-        ("DC", "Debit card"),
-        ("ET", "Ethereum"),
-        ("BC", "Bitcoin"),
-    ]
-    payment_method = CharField(max_length=2, default="CC", choices=PAYMENT_METHODS)
-    time = DateTimeField()
-    successful = BooleanField(default=False)
-
-
-
-    def __str__(self):
-        return f"{self.customer_full_name}, {self.payment_method} ({self.item.name})"

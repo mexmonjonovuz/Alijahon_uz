@@ -12,7 +12,7 @@ if settings.DEBUG:
 urlpatterns = [
                   path('', include('apps.urls')),
                   path("ckeditor5/", include('django_ckeditor_5.urls')),
-                  path("i18n/", include("django.conf.urls.i18n")),
+                  path('i18n/', include('django.conf.urls.i18n')),
                   path('__debug__/', include(debug_toolbar.urls)),
                   path('logout/', LogoutView.as_view(), name="logout"),
 

@@ -1,4 +1,5 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views import View
 
 
@@ -6,9 +7,17 @@ class GetObjectMixins(LoginRequiredMixin, View):
 
     def get_object(self, queryset=None):
         return self.request.user
-
-
-from django.conf import settings
+#
+#
+# class IsAuthOperatorMixins(LoginRequiredMixin, UserPassesTestMixin):
+#     #
+#     # def test_func(self):
+#     #     return self.request.user.type == 'Operator'
+#     #
+#     # def handle_no_permission(self):
+#     #     redirect('login_page')
+#     #     return super().handle_no_permission()
+#     pass
 
 
 def switch_lang_code(path, language):

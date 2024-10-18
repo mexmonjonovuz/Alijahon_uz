@@ -81,16 +81,16 @@
                                     #{{ order.pk }}
                                 </span>
                 {% endif %}
-                <h2 class="card-title">{{ order.full_name }}
+                <h2 class="card-title">{{ order.product.name }}
                     - {{ order.product.price|intcomma }} {{ order.product.currency }}</h2>
                 <h3 class="card-subtitle mb-2 text-danger">{% trans "ZAKAZ ID:" %} #{{ order.pk }}</h3>
                 <ul class="list-unstyled text-muted">
                     <li>
                         <strong>{% trans "Reklama tarqatuvchi ID:" %}</strong> {{ order.ref_user.id }}
                     </li>
-                    <li><strong>{% trans "Client:" %}</strong> +998{{ order.phone_number }}</li>
+                    <li><strong>{% trans "Client:" %}</strong> {{ order.full_name }} +998{{ order.phone_number|slice:'1'|add:'XXXXXXXX' }}</li>
                     <li>
-                        <strong>{% trans "Manzil" %}:</strong> {{ order.region.name|default:"{% trans 'No aniq' %}" }}
+                        <strong>{% trans "Manzil" %}:</strong> {{ order.region.name|default_if_none:" " }}
                     </li>
                     <li>
                         <strong>{% trans "Narxi" %}:</strong> {{ order.product.price|intcomma }} {{ order.product.currency }}

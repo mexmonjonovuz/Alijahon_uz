@@ -2,6 +2,8 @@ from decimal import Decimal
 
 from django.template import Library
 
+from apps.models import User
+
 register = Library()
 
 
@@ -89,3 +91,10 @@ def custom_intcomma(value):
     result_with_spaces = ' '.join([result[i:i + 4] for i in range(0, len(result), 4)])
 
     return result_with_spaces
+
+
+@register.filter('has_operator')
+def has_operator(value):
+    if value == "Operator":
+        return True
+    return False
