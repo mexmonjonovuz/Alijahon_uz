@@ -51,16 +51,17 @@ urlpatterns = [
 
     # Operator page
     path('operator-page/', OperatorOrderListView.as_view(), name='operator_page'),
-    path('operator-page/add/', OperatorAddOrderView.as_view(), name='operator_add_order'),
-    path('operator-page/new/', OperatorOrderListView.as_view(), name='operator_new_page'),
-    path('operator-page/ready/', OperatorOrderListView.as_view(), name='operator_ready_page'),
-    path('operator-page/delivering/', OperatorOrderListView.as_view(), name='operator_delivering_page'),
-    path('operator-page/delivered/', OperatorOrderListView.as_view(), name='operator_delivered_page'),
-    path('operator-page/broken/', OperatorOrderListView.as_view(), name='operator_broken_page'),
-    path('operator-page/cant_phone/', OperatorOrderListView.as_view(), name='operator_cantphone_page'),
-    path('operator-page/cancelled/', OperatorOrderListView.as_view(), name='operator_cancelled_page'),
-    path('operator-page/archived/', OperatorOrderListView.as_view(), name='operator_archived_page'),
-    path('operator-page/all/', OperatorOrderListView.as_view(), name='operator_all_page'),
+    path('operator-page/<str:status>/', OperatorOrderListView.as_view(), name='operator_status_page'),
     path('operator/detail/<int:pk>/', OperatorDetailView.as_view(), name='operator_detail'),
+    path('operator-page/add/', OperatorAddOrderView.as_view(), name='operator_add_order'),
+    # path('operator-page/new/', OperatorOrderListView.as_view(), name='operator_new_page'),
+    # path('operator-page/ready/', OperatorOrderListView.as_view(), name='operator_ready_page'),
+    # path('operator-page/delivering/', OperatorOrderListView.as_view(), name='operator_delivering_page'),
+    # path('operator-page/delivered/', OperatorOrderListView.as_view(), name='operator_delivered_page'),
+    # path('operator-page/broken/', OperatorOrderListView.as_view(), name='operator_broken_page'),
+    # path('operator-page/cant_phone/', OperatorOrderListView.as_view(), name='operator_cantphone_page'),
+    # path('operator-page/cancelled/', OperatorOrderListView.as_view(), name='operator_cancelled_page'),
+    # path('operator-page/archived/', OperatorOrderListView.as_view(), name='operator_archived_page'),
+    # path('operator-page/all/', OperatorOrderListView.as_view(), name='operator_all_page'),
 
 ]

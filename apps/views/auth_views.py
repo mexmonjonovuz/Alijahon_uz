@@ -87,7 +87,7 @@ class OperatorDetailView(UpdateView):
     template_name = 'apps/operators/operator_detail.html'
     context_object_name = 'order'
     form_class = OperatorUpdateForm
-    success_url = reverse_lazy('operator_new_page')
+    success_url = reverse_lazy('operator_page')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
@@ -115,7 +115,7 @@ class OperatorAddOrderView(CreateView):
     queryset = Order.objects.all()
     template_name = 'apps/operators/operator_add_product.html'
     form_class = OperatorOrderCreateForm
-    success_url = reverse_lazy('operator_new_page')
+    success_url = reverse_lazy('operator_page')
 
     def form_valid(self, form):
         return super().form_valid(form)
