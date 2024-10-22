@@ -86,6 +86,10 @@ class Order(TimeBasedModel):
     def order_count(self):
         return self.status.count('new')
 
+    def save(self, *args, force_insert=False, force_update=False, using=None, update_fields=None):
+        super().save(*args, force_insert=force_insert, force_update=force_update, using=using,
+                     update_fields=update_fields)
+
 
 class Favorite(SlugTimeBasedModel):
     user = ForeignKey('apps.User', CASCADE, related_name='likes')

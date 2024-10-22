@@ -1,13 +1,13 @@
 from django.contrib import admin
-from django.contrib.admin import ModelAdmin, register, StackedInline
+from django.contrib.admin import ModelAdmin, StackedInline
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
 
+from apps.admin.apps_admin import site_register
 from apps.models import Category, Product, User, SiteSettings, Favorite, Competition, Order, District, Region, \
     Transaction, Operator
 from apps.models.proxy.proxy import UserProxyModel, UserOperatorProxyModel, UserManagerProxyModel, UserAdminProxyModel, \
-    UserCurrierProxyModel, OrderNewProxyModel, OrderReadyProxyModel, OrderDeliverProxyModel, OrderDeliveredProxyModel, \
-    OrderCantPhoneProxyModel, OrderBrokenProxyModel, OrderCanceledProxyModel, OrderArchivedProxyModel
+    UserCurrierProxyModel
 
 
 class OperatorStackedInline(StackedInline):
@@ -16,17 +16,18 @@ class OperatorStackedInline(StackedInline):
     max_num = 3
 
 
-@register(User)
+@site_register(User)
 class UserModelAdmin(UserAdmin):
     list_display = 'phone', 'type', 'is_staff',
     inlines = [OperatorStackedInline]
     ordering = 'phone',
+    search_fields = ("phone", "first_name", "last_name")
     fieldsets = (
         (
             None,
             {
                 "classes": ("wide",),
-                "fields": ("phone", "password", "email"),
+                "fields": ("phone", "password"),
             },
         ),
     )
@@ -48,7 +49,7 @@ class UserModelAdmin(UserAdmin):
         )
 
 
-@register(Category)
+@site_register(Category)
 class CategoryModelAdmin(ModelAdmin):
     list_display = 'name', 'show_image',
 
@@ -61,7 +62,7 @@ class CategoryModelAdmin(ModelAdmin):
     show_image.allow_tags = True
 
 
-@register(Product)
+@site_register(Product)
 class ProductModelAdmin(ModelAdmin):
     list_display = 'name', 'show_image',
 
@@ -74,105 +75,63 @@ class ProductModelAdmin(ModelAdmin):
     show_image.allow_tags = True
 
 
-@register(Order)
+@site_register(Order)
 class OrderModelAdmin(ModelAdmin):
     list_display = 'full_name', 'phone_number', 'status',
 
 
-@register(Region)
+@site_register(Region)
 class ReginModelAdmin(ModelAdmin):
     list_display = 'name',
 
 
-@register(District)
+@site_register(District)
 class DistrictModelAdmin(ModelAdmin):
     list_display = 'name',
 
 
-@register(SiteSettings)
+@site_register(SiteSettings)
 class SiteSettingsModelAdmin(ModelAdmin):
     pass
 
 
-@register(Favorite)
+@site_register(Favorite)
 class FavouriteModelAdmin(ModelAdmin):
     pass
 
 
-@register(Transaction)
+@site_register(Transaction)
 class TransactionModelAdmin(ModelAdmin):
     pass
 
 
-@register(Competition)
+@site_register(Competition)
 class CompetitionModelAdmin(ModelAdmin):
     pass
 
 
 # PROXY USER
 
-@register(UserProxyModel)
-class UserProxyModelAdmin(ModelAdmin):
+@site_register(UserProxyModel)
+class UserProxyModelAdmin(UserModelAdmin):
     list_display = 'phone', 'type',
 
 
-@register(UserOperatorProxyModel)
-class UserOperatorProxyModelAdmin(ModelAdmin):
+@site_register(UserOperatorProxyModel)
+class UserOperatorProxyModelAdmin(UserModelAdmin):
     pass
 
 
-@register(UserManagerProxyModel)
+@site_register(UserManagerProxyModel)
 class UserManagerProxyModelAdmin(ModelAdmin):
     pass
 
 
-@register(UserAdminProxyModel)
+@site_register(UserAdminProxyModel)
 class UserAdminProxyModelAdmin(ModelAdmin):
     pass
 
 
-@register(UserCurrierProxyModel)
+@site_register(UserCurrierProxyModel)
 class UserCurrierProxyModelAdmin(ModelAdmin):
-    pass
-
-
-# PROXY ORDER
-
-@register(OrderNewProxyModel)
-class OrderNewProxyModelAdmin(ModelAdmin):
-    pass
-
-
-@register(OrderReadyProxyModel)
-class OrderReadyProxyModelAdmin(ModelAdmin):
-    pass
-
-
-@register(OrderDeliverProxyModel)
-class OrderDeliverProxyModelAdmin(ModelAdmin):
-    pass
-
-
-@register(OrderDeliveredProxyModel)
-class OrderDeliveredProxyModelAdmin(ModelAdmin):
-    pass
-
-
-@register(OrderCantPhoneProxyModel)
-class OrderCantPhoneProxyModelAdmin(ModelAdmin):
-    pass
-
-
-@register(OrderBrokenProxyModel)
-class OrderBrokenProxyModelAdmin(ModelAdmin):
-    pass
-
-
-@register(OrderCanceledProxyModel)
-class OrderCanceledProxyModelAdmin(ModelAdmin):
-    pass
-
-
-@register(OrderArchivedProxyModel)
-class OrderArchivedProxyModelAdmin(ModelAdmin):
     pass

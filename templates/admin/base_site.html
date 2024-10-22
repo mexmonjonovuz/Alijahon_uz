@@ -68,8 +68,8 @@
     {#    </a>#}
     {#    &nbsp;#}
     {#    /#}
-    &nbsp;
-    <form action="{% url 'admin:set_language' %}" method="post">
+    {#    &nbsp; {% url 'admin:set_language' %}#}
+    <form action="#" method="post">
         {% csrf_token %}
         <label for="language">Choose Language:</label>
         <select name="language" id="language" onchange="this.form.submit()">
