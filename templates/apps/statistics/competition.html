@@ -21,7 +21,7 @@
                         <div class="card text-white bg-info" bis_skin_checked="1">
                             <div class="card-body" bis_skin_checked="1">
                                 <div class="card-title" bis_skin_checked="1">{% trans 'Boshlash' %}</div>
-                                <p class="card-text">{{ competition.start_date|custom_date }}</p>
+                                <p class="card-text">{{ competition.start_date|date:'d m Y' }}</p>
                             </div>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                         <div class="card text-white bg-danger" bis_skin_checked="1">
                             <div class="card-body" bis_skin_checked="1">
                                 <div class="card-title" bis_skin_checked="1">{% trans 'Yakunlash' %}</div>
-                                <p class="card-text">{{ competition.end_date|custom_date }}</p>
+                                <p class="card-text">{{ competition.end_date|date:'d m y' }}</p>
                             </div>
                         </div>
                     </div>

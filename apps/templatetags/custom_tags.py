@@ -1,6 +1,7 @@
 from decimal import Decimal
 
 from django.template import Library
+from django.utils.translation import gettext_lazy as _
 
 register = Library()
 
@@ -54,18 +55,18 @@ def remove_nulls(value):
 @register.filter('custom_date')
 def custom_date(value):
     months = {
-        1: 'Yanvar',
-        2: 'Fevral',
-        3: 'Mart',
-        4: 'Aprel',
-        5: 'May',
-        6: 'Iyun',
-        7: 'Iyul',
-        8: 'Avgust',
-        9: 'Sentabr',
-        10: 'Oktabr',
-        11: 'Noyabr',
-        12: 'Dekabr',
+        1: _('Yanvar'),
+        2: _('Fevral'),
+        3: _('Mart'),
+        4: _('Aprel'),
+        5: _('May'),
+        6: _('Iyun'),
+        7: _('Iyul'),
+        8: _('Avgust'),
+        9: _('Sentabr'),
+        10: _('Oktabr'),
+        11: _('Noyabr'),
+        12: _('Dekabr'),
     }
     if value.minute:
         return f"{value.day} - {months.get(value.month, '')} - {value.month} - {value.year}  {value.hour}:{value.minute}"

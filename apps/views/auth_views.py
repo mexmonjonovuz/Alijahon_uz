@@ -82,10 +82,6 @@ class OperatorOrderListView(ListView):
         return context
 
 
-
-
-
-
 class OperatorDetailView(UpdateView):
     queryset = Order.objects.all()
     template_name = 'apps/operators/operator_detail.html'

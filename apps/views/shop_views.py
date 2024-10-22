@@ -109,7 +109,7 @@ class CompetitionListView(ListView):
 
 
 class StatisticView(LoginRequiredMixin, ListView):
-    model = Stream
+    queryset = Stream.objects.all()
     template_name = 'apps/statistics/statistic.html'
     context_object_name = 'streams'
 
@@ -143,7 +143,7 @@ class StatisticView(LoginRequiredMixin, ListView):
             total_visit_count=Sum('visit_count'),
             total_new_count=Sum(Order.StatusType.NEW),
             total_ready_count=Sum(Order.StatusType.READY),
-            total_deliver_count=Sum(Order.StatusType.DELIVERING),
+            total_deliver_count=Sum('deliver'),
             total_delivered_count=Sum(Order.StatusType.DELIVERED),
             total_cant_phone_count=Sum(Order.StatusType.CANT_PHONE),
             total_broken_count=Sum(Order.StatusType.BROKEN),
@@ -151,6 +151,3 @@ class StatisticView(LoginRequiredMixin, ListView):
             total_archived_count=Sum(Order.StatusType.ARCHIVED),
         )
         return qs
-
-
-
