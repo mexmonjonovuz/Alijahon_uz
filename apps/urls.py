@@ -45,7 +45,7 @@ urlpatterns = [
     path('admin-page/statistika/<int:pk>', ProductStatisticView.as_view(), name='product_statistic'),
     path('admin-page/stream/', StreamListView.as_view(), name='steam_page'),
     path('admin-page/market/', MarketView.as_view(), name='market_page'),
-    path('admin-page/market/<slug:slug>/', MarketView.as_view(), name='market_by_slug'),
+    re_path(r'admin-page/market/(?P<slug>[\w\-]+)/$', MarketView.as_view(), name='market_by_slug'),
     path('admin-page/requests/', InquiriesView.as_view(), name='inquiries_page'),
     path('admin-page/create-stream/', StreamCreateView.as_view(), name='create_stream_page'),
 

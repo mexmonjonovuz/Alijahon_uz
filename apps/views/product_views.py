@@ -36,7 +36,7 @@ class ProductListByCategoryListView(ListView):
 
 
 class MarketView(ListView):
-    queryset = Product.objects.select_related('category').all()
+    queryset = Product.objects.all()
     template_name = 'apps/market.html'
     context_object_name = 'products'
     paginate_by = 5
@@ -51,6 +51,11 @@ class MarketView(ListView):
             qs = qs.filter(name__icontains=search)
 
         return qs
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super().get_context_data(object_list=object_list, **kwargs)
+        ctx['categories'] = Category.objects.values('name', 'slug')
+        return ctx
 
 
 class ProductOrStreamDetailView(DetailView):
