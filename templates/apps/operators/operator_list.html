@@ -18,8 +18,6 @@
             </div>
         {% endif %}
     </div>
-
-
     <div class="row form-section">
         <div class="col-md-6 mb-3">
             <label for="region">{% trans "Viloyat" %}</label>
@@ -75,25 +73,32 @@
     {% for order in orders %}
         <div class="card border-dark mt-5">
             <div class="card-body position-relative">
-                {% if request.path|spliter|title == 'delivering' %}
-                    <span class="badge badge-success position-absolute"
+                {% if request.path|spliter in 'new' or request.path|spliter in 'ready' or request.path|spliter in 'delivering' or request.path|spliter in 'delivered' or request.path|spliter in 'cant_phone' or request.path|spliter in 'broken' or request.path|spliter in 'cancelled' or request.path|spliter in 'archived' or request.path|spliter in 'all'%}
+                    <span class="badge {% if request.user.pk == order.operator.pk %}badge-pill badge-success
+                        {% elif order.operator is None %}badge-pill btn-primary
+                        {% else %}alert-danger
+                        {% endif %} position-absolute"
                           style="top: 10px; right: 10px; font-size: 1.2rem;">
-                                    #{{ order.pk }}
+                                    #{{ order.operator.pk|default_if_none:'Nomalum' }}
                                 </span>
                 {% endif %}
-                <h2 class="card-title">{{ order.product.name }}
-                    - {{ order.product.price|intcomma }} {{ order.product.currency }}</h2>
+                <h2 class="card-title">{{ order.product.name }}{% if order.stream %}
+                    - {{ order.stream.sale_price|intcomma }}{% else %}
+                    {{ order.product.price|intcomma }}{% endif %}</h2>
                 <h3 class="card-subtitle mb-2 text-danger">{% trans "ZAKAZ ID:" %} #{{ order.pk }}</h3>
                 <ul class="list-unstyled text-muted">
                     <li>
                         <strong>{% trans "Reklama tarqatuvchi ID:" %}</strong> {{ order.ref_user.id }}
                     </li>
-                    <li><strong>{% trans "Client:" %}</strong> {{ order.full_name }} +998{{ order.phone_number|slice:'1'|add:'XXXXXXXX' }}</li>
+                    <li><strong>{% trans "Client:" %}</strong> {{ order.full_name }}
+                        +998{{ order.phone_number|slice:'1'|add:'XXXXXXXX' }}</li>
                     <li>
                         <strong>{% trans "Manzil" %}:</strong> {{ order.region.name|default_if_none:" " }}
                     </li>
                     <li>
-                        <strong>{% trans "Narxi" %}:</strong> {{ order.product.price|intcomma }} {{ order.product.currency }}
+                        <strong>{% trans "Narxi" %}:</strong>
+                        {% if order.stream %}{{ order.stream.sale_price|intcomma }}{% else %}
+                            {{ order.product.price|intcomma }}{% endif %} sum
                     </li>
                     <li><strong>{% trans "Soni:" %}</strong> {{ order.quantity }} ta</li>
                     <li><strong>{% trans "Vaqti:" %}</strong> {{ order.created_at|date:"Y-m-d H:i" }}
@@ -103,11 +108,12 @@
                     </li>
                     <li><strong>{% trans "Holati:" %}</strong> {{ order.status.title }}</li>
                 </ul>
-                <a href="{% url 'operator_detail' order.pk %}"
-                   class="btn btn-primary mt-2">{% trans "Qabul qilish" %}</a>
-                <a href="" class="btn btn-warning mt-2 ml-2"
-                   style="position: absolute; right: 10px;">{% trans "Hold" %}</a>
-
+                {% if order.operator.pk == request.user.pk or order.operator is None %}
+                    <a href="{% url 'operator_detail' order.pk %}"
+                       class="btn btn-primary mt-2">{% trans "Qabul qilish" %}</a>
+                    <a href="" class="btn btn-warning mt-2 ml-2"
+                       style="position: absolute; right: 10px;">{% trans "Hold" %}</a>
+                {% endif %}
             </div>
         </div>
     {% endfor %}

@@ -2,8 +2,6 @@ from decimal import Decimal
 
 from django.template import Library
 
-from apps.models import User
-
 register = Library()
 
 

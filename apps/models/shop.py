@@ -21,6 +21,7 @@ class Product(SlugTimeBasedModel):
     price = PositiveIntegerField(db_default=0, verbose_name=_("price"))
     quantity = PositiveIntegerField(db_default=0, verbose_name=_("quantity"))
     discount_price = PositiveIntegerField(db_default=0, verbose_name=_("discount_price"))
+    # stream_discount = PositiveIntegerField(db_default=0,verbose_name=_("discount_stream_price"))
     category = ForeignKey('apps.Category', CASCADE)
 
     class Meta:

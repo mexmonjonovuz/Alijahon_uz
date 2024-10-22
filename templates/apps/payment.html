@@ -61,8 +61,6 @@
                                     <form class="card-body" action="{% url 'payment_page' %}" method="POST"
                                           enctype="multipart/form-data">
                                         {% csrf_token %}
-                                        <input type="hidden" name="user" id="user_id" class="form-control"
-                                               value="{{ request.user }}" required>
                                         <div class="form-group">
                                             {% trans "Karta raqami" %} <input type="text" name="card_number"
                                                                               class="form-control"
@@ -75,12 +73,6 @@
                                                                             class="form-control"
                                                                             placeholder={% trans "Miqdorini kiriting" %}
                                                                                     id="id_amount" required>
-                                        </div>
-                                        <div class="form-group">
-                                            {% trans "Izoh" %}
-                                            <input type="text" name="text" id="text_id" class="form-control"
-                                                   placeholder={% trans "O'tkazish sababini kiriting (ixtiyoriy)" %}
-                                                           maxlength="255">
                                         </div>
                                         <input type="submit" value="{% trans "Tasdiqlash" %}" class="btn btn-primary">
                                     </form>
@@ -115,12 +107,14 @@
                                     <td>
                                         {% if transaction.check_image %}
                                             <a href="{{ transaction.check_image.url }}" target="_blank">
-                                                <img src="{{ transaction.check_image.url }}" alt="Check Image" style="width: 30px; height: auto;" />
+                                                <img src="{{ transaction.check_image.url }}" alt="Check Image"
+                                                     style="width: 30px; height: auto;"/>
                                             </a>
                                         {% else %}
                                             No Image Available
                                         {% endif %}
-                                    </td>                                </tr>
+                                    </td>
+                                </tr>
                             {% endfor %}
                         {% else %}
                             <tr>

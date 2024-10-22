@@ -1,5 +1,6 @@
 {% extends 'apps/base.html' %}
 {% load static %}
+{% load humanize %}
 {% block title %}
     Admin page
 {% endblock %}
@@ -17,11 +18,11 @@
                         <h5 class="text-primary">Assalomu alaykum Admin bo'limiga xush kelibsiz! </h5>
                     </div>
 
-                    <span class="fs-2 fw-medium">Balans: </span><span class="fs-3 fw-medium"
-                                                                      data-countup="{&quot;endValue&quot;:0,&quot;separator&quot;:&quot; &quot;}">0</span>
+                    <span class="fs-2 fw-medium">Balans: {{ user.balance|intcomma }} sum </span><span class="fs-3 fw-medium"
+                                                                      data-countup="{&quot;endValue&quot;:0,&quot;separator&quot;:&quot; &quot;}"></span>
                     <div class="flex-1 z-index-1" bis_skin_checked="1">
-                        <h5 class="text-800 mb-0">API Key:</h5>
-                        <p class="mb-0 text-500">1iLqO7Wj5mDyXs50TGHF2Mtd2HhN1ZB8</p>
+                        <h5 class="text-800 mb-0">API Key: 1iLqO7Wj5mDyXs50TGHF2Mtd2HhN1ZB8</h5>
+                        <p class="mb-0 text-500"></p>
                     </div>
                     <div class="card-body z-index-1" bis_skin_checked="1">
                         <div class="row g-2 h-100 align-items-end" bis_skin_checked="1">

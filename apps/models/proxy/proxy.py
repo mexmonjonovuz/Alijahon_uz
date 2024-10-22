@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from apps.models import Order, User
 from apps.models.proxy.proxymanagers import AdminUserManager, ManagerUserManager, CurrierUserManager, UserManager, \
     OperatorUserManager, ArchivedOrderManager, CanceledOrderManager, CantPhoneOrderManager, DeliveredOrderManager, \
-    DeliveringOrderManager, ReadyOrderManager, NewOrderManager
+    DeliveringOrderManager, ReadyOrderManager, NewOrderManager, BrokenOrderManager
 
 
 class OrderNewProxyModel(Order):
@@ -49,6 +49,15 @@ class OrderCantPhoneProxyModel(Order):
         proxy = True
         verbose_name = _('Cant to Phone')
         verbose_name_plural = _('Cant to Phone')
+
+
+class OrderBrokenProxyModel(Order):
+    objects = BrokenOrderManager()
+
+    class Meta:
+        proxy = True
+        verbose_name = _('Order Broken')
+        verbose_name_plural = _('Orders Broken')
 
 
 class OrderCanceledProxyModel(Order):

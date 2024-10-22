@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     # external
     'django_ckeditor_5',
     'debug_toolbar',
+    'django_seed',
+    'rosetta',
 ]
 
 MIDDLEWARE = [
@@ -250,3 +252,8 @@ MESSAGE_TAGS = {
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+
+
+
+

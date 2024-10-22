@@ -170,15 +170,11 @@ class OperatorUpdateForm(ModelForm):
 
 
 class TransactionCreateForm(ModelForm):
+    user = ModelChoiceField(queryset=User.objects.all(), required=False)
+
     class Meta:
         model = Transaction
-        fields = 'card_number', 'amount', 'text', 'user',
-
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)
-        super().__init__(*args, **kwargs)
-        if user:
-            self.instance.user = user
+        fields = 'user', 'card_number', 'amount',
 
     def clean_card_number(self):
         card_number = self.data.get('card_number').replace(' ', '')
@@ -186,15 +182,18 @@ class TransactionCreateForm(ModelForm):
             raise ValidationError("Karta raqamlari noto'gri bo'lishi mumkin tekshirib qaytadan uruning !!!")
         return card_number
 
-    def clean_amount(self):
-        amount = self.data.get('amount')
-        user = self.data.get('user')
-        user_balance = User.objects.filter(phone=user).values_list('balance', flat=True)[0]
-        if user_balance < int(amount):
-            return ValidationError("Mablag' yetarli Emas !!!")
-        _user = User.objects.filter(phone=user)
-        _user.update(balance=(user_balance - int(amount)))
-        return amount
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        user = instance.user or self.user
+        amount = self.cleaned_data.get('amount')
+        if user.balance >= amount:
+            user.balance -= amount
+            user.save()
+        else:
+            raise ValidationError("Balansingizda yetarli mablag' mavjud emas .")
+        if commit:
+            instance.save()
+        return instance
 
 
 class OperatorOrderCreateForm(ModelForm):

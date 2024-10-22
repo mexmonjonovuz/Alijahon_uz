@@ -63,9 +63,9 @@ class UserChangePasswordView(GetObjectMixins, UpdateView):
 
 class OperatorOrderListView(ListView):
     queryset = Order.objects.all()
-    template_name = 'apps/operators/operator.html'
+    template_name = 'apps/operators/operator_list.html'
     context_object_name = 'orders'
-    paginate_by = 5
+    paginate_by = 20
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -105,13 +105,13 @@ class OperatorDetailView(UpdateView):
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
         session_operator = self.request.user
-        if obj.status == Order.StatusType.NEW:
+        if obj.operator is None:
             obj.operator = session_operator
             obj.save()
         return obj
 
 
-class OperatorAddOrderView(CreateView):
+class OperatorCreateOrderView(CreateView):
     queryset = Order.objects.all()
     template_name = 'apps/operators/operator_add_product.html'
     form_class = OperatorOrderCreateForm
@@ -128,8 +128,3 @@ class OperatorAddOrderView(CreateView):
         ctx['regions'] = Region.objects.all()
         ctx['products'] = Product.objects.all()
         return ctx
-
-
-def logoutUser(request):
-    logout(request)
-    return redirect('admin:login')

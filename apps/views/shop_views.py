@@ -146,7 +146,7 @@ class StatisticView(LoginRequiredMixin, ListView):
             total_deliver_count=Sum(Order.StatusType.DELIVERING),
             total_delivered_count=Sum(Order.StatusType.DELIVERED),
             total_cant_phone_count=Sum(Order.StatusType.CANT_PHONE),
-            total_broken_count=Sum(Order.StatusType.CANCELED),
+            total_broken_count=Sum(Order.StatusType.BROKEN),
             total_canceled_count=Sum(Order.StatusType.CANCELED),
             total_archived_count=Sum(Order.StatusType.ARCHIVED),
         )

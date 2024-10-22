@@ -32,7 +32,7 @@ class TransactionCreateView(CreateView, GetObjectMixins):
     def form_valid(self, form):
         messages.add_message(self.request, message="Muvoffaqiyatli (24 soat ichida kiritilgan kartaga o'tkaziladi )!!",
                              level=messages.SUCCESS)
-        form = TransactionCreateForm(self.request.POST, user=self.request.user)
+        form.user = self.request.user
         form.save()
         return super().form_invalid(form)
 
