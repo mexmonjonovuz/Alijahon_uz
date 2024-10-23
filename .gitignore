@@ -323,4 +323,12 @@ apps/fixtures/*
 templates/public/
 apps/static/apps/
 
-TODO.txt
+TODO.txt!/templates/apps/parts/_footer.html
+!/templates/apps/parts/_header.html
+!/templates/apps/parts/_inquiries.html
+!/templates/apps/parts/_operators_header.html
+!/templates/apps/parts/_sidebar.html
+!/templates/apps/parts/_pagination.html
+!/templates/apps/parts/_operators_sidebar.html
+!/templates/apps/parts/_operators_pagination.html
+!/templates/apps/parts/
