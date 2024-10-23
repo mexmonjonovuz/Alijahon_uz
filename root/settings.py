@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-s31m)1+8#q4xh!cq!wc20i5d=huct9(_2+or897b52&hdy8657'
 load_dotenv('.env')
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -252,8 +252,3 @@ MESSAGE_TAGS = {
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
-
-
-
-
-
