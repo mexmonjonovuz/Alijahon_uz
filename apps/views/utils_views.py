@@ -2,7 +2,9 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseServerError
+from django.shortcuts import render
+from django.template import RequestContext
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, TemplateView, CreateView
@@ -78,3 +80,21 @@ class HeaderSearchView(ListView):
         page_obj = paginator.get_page(page_number)
         results = [{'name': product.name} for product in page_obj]
         return JsonResponse(results, safe=False)
+
+
+def handler404(request, *args, **argv):
+    response = render('404.html', {},
+                      context=RequestContext(request))
+    response.status_code = 404
+    return response
+
+
+def handler500(request, *args, **argv):
+    response = render('500.html', {},
+                      context=RequestContext(request))
+    response.status_code = 500
+    return response
+
+# 500 testing html
+# def trigger_error(request):
+#     return HttpResponseServerError(template='500.html')
