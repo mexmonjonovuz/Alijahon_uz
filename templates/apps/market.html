@@ -153,9 +153,8 @@
                 toggleValidationError('stream-error', 'Oqim nomi kamida 3 ta belgidan iborat bo\'lishi kerak');
                 return false;
             }
-            {#--numeric validation for name stream-#}
-            if (/\d/.test(product_discount_price) > discountValue) {
-                toggleValidationError('stream-error', "Oqim chegisrmasi belgilangan oraliqdan o'tib ketdi");
+            if (/\d/.test(nameValue)) {
+                toggleValidationError('stream-error', "Oqim nomida raqam ishlatish mumkun emas !!!");
                 return false;
             }
             toggleValidationError('stream-error', '', false);
@@ -182,38 +181,7 @@
                 event.preventDefault();
             }
         });
-
-        {#function validateDiscount() {#}
-        {#    const productDiscountPrice = parseFloat(document.getElementById('product_discount_price').value);#}
-        {#    let discountValue = parseFloat(document.getElementById('id_discount').value);#}
-        {##}
-        {#    if (isNaN(discountValue) || discountValue < 0) {#}
-        {#        document.getElementById('id_discount').value = 0;#}
-        {#        discountValue = 0;#}
-        {#    }#}
-        {##}
-        {#    if (productDiscountPrice >= discountValue) {#}
-        {#        toggleValidationError('discount-error', '', false);#}
-        {#    } else {#}
-        {#        toggleValidationError('discount-error', "Oqim chegirmasi belgilangan oraliqdan o'tib ketdi");#}
-        {#        return false;#}
-        {#    }#}
-        {##}
-        {#    return true;#}
-        {#}#}
-        {##}
-        {#    document.getElementById('submit-btn').addEventListener('click', function (event) {#}
-        {#        const isNameValid = validateStreamName();#}
-        {#        const isDiscountValid = validateDiscount();#}
-        {##}
-        {#        if (!isNameValid || !isDiscountValid) {#}
-        {#            event.preventDefault();#}
-        {#        }#}
-        {#    })#}
-        {#        ;#}
-
     </script>
-
 {% endblock %}
 
 
