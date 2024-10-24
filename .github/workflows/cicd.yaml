@@ -19,4 +19,3 @@ jobs:
             cd /var/www/Alijahon_uz
             git pull
             systemctl restart alijahon.service
-            mkdir new_file
