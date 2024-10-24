@@ -1,4 +1,4 @@
-name: Asadbek BOT CI/CD Deployment
+name: Alijahon_uz CI/CD Deployment
 
 on:
   push:
@@ -19,3 +19,4 @@ jobs:
             cd /var/www/Alijahon_uz
             git pull
             systemctl restart alijahon.service
+            mkdir new_file
