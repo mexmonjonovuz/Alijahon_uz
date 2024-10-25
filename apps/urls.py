@@ -57,7 +57,7 @@ urlpatterns = [
     path('operator/detail/<int:pk>/', OperatorDetailView.as_view(), name='operator_detail'),
 
     # Currier page
-    path('currier-page/', CurrierOrderListView.as_view(), name='currier_order_page'),
+    path('currier-page/orders/', CurrierOrderListView.as_view(), name='currier_order_page'),
     path('currier-page/detail/', CurrierOrderDetailView.as_view(), name='currier_detail_page'),
     path('currier-page/', CurrierListView.as_view(), name='currier_page')
 ]
