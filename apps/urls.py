@@ -7,7 +7,7 @@ from .views import MainBaseView, UserLoginView, UserLogautView, ProductOrStreamD
     UserChangeImageView, UserSettingsView, UserChangePasswordView, CreatedSuccessOrderedView, DiagramView, \
     DistrictListView, CompetitionListView, CoinsView, StreamListView, StreamCreateView, StatisticView, \
     ProductStatisticView, MarketView, InquiriesView, OperatorDetailView, OperatorOrderListView
-from .views.auth_views import OperatorCreateOrderView, CurrierOrderListView
+from .views.auth_views import OperatorCreateOrderView, CurrierOrderListView, CurrierOrderView
 
 urlpatterns = [
     path('', MainBaseView.as_view(), name='main_base'),
@@ -57,6 +57,5 @@ urlpatterns = [
 
     # Currier page
     path('currier-page/', CurrierOrderListView.as_view(), name='currier_page'),
-    path('currier-page/abror/', TemplateView.as_view(template_name='apps/couriers/currier_213.html'),
-         name='currier_page')
+    path('currier-page/detail/', CurrierOrderView.as_view(), name='currier_detail_page')
 ]
