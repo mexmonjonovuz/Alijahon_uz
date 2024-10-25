@@ -1,10 +1,11 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
+from django.db.models import Q
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import UpdateView, ListView, CreateView
+from django.views.generic import UpdateView, ListView, CreateView, TemplateView
 
 from apps.forms import UserAuthenticatedForm, UserSettingsForm, UserChangePasswordForm, OperatorUpdateForm, \
     OperatorOrderCreateForm
@@ -69,10 +70,9 @@ class OperatorOrderListView(ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        status = self.request.path.split('/')[-2]
-        if status:
-            qs = qs.filter(status=status)
-        return qs
+        status = self.kwargs.get('status') or self.request.path.split('/')[-2]
+        return qs if not status else qs.filter(Q(operator=self.request.user.id) | Q(operator__isnull=True)).filter(
+            status=status)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
@@ -128,3 +128,7 @@ class OperatorCreateOrderView(CreateView):
         ctx['regions'] = Region.objects.all()
         ctx['products'] = Product.objects.all()
         return ctx
+
+
+class CurrierOrderListView(TemplateView):
+    template_name = 'apps/couriers/currier.html'

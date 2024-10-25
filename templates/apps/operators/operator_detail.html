@@ -71,7 +71,9 @@
             {{ order.full_name }}</p>
         <p><strong>{% trans "Buyurtma Beruvchi Raqami:" %}</strong> <a
                 href="tel:998{{ order.phone_number }}">+998{{ order.phone_number }}</a></p>
-        <p><strong>{% trans "Mahsulot:" %}</strong> {{ order.product.name }} - {{ order.product.price|intcomma }} sum
+        <p><strong>{% trans "Mahsulot:" %}</strong> {{ order.product.name }} -
+            {% if order.stream %}{{ order.stream.sale_price|intcomma }}{% else %}
+                {{ order.product.price|intcomma }}{% endif %}  sum
         </p>
         <p style="color: red; font-weight: bold;">AKSIYA</p>
     </div>

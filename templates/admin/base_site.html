@@ -45,68 +45,68 @@
         });
     </script>
     &nbsp;
-    {#    <a href="{{ request|switch_i18n:'en' }}">#}
-    {#        <img class="i18n_flag" src="{% static 'admin/images/flag-Stars-and-Stripes-May-1-1795.webp' %}"/>#}
-    {#    </a>#}
-    {#    &nbsp;#}
-    {#    /#}
-    {#    &nbsp;#}
-    {#    <a href="{{ request|switch_i18n:'ru' }}">#}
-    {#        <img class="i18n_flag" src="{% static 'admin/images/Flag_of_Russia.svg.png' %}"/>#}
-    {#    </a>#}
-    {#    &nbsp;#}
-    {#    /#}
-    {#    &nbsp;#}
-    {#    <a href="{{ request|switch_i18n:'uz' }}">#}
-    {#        <img class="i18n_flag" src="{% static 'admin/images/Flag-Uzbekistan.webp' %}"/>#}
-    {#    </a>#}
-    {#    &nbsp;#}
-    {#    /#}
-    {#    &nbsp;#}
-    {#    <a href="{{ request|switch_i18n:'oz' }}">#}
-    {#        <img class="i18n_flag" src="{% static 'admin/images/Flag-Uzbekistan.webp' %}"/>#}
-    {#    </a>#}
-    {#    &nbsp;#}
-    {#    /#}
+        <a href="{{ request|switch_i18n:'en' }}">
+            <img class="i18n_flag" src="{% static 'admin/images/flag-Stars-and-Stripes-May-1-1795.webp' %}"/>
+        </a>
+        &nbsp;
+        /
+        &nbsp;
+        <a href="{{ request|switch_i18n:'ru' }}">
+            <img class="i18n_flag" src="{% static 'admin/images/Flag_of_Russia.svg.png' %}"/>
+        </a>
+        &nbsp;
+        /
+        &nbsp;
+        <a href="{{ request|switch_i18n:'uz' }}">
+            <img class="i18n_flag" src="{% static 'admin/images/Flag-Uzbekistan.webp' %}"/>
+        </a>
+        &nbsp;
+        /
+        &nbsp;
+        <a href="{{ request|switch_i18n:'oz' }}">
+            <img class="i18n_flag" src="{% static 'admin/images/Flag-Uzbekistan.webp' %}"/>
+        </a>
+        &nbsp;
+        /
     {#    &nbsp; {% url 'admin:set_language' %}#}
-    <form action="#" method="post">
-        {% csrf_token %}
-        <label for="language">Choose Language:</label>
-        <select name="language" id="language" onchange="this.form.submit()">
-            <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
-            <option value="ru" {% if LANGUAGE_CODE == 'ru' %}selected{% endif %}>Русский</option>
-            <option value="uz" {% if LANGUAGE_CODE == 'uz' %}selected{% endif %}>O'zbek</option>
-            <option value="oz" {% if LANGUAGE_CODE == 'oz' %}selected{% endif %}>Ўзбек</option>
-        </select>
-    </form>
-    <style>
-        select {
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 14px;
-        }
-
-        select:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-
-        input[type="submit"] {
-            padding: 8px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-
-    </style>
+{#    <form action="#" method="post">#}
+{#        {% csrf_token %}#}
+{#        <label for="language">Choose Language:</label>#}
+{#        <select name="language" id="language" onchange="this.form.submit()">#}
+{#            <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>#}
+{#            <option value="ru" {% if LANGUAGE_CODE == 'ru' %}selected{% endif %}>Русский</option>#}
+{#            <option value="uz" {% if LANGUAGE_CODE == 'uz' %}selected{% endif %}>O'zbek</option>#}
+{#            <option value="oz" {% if LANGUAGE_CODE == 'oz' %}selected{% endif %}>Ўзбек</option>#}
+{#        </select>#}
+{#    </form>#}
+{#    <style>#}
+{#        select {#}
+{#            padding: 10px;#}
+{#            border-radius: 5px;#}
+{#            border: 1px solid #ccc;#}
+{#            font-size: 14px;#}
+{#        }#}
+{##}
+{#        select:focus {#}
+{#            border-color: #007bff;#}
+{#            outline: none;#}
+{#        }#}
+{##}
+{#        input[type="submit"] {#}
+{#            padding: 8px 15px;#}
+{#            background-color: #007bff;#}
+{#            color: white;#}
+{#            border: none;#}
+{#            border-radius: 5px;#}
+{#            cursor: pointer;#}
+{#            font-size: 14px;#}
+{#        }#}
+{##}
+{#        input[type="submit"]:hover {#}
+{#            background-color: #0056b3;#}
+{#        }#}
+{##}
+{#    </style>#}
     {% if user.is_active and user.is_staff %}
         {% url 'django-admindocs-docroot' as docsroot %}
         {% if docsroot %}
