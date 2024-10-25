@@ -134,9 +134,8 @@ class CurrierOrderListView(TemplateView):
     template_name = 'apps/couriers/currier_order_list.html'
 
 
-class CurrierOrderView(TemplateView):
+class CurrierOrderDetailView(TemplateView):
     template_name = 'apps/couriers/currier_detail.html'
-
 
 
 class CurrierListView(TemplateView):

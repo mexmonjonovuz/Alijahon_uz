@@ -1,13 +1,14 @@
 from django.urls import path, re_path
 from django.views.generic import TemplateView
 
-from .views import MainBaseView, UserLoginView, UserLogautView, ProductOrStreamDetailView, \
+from apps.views import MainBaseView, UserLoginView, UserLogautView, ProductOrStreamDetailView, \
     ProductListByCategoryListView, \
     TransactionCreateView, HeaderSearchView, FavoriteView, FavouriteListView, OrderListView, \
     UserChangeImageView, UserSettingsView, UserChangePasswordView, CreatedSuccessOrderedView, DiagramView, \
     DistrictListView, CompetitionListView, CoinsView, StreamListView, StreamCreateView, StatisticView, \
     ProductStatisticView, MarketView, InquiriesView, OperatorDetailView, OperatorOrderListView
-from .views.auth_views import OperatorCreateOrderView, CurrierOrderListView, CurrierOrderView, CurrierOrderView12
+from apps.views.auth_views import OperatorCreateOrderView, CurrierOrderListView, CurrierListView, \
+    CurrierOrderDetailView
 
 urlpatterns = [
     path('', MainBaseView.as_view(), name='main_base'),
@@ -56,7 +57,7 @@ urlpatterns = [
     path('operator/detail/<int:pk>/', OperatorDetailView.as_view(), name='operator_detail'),
 
     # Currier page
-    path('currier-page/', CurrierOrderListView.as_view(), name='currier_page'),
-    path('currier-page/detail/', CurrierOrderView.as_view(), name='currier_detail_page'),
-    path('currier-page/detail/1/', CurrierOrderView12.as_view(), name='currier_detail12_page')
+    path('currier-page/', CurrierOrderListView.as_view(), name='currier_order_page'),
+    path('currier-page/detail/', CurrierOrderDetailView.as_view(), name='currier_detail_page'),
+    path('currier-page/', CurrierListView.as_view(), name='currier_page')
 ]
