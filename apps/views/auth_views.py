@@ -131,8 +131,13 @@ class OperatorCreateOrderView(CreateView):
 
 
 class CurrierOrderListView(TemplateView):
-    template_name = 'apps/couriers/currier.html'
+    template_name = 'apps/couriers/currier_order_list.html'
 
 
 class CurrierOrderView(TemplateView):
     template_name = 'apps/couriers/currier_detail.html'
+
+
+
+class CurrierListView(TemplateView):
+    template_name = 'apps/couriers/currier_list.html'
