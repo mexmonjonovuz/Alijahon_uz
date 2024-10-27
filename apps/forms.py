@@ -163,6 +163,7 @@ class AuthAdminsLogin(AuthenticationForm):
         username = self.cleaned_data.get('username')
 
 
+
 class OperatorUpdateForm(ModelForm):
     class Meta:
         model = Order
@@ -204,3 +205,5 @@ class OperatorOrderCreateForm(ModelForm):
     def clean_phone_number(self):
         phone_number = self.data.get('phone_number')
         return re.sub(r'[^\d]', '', phone_number)[-9:]
+
+
