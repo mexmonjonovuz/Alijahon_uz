@@ -98,3 +98,8 @@ def handler500(request, *args, **argv):
 # 500 manual testing html
 # def trigger_error(request):
 #     return HttpResponseServerError(template='500.html')
+
+
+
+
+
