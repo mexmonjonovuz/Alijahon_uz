@@ -6,8 +6,8 @@ from apps.views import MainBaseView, UserLoginView, UserLogautView, ProductOrStr
     TransactionCreateView, HeaderSearchView, FavoriteView, FavouriteListView, OrderListView, \
     UserChangeImageView, UserSettingsView, UserChangePasswordView, CreatedSuccessOrderedView, DiagramView, \
     DistrictListView, CompetitionListView, CoinsView, StreamListView, StreamCreateView, StatisticView, \
-    ProductStatisticView, MarketView, InquiriesView, OperatorDetailView, OperatorOrderListView
-from apps.views.auth_views import OperatorCreateOrderView, CurrierOrderListView, CurrierListView, \
+    ProductStatisticView, MarketView, InquiriesView, OperatorDetailView, OperatorOrderListView, OperatorCreateOrderView, \
+    CurrierOrderListView, CurrierListView, \
     CurrierOrderDetailView
 
 urlpatterns = [
