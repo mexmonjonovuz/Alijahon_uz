@@ -1,0 +1,57 @@
+
+
+
+
+TASK
+1. user change password da check user formada bolishi kk  ✅
+2. stream detail bilan product detail 1ta bolishi kk ✅
+3. kirilcha sozlarda ham slug ishlashi kk ✅
+4. tolov qismi -- ✅
+5. KONKURS -- ✅
+
+6. SOROVLAR OXIRIGACHA -- ✅
+7. Operatorlar POLNY --- ✅
+8. TARJIMA 20%
+9. ADMINKA
+10. ADMINKADA VIL REG CHIQADIGAN QILISH ✅
+
+
+11. adminkada (operator gaplashish hisoboti)
+13. Order statusga tegishli bolgan orderlar soni
+14. COINS -----
+15. Operator Detail xal ✅
+
+
+15. Lang change strukture 70%  ✅
+16. Admin.py qismlarga ajaratildi ✅
+17. apps -> BUYURTMALAR BOLIMI   ✅
+18. OQIM MUANMO QOMADI ! ✅
+20. PROFILE REGION SELELCT TURISHI ZARUR  -> ✅
+
+
+25. modellarni orderlarga va userlar bolimiga ajratish (app in bo'lmasdan) (po seryoznee) ✅
+22. Rosetta kirilchani, o'zbekchani, ruschani to'g'irlash ✅
+23. Operator gaplashish hisoboti (mothly, weekly) (statistic)
+34. hamma modellarga ntadan malumot qoshish django commands (model yangi qoshilsa ham unga ham qoshish kk)
+30. operator faqat operator page kira olishi kk
+
+
+36. adminkada listda edit va delete button
+37. adminkada edit,detailni custom qilish https://essentialwebapps.com/wp-content/uploads/2022/03/profile-edit-data-and-skills-1024x683.jpg
+35. http://localhost:8000/en/admin/apps/operatoruserproxy/ operator list display da dostavkaga tayyorlar soni linkda chiqishi kk
+26. Currier modelga stackedinline qilib region district (M2M)
+
+
+38. currier 2hil tuman, viloyat
+39. DJANGO SEED dumpdata qoshish
+40. TELEGRAM BOT qowiw
+41. Django admin add page custom
+
+42. 404 page ✅
+43. 500 page ✅
+
+
+django silk install + endi tekshirib chiqish zarur
+django rosetta install + endi tekshirib chiqish zarur
+
+
