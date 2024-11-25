@@ -31,3 +31,7 @@ class TimeBasedModel(Model):
 class SlugTimeBasedModel(TimeBasedModel, SlugBasedModel):
     class Meta:
         abstract = True
+
+
+
+
