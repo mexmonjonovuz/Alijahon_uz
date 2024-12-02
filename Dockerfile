@@ -1,12 +1,14 @@
+#NOW NOT WORKING DOCKER
 FROM python:3.12-alpine
 
-WORKDIR app/
+WORKDIR /app
+
 COPY . /app
 
-RUN echo "Success"
+RUN apk add --no-cache gcc musl-dev libffi-dev mariadb-connector-c-dev pkgconfig
 
-RUN --mount=type=cache,id=custom-pip,target=/root/.cache/pip pip install -r /app/requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 8000
 
-CMD ["python3","manage.py","8000"]
+CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
