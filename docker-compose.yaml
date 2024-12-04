@@ -1,9 +1,28 @@
 services:
-  web_service:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
+  django_service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: python3 manage.py runserver 0:8099
     ports:
-      - "8000:8000"
+      - 8001:8033
     volumes:
-      - .:/app
-    working_dir: /app
+      - static_volume:/app/static
+      - media_volume:/app/media
+    env_file: .env
+    depends_on:
+      - mysql_service
+
+  mysql_service:
+    image: mysql:alpine
+    environment:
+      - MYSQL_PASSWORD=1
+    ports:
+      - 5433:5432
+    volumes:
+      - new_pg_data:/var/lib/mysql/data
+
+volumes:
+  new_pg_data:
+  static_volume:
+  media_volume:
