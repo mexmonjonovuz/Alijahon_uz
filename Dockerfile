@@ -1,4 +1,3 @@
-#NOW NOT WORKING DOCKER
 FROM python:3.12-alpine
 
 WORKDIR /app
